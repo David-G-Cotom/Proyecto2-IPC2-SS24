@@ -1,1 +1,19 @@
-<p>inicio-sesion works!</p>
+<div class="body-component">
+    <div class="login-container">
+        <h2>Iniciar Sesión</h2>
+        <form id="loginForm" [formGroup]="formulario">
+            <div class="input-group">
+                <label for="username">Usuario</label>
+                <input type="text" id="username" name="username" formControlName="userName" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" formControlName="password" required>
+            </div>
+            <button type="submit" [disabled]="formulario.invalid" (click)="ingresar()">Entrar</button>
+        </form>
+    </div>
+    <div *ngIf="errorDatos"><span style="color: red;">CREDENCIALES INCORRECTAS</span></div>
+</div>
+<pre>{{ formulario.value | json }}</pre>
+<pre>{{ formulario.valid | json }}</pre>
