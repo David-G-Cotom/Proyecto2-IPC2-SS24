@@ -1,0 +1,38 @@
+div {
+    margin: 50px auto;
+    padding: 10px 25px;
+}
+
+.form-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 50vw;
+    text-align: center;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px;
+}
+
+.checkbox-group label {
+    margin-bottom: 10px;
+    margin-right: 25px;
+}
+
+button {
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    background-color: #007BFF;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
