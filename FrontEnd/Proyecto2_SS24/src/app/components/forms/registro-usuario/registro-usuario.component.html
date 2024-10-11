@@ -1,19 +1,18 @@
-<p>registro-usuario works!</p>
 <div class="body-component">
     <div class="login-container">
         <h2>Registrar Usuario</h2>
-        <form id="loginForm" method="POST" action="${pageContext.servletContext.contextPath}/RegistroUsuarioServlet" enctype="multipart/form-data">
+        <form id="loginForm" [formGroup]="formulario" enctype="multipart/form-data" (ngSubmit)="registrar()">
             <div class="input-group">
                 <label for="username">Usuario</label>
-                <input type="text" id="username" name="username" required>
+                <input type="text" id="username" name="username" formControlName="userName" required>
             </div>
             <div class="input-group">
                 <label for="password">Contraseña</label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" name="password" formControlName="password" required>
             </div>
             <div class="input-group">
                 <label for="usertype">Tipo de Usuario</label>
-                <select id="usertype" name="usertype">
+                <select id="usertype" name="usertype" formControlName="tipoUsuario">
                     <option value="editor">EDITOR</option>
                     <option value="suscriptor">SUSCRIPTOR</option>
                     <option value="inversionista">INVERSIONISTA</option>
@@ -22,13 +21,16 @@
             </div>
             <div class="input-group">
                 <label for="name">Nombre</label>
-                <input type="text" id="name" name="name" required>
+                <input type="text" id="name" name="name" formControlName="nombre" required>
             </div>
             <div class="input-group">
                 <label for="imageFile">Foto de Perfil</label>                    
-                <input type="file" data-buttonText="Foto" name="imageFile" id="imageFile">                        
+                <input type="file" accept="image/*" name="imageFile" id="imageFile" formControlName="archivoFoto" (change)="obtenerImagen($event)">                        
             </div>
-            <button type="submit">Registrar</button>
+            <button type="submit" [disabled]="formulario.invalid">Registrar</button>
         </form>
     </div>
+    <div *ngIf="errorDatos"><span style="color: red;">DEBE COMPLETAR TODOS LOS DATOS</span></div>
 </div>
+<pre>{{ formulario.value | json }}</pre>
+<pre>{{ formulario.valid | json }}</pre>
