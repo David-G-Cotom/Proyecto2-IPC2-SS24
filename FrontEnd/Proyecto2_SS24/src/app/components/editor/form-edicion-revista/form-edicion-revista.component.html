@@ -1,8 +1,8 @@
-<div class="content-body">
+<div class="body-component">
     <div class="form-container">
-        <h1>Nueva Revista</h1>
-        <form [formGroup]="formulario" (ngSubmit)="crearRevista()">
-            <input type="hidden" name="idUsuario">
+        <h1>Edicion de Revista</h1>
+        <form [formGroup]="formulario" (ngSubmit)="editarRevista()">                
+            <input type="hidden" name="idRevista">
             <div class="input-group">
                 <label for="nombreRevista">Nombre de la Revista:</label>
                 <input type="text" id="nombreRevista" name="nombreRevista" formControlName="nombre">
@@ -10,10 +10,6 @@
             <div class="input-group">
                 <label for="descripcionRevista">Descripcion de la Revista:</label>
                 <textarea id="descripcionRevista" name="descripcionRevista" formControlName=""descripcion></textarea>
-            </div>                
-            <div class="input-group">
-                <label for="fecha">Fecha de Creacion:</label>
-                <input type="date" id="fecha" name="fecha" formControlName="fecha">
             </div>
             <div class="input-group">
                 <label for="categoria">Categoria:</label>
@@ -101,7 +97,7 @@
                     <label for="suscripciones-no"><input type="radio" id="suscripciones-no" name="suscripciones" value="NO"> NO Recibir Suscripciones</label>
                 </div>
             </div>
-            <button type="submit">Crear Revista</button>
+            <button type="submit">Guardar Cambios</button>
         </form>
     </div>
 </div>

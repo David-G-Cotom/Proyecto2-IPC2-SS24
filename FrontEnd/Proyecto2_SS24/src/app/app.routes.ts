@@ -10,6 +10,8 @@ import { HomePageAdminComponent } from './components/administrador/home-page-adm
 import { PerfilUsuarioComponent } from './components/forms/perfil-usuario/perfil-usuario.component';
 import { FormNuevaPublicacionComponent } from './components/editor/form-nueva-publicacion/form-nueva-publicacion.component';
 import { FormNuevaRevistaComponent } from './components/editor/form-nueva-revista/form-nueva-revista.component';
+import { FormEdicionRevistaComponent } from './components/editor/form-edicion-revista/form-edicion-revista.component';
+import { FormRecargaCreditoComponent } from './components/editor/form-recarga-credito/form-recarga-credito.component';
 
 export const routes: Routes = [
   {
@@ -44,6 +46,14 @@ export const routes: Routes = [
       {
         path: 'nueva-publicacion',
         component: FormNuevaPublicacionComponent
+      },
+      {
+        path: 'editar-revista',
+        component: FormEdicionRevistaComponent
+      },
+      {
+        path: 'recargar-credito',
+        component: FormRecargaCreditoComponent
       }
     ]
   },

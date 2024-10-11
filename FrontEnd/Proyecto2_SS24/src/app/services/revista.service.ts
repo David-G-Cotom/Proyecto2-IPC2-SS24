@@ -24,4 +24,8 @@ export class RevistaService {
     return this.http.post<Publicacion>(`${this.urlBackend}RegistroPublicacion`, formData);
   }
 
+  public actualizarRevista(revista: Revista): Observable<Revista> {
+    return this.http.put<Revista>(`${this.urlBackend}RegistroRevista`, revista)
+  }
+
 }

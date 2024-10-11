@@ -298,5 +298,11 @@ public class RevistaDB {
         return false;
         
     }
+    
+    public boolean actualizarRevista(Revista revista) {
+        
+        return false;
+        
+    }
 
 }
