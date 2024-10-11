@@ -1,0 +1,16 @@
+<div class="body-content">
+    <div class="form-container">
+        <h1>Nueva Publicacion</h1>
+        <form enctype="multipart/form-data" [formGroup]="formulario" (ngSubmit)="registrar()">
+            <input type="hidden" name="idUsuario">
+            <div class="input-group">
+                <label for="nombreRevista">Numero de Publicacion:</label>
+                <input type="text" id="nombreRevista" name="nombreRevista"/>
+            </div>               
+            <div class="input-group">                        
+                <input type="file" name="pdfFile" id="pdfFile" (change)="obtenerArchivo($event)">                        
+            </div>
+            <button type="submit">Crear Publicacion</button>
+        </form>
+    </div>
+</div>

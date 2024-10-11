@@ -8,6 +8,8 @@ import { HomePageSuscriptorComponent } from './components/suscriptor/home-page-s
 import { HomePageAnuncianteComponent } from './components/anunciante/home-page-anunciante/home-page-anunciante.component';
 import { HomePageAdminComponent } from './components/administrador/home-page-admin/home-page-admin.component';
 import { PerfilUsuarioComponent } from './components/forms/perfil-usuario/perfil-usuario.component';
+import { FormNuevaPublicacionComponent } from './components/editor/form-nueva-publicacion/form-nueva-publicacion.component';
+import { FormNuevaRevistaComponent } from './components/editor/form-nueva-revista/form-nueva-revista.component';
 
 export const routes: Routes = [
   {
@@ -34,6 +36,14 @@ export const routes: Routes = [
       {
         path: 'perfil',
         component: PerfilUsuarioComponent
+      },
+      {
+        path: 'nueva-revista',
+        component: FormNuevaRevistaComponent
+      },
+      {
+        path: 'nueva-publicacion',
+        component: FormNuevaPublicacionComponent
       }
     ]
   },

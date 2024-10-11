@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { UsuarioAplicacionJava } from '../../../models/usuarioAplicacionJava';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
 import { ProfileService } from '../../../services/profile.service';
 import { RoutingService } from '../../../services/routing.service';
