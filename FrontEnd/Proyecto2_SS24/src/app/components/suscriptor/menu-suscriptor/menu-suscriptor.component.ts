@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-menu-suscriptor',
@@ -9,5 +10,11 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './menu-suscriptor.component.css'
 })
 export class MenuSuscriptorComponent {
+
+  constructor(private authService: AuthService) { }
+
+  public logOut() {
+    this.authService.removeLocalStorageItem();
+  }
 
 }

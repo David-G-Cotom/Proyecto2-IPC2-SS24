@@ -18,7 +18,7 @@ export class AuthService {
     return this.http.get<UsuarioAplicacionJava>(`${this.urlBackend}InicioSesion/${user.userName}/${user.password}`);
   }
 
-  public setLocalStorageItem(user: UsuarioAplicacionJava):void {
+  public setLocalStorageItem(user: UsuarioAplicacionJava): void {
     localStorage.setItem('Usuario-Actual', JSON.stringify(user));
   }
 
@@ -30,6 +30,10 @@ export class AuthService {
     formData.append('Nombre', user.perfil.nombre);
     formData.append('Foto', imagen);
     return this.http.post<UsuarioAplicacionJava>(`${this.urlBackend}RegistroUsuario`, formData);
+  }
+
+  public removeLocalStorageItem(): void {
+    localStorage.removeItem('Usuario-Actual');
   }
 
 }
