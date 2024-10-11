@@ -1,7 +1,7 @@
 <div class="body-component">
     <div class="login-container">
         <h2>Registrar Usuario</h2>
-        <form id="loginForm" [formGroup]="formulario">
+        <form id="loginForm" [formGroup]="formulario" enctype="multipart/form-data" (ngSubmit)="registrar()">
             <div class="input-group">
                 <label for="username">Usuario</label>
                 <input type="text" id="username" name="username" formControlName="userName" required>
@@ -27,7 +27,7 @@
                 <label for="imageFile">Foto de Perfil</label>                    
                 <input type="file" accept="image/*" name="imageFile" id="imageFile" formControlName="archivoFoto" (change)="obtenerImagen($event)">                        
             </div>
-            <button type="submit" [disabled]="formulario.invalid" (click)="registrar()">Registrar</button>
+            <button type="submit" [disabled]="formulario.invalid">Registrar</button>
         </form>
     </div>
     <div *ngIf="errorDatos"><span style="color: red;">DEBE COMPLETAR TODOS LOS DATOS</span></div>

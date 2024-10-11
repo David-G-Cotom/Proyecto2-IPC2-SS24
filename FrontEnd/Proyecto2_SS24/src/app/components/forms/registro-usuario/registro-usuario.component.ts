@@ -6,6 +6,7 @@ import { User } from '../../../models/user';
 import { Perfil } from '../../../models/perfil';
 import { AuthService } from '../../../services/auth.service';
 import { RoutingService } from '../../../services/routing.service';
+import { UsuarioAplicacionJava } from '../../../models/usuarioAplicacionJava';
 
 @Component({
   selector: 'app-registro-usuario',
@@ -45,19 +46,22 @@ export class RegistroUsuarioComponent {
       const tipoUsuarioControl: FormControl = this.formulario.get('tipoUsuario') as FormControl;
       if (this.foto != null) {
         let userAplication = new UsuarioAplicacion(new User(userNameControl.value, passwordControl.value, tipoUsuarioControl.value), new Perfil("", nombreControl.value));
-        this.authService.registrarUsuario(userAplication, this.foto).subscribe((nuevoUsuario: UsuarioAplicacion) => {
-          if (nuevoUsuario) {
-            console.log("DENTRO DE NUEVO USUARIO? SI");
-            this.authService.setLocalStorageItem(nuevoUsuario.user);
-            this.routingService.redireccionarUsuario();
-          } else {
-            console.log("DENTRO DE NUEVO USUARIO? NO");
-            this.errorDatos = true;
-            this.formulario.reset();
+        this.authService.registrarUsuario(userAplication, this.foto).subscribe({
+          next: (nuevoUsuario: UsuarioAplicacionJava) => {
+            if (nuevoUsuario) {
+              console.log('DENTRO DE NUEVO USUARIO? SI');
+              this.authService.setLocalStorageItem(nuevoUsuario);
+              this.routingService.redireccionarUsuario();
+            } else {
+              console.log('DENTRO DE NUEVO USUARIO? NO');
+              this.errorDatos = true;
+              this.formulario.reset();
+            }
+          }, error: (error: any) => {
+            this.routingService.enviarPagina('page-not-found');
+            console.log('HUBO ERROR');
+            console.log(error);
           }
-        }, error => {
-          this.routingService.enviarPagina("page-not-found")
-          console.log(error);
         });
       }
     }

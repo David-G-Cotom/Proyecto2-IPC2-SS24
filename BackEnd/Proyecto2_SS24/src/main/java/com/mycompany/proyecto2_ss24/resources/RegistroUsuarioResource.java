@@ -6,19 +6,20 @@ package com.mycompany.proyecto2_ss24.resources;
 
 import com.mycompany.proyecto2_ss24.backend.controllers.ArchivosController;
 import com.mycompany.proyecto2_ss24.backend.data.LogInUsuarioDB;
+import com.mycompany.proyecto2_ss24.backend.mode.users.PerfilTS;
 import com.mycompany.proyecto2_ss24.backend.mode.users.UsuarioAplicacion;
 import com.mycompany.proyecto2_ss24.backend.mode.users.UsuarioAplicacionTS;
-import com.mycompany.proyecto2_ss24.backend.utils.ConvertirJson;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.Part;
+import com.mycompany.proyecto2_ss24.backend.mode.users.UsuarioTS;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import java.io.IOException;
+import java.io.InputStream;
 import java.util.Base64;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 
 /**
  *
@@ -26,39 +27,42 @@ import java.util.Base64;
  */
 @Path("RegistroUsuario")
 public class RegistroUsuarioResource {
- 
+
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response createRegistro(HttpServletRequest request) {
-        System.out.println("ESTAMOS EN EL SERVIDOR");
-        ConvertirJson convertidor = new ConvertirJson();
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createRegistro(@FormDataParam("Foto") InputStream foto,
+            @FormDataParam("Foto") FormDataContentDisposition detalleFoto,
+            @FormDataParam("UserName") String userName,
+            @FormDataParam("Password") String password,
+            @FormDataParam("TipoUsuario") String tipoUsuario,
+            @FormDataParam("Nombre") String nombre) {
+        System.out.println(userName);
+        System.out.println(password);
+        System.out.println(tipoUsuario);
+        System.out.println(nombre);
+        System.out.println("FOTO: " + detalleFoto.getFileName());
         ArchivosController archivoController = new ArchivosController();
         LogInUsuarioDB dataUsuario = new LogInUsuarioDB();
-        try {
-            String textoEntrada = request.getParameter("UsuarioAplicacion");
-            Part foto = request.getPart("Foto");
-            UsuarioAplicacionTS usuario = (UsuarioAplicacionTS) convertidor.getObjeto(textoEntrada, UsuarioAplicacionTS.class);
-            String pathFoto = archivoController.guardarArchivo(foto, "FOTO-" + usuario.getPerfil().getNombre(), ".png", request.getServletContext().getRealPath(""));
-            usuario.getPerfil().setPathFoto(pathFoto);
-            UsuarioAplicacion userAplication = new UsuarioAplicacion();
-            userAplication.setUserName(usuario.getUsuario().getUserName());
-            String codificado = Base64.getEncoder().encodeToString(usuario.getUsuario().getPassword().getBytes());
-            userAplication.setPassword(codificado);
-            userAplication.setNombre(usuario.getPerfil().getNombre());
-            userAplication.setFoto(usuario.getPerfil().getPathFoto());
-            int idTipoUsuario = dataUsuario.getIdTipoUsuario(usuario.getUsuario().getTipoUsuario());
-            userAplication.setIdTipoUsuario(idTipoUsuario);
-            UsuarioAplicacion existeUsuario = dataUsuario.getUsuario(userAplication.getUserName(), userAplication.getPassword());
-            if (existeUsuario != null) {
-                System.out.println("YA EXISTE EL USUARIO");
-                return Response.status(Response.Status.NOT_FOUND).build();
-            } else {
-                dataUsuario.crearUsuario(userAplication);
-                return Response.status(Response.Status.CREATED).build();
-            }
-        } catch (ServletException | IOException e) {
-            System.out.println("ERROR AL REGISTRAR USUARIO: " + e.getMessage());
-            return Response.status(Response.Status.UNAUTHORIZED).build();
+        UsuarioAplicacionTS usuario = new UsuarioAplicacionTS(new UsuarioTS(tipoUsuario, userName, password), new PerfilTS("", nombre));
+        String pathFoto = archivoController.guardarArchivo(foto, "FOTO-" + usuario.getPerfil().getNombre() + detalleFoto.getFileName());
+        usuario.getPerfil().setPathFoto(pathFoto);
+        UsuarioAplicacion userAplication = new UsuarioAplicacion();
+        userAplication.setUserName(usuario.getUsuario().getUserName());
+        String codificado = Base64.getEncoder().encodeToString(usuario.getUsuario().getPassword().getBytes());
+        userAplication.setPassword(codificado);
+        userAplication.setNombre(usuario.getPerfil().getNombre());
+        userAplication.setFoto(usuario.getPerfil().getPathFoto());
+        int idTipoUsuario = dataUsuario.getIdTipoUsuario(usuario.getUsuario().getTipoUsuario());
+        userAplication.setIdTipoUsuario(idTipoUsuario);
+        UsuarioAplicacion existeUsuario = dataUsuario.getUsuario(userAplication.getUserName(), userAplication.getPassword());
+        if (existeUsuario != null) {
+            System.out.println("YA EXISTE EL USUARIO");
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } else {
+            System.out.println("CREANDO EL NUEVO USUARIO");
+            dataUsuario.crearUsuario(userAplication);
+            return Response.ok(userAplication).build();
         }
     }
     

@@ -4,12 +4,12 @@
  */
 package com.mycompany.proyecto2_ss24.backend.controllers;
 
-import jakarta.servlet.http.Part;
-import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.OutputStream;
 
 /**
  *
@@ -17,23 +17,32 @@ import java.io.InputStreamReader;
  */
 public class ArchivosController {
     
-    private static final String PATH = "DataServer\\";
-    private static final String PDF_EXTENS = ".pdf";
-    private static final String IMG_EXTENS = ".png";
-    private static final String VIDEO_EXTENS = ".mp4";
+    private final String PATH = "DataServer" + File.separatorChar;
     
-    public String guardarArchivo(Part part, String nombreArchivo, String extension, String servidor) throws IOException {
-        String path = "";
-        InputStream fileStream = part.getInputStream();
-        try (BufferedReader input = new BufferedReader(new InputStreamReader(fileStream))){
-            String line = input.readLine();
-            while (line != null) {
-                line = input.readLine();
+    public String guardarArchivo(InputStream fileStream, String nombreArchivo) {
+        File carpeta = new File(PATH);
+        if (!carpeta.exists()) {
+            System.out.println("No esxiste carpeta");
+            carpeta.mkdir();
+            System.out.println("Carpeta creada");
+        } else {
+            System.out.println("Carpeta ya existe");
+        }
+        String path = PATH + nombreArchivo;
+        try (OutputStream out = new FileOutputStream(new File(path))){
+            int read;
+            byte[] bytes = new byte[1024];
+            while ((read = fileStream.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
             }
-            path = servidor + PATH + nombreArchivo + extension;
-            part.write(path);
-        } catch (Exception e) {
-            System.out.println("ERROR AL GUARDAR EL ARCHIVO: " + e.getMessage());
+            System.out.println(path);
+            System.out.println("Archivo guardado");
+        } catch (FileNotFoundException ex) {
+            System.out.println("ERROR AL GUARDAR EL ARCHIVO: " + ex);
+            System.out.println(ex.getMessage());
+        } catch (IOException ex) {
+            System.out.println("ERROR AL GUARDAR EL ARCHIVO: " + ex);
+            System.out.println(ex.getMessage());
         }
         return path;
     }

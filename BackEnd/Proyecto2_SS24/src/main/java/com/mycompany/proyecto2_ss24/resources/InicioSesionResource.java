@@ -36,6 +36,7 @@ public class InicioSesionResource {
             System.out.println("NO HAY USUARIO COINCIDENTE");
             return Response.status(Response.Status.NOT_FOUND).build();
         }
+        System.out.println("USUARIO ENCONTRADO");
         return Response.ok(usuario).build();
     }
 

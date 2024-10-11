@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { User } from '../models/user';
 import { Observable } from 'rxjs';
 import { UsuarioAplicacion } from '../models/usuarioAplicacion';
+import { UsuarioAplicacionJava } from '../models/usuarioAplicacionJava';
 
 @Injectable({
   providedIn: 'root'
@@ -13,19 +14,22 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  validarInicioSesion(user: User): Observable<User> {
-    return this.http.get<User>(`${this.urlBackend}InicioSesion/${user.userName}/${user.password}`);
+  public validarInicioSesion(user: User): Observable<UsuarioAplicacionJava> {
+    return this.http.get<UsuarioAplicacionJava>(`${this.urlBackend}InicioSesion/${user.userName}/${user.password}`);
   }
 
-  setLocalStorageItem(user: User):void {
+  public setLocalStorageItem(user: UsuarioAplicacionJava):void {
     localStorage.setItem('Usuario-Actual', JSON.stringify(user));
   }
 
-  registrarUsuario(user:UsuarioAplicacion, imagen:File) {
+  public registrarUsuario(user:UsuarioAplicacion, imagen:File): Observable<UsuarioAplicacionJava> {
     let formData = new FormData();
-    formData.append("UsuarioAplicacion", JSON.stringify(user));
-    formData.append("Foto", imagen, imagen.name);
-    return this.http.post<UsuarioAplicacion>(this.urlBackend + "RegistroUsuario", formData);
+    formData.append('UserName', user.user.userName);
+    formData.append('Password', user.user.password);
+    formData.append('TipoUsuario', user.user.tipoUsuario);
+    formData.append('Nombre', user.perfil.nombre);
+    formData.append('Foto', imagen);
+    return this.http.post<UsuarioAplicacionJava>(`${this.urlBackend}RegistroUsuario`, formData);
   }
 
 }

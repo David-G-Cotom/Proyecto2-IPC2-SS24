@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { User } from '../../../models/user';
 import { AuthService } from '../../../services/auth.service';
 import { RoutingService } from '../../../services/routing.service';
+import { UsuarioAplicacionJava } from '../../../models/usuarioAplicacionJava';
 
 @Component({
   selector: 'app-inicio-sesion',
@@ -35,17 +36,22 @@ export class InicioSesionComponent {
 
       console.log("UserName enviado: " + this.user.userName + ", Password enviado: " + this.user.password);
 
-      this.authService.validarInicioSesion(this.user).subscribe((existeUsuario: User) => {
-        if (existeUsuario) {
-          this.authService.setLocalStorageItem(existeUsuario);
-          this.routingService.redireccionarUsuario();
-        } else {
-          this.errorDatos = true;
-          this.formulario.reset();
+      this.authService.validarInicioSesion(this.user).subscribe({
+        next: (existeUsuario: UsuarioAplicacionJava) =>{
+          if (existeUsuario) {
+            console.log("DENTRO DE EXISTE USUARIO");
+            this.authService.setLocalStorageItem(existeUsuario);
+            this.routingService.redireccionarUsuario();
+          } else {
+            console.log("DENTRO DE EXISTE USUARIO NO");
+            this.errorDatos = true;
+            this.formulario.reset();
+          }
+        }, error: (error: any) => {
+          this.routingService.enviarPagina("page-not-found")
+          console.log("HUBO ERROR");
+          console.log(error);
         }
-      }, error => {
-        this.routingService.enviarPagina("page-not-found")
-        console.log(error);
       });
     }
   }
