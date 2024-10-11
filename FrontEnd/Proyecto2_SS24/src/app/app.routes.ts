@@ -7,6 +7,7 @@ import { HomePageEditorComponent } from './components/editor/home-page-editor/ho
 import { HomePageSuscriptorComponent } from './components/suscriptor/home-page-suscriptor/home-page-suscriptor.component';
 import { HomePageAnuncianteComponent } from './components/anunciante/home-page-anunciante/home-page-anunciante.component';
 import { HomePageAdminComponent } from './components/administrador/home-page-admin/home-page-admin.component';
+import { PerfilUsuarioComponent } from './components/forms/perfil-usuario/perfil-usuario.component';
 
 export const routes: Routes = [
   {
@@ -28,19 +29,43 @@ export const routes: Routes = [
   },
   {
     path: 'editor/home-page',
-    component: HomePageEditorComponent
+    component: HomePageEditorComponent,
+    children: [
+      {
+        path: 'perfil',
+        component: PerfilUsuarioComponent
+      }
+    ]
   },
   {
     path: 'suscriptor/home-page',
-    component: HomePageSuscriptorComponent
+    component: HomePageSuscriptorComponent,
+    children: [
+      {
+        path: 'perfil',
+        component: PerfilUsuarioComponent
+      }
+    ]
   },
   {
     path: 'anunciante/home-page',
-    component: HomePageAnuncianteComponent
+    component: HomePageAnuncianteComponent,
+    children: [
+      {
+        path: 'perfil',
+        component: PerfilUsuarioComponent
+      }
+    ]
   },
   {
     path: 'administrador/home-page',
-    component: HomePageAdminComponent
+    component: HomePageAdminComponent,
+    children: [
+      {
+        path: 'perfil',
+        component: PerfilUsuarioComponent
+      }
+    ]
   },
   {
     path: '**',

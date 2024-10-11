@@ -18,6 +18,7 @@ public class JakartaRestConfiguration extends Application {
         // Registra tus recursos y filtros aquí
         resources.add(com.mycompany.proyecto2_ss24.resources.RegistroUsuarioResource.class);
         resources.add(com.mycompany.proyecto2_ss24.resources.InicioSesionResource.class);
+        resources.add(com.mycompany.proyecto2_ss24.resources.PerfilUsuarioResource.class);
         return resources;
     }
     

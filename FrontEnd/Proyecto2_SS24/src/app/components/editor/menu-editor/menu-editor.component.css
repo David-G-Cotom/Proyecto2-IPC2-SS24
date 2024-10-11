@@ -28,6 +28,7 @@
     display: block;
     padding: 10px;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 .sidebar ul li a:hover {

@@ -21,7 +21,7 @@ export class RegistroUsuarioComponent {
   foto: File | null = null;
   errorDatos: boolean = false;
 
-  constructor(private authService:AuthService, private routingService: RoutingService) {
+  constructor(private authService: AuthService, private routingService: RoutingService) {
     this.formulario = new FormGroup({
       userName: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required),
@@ -31,14 +31,14 @@ export class RegistroUsuarioComponent {
     });
   }
 
-  obtenerImagen(event: Event) {
+  public obtenerImagen(event: Event) {
     const file = (event.target as HTMLInputElement).files;
     if (file != null) {
       this.foto = file.item(0);
     }
   }
 
-  registrar() {
+  public registrar() {
     if (this.formulario.valid) {
       const userNameControl: FormControl = this.formulario.get('userName') as FormControl;
       const passwordControl: FormControl = this.formulario.get('password') as FormControl;
