@@ -4,8 +4,9 @@
  */
 package com.mycompany.proyecto2_ss24.resources;
 
+import com.mycompany.proyecto2_ss24.backend.controllers.RegistroRevistaController;
 import com.mycompany.proyecto2_ss24.backend.data.RevistaDB;
-import com.mycompany.proyecto2_ss24.backend.model.Revista;
+import com.mycompany.proyecto2_ss24.backend.model.RevistaTS;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
@@ -24,18 +25,22 @@ public class RevistaResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response crearRegistro(Revista revista) {
-        RevistaDB dataRevista = new RevistaDB();
-        if (dataRevista.crearRevista(revista, 0)) {
-            return Response.ok(revista).build();
+    public Response crearRegistro(RevistaTS revista) {
+        System.out.println(revista.toString());
+        RegistroRevistaController controlRegistro = new RegistroRevistaController(revista);
+        String mensajeErrorDatos = controlRegistro.verificarDatosRevista();
+        if (!mensajeErrorDatos.equals("")) {
+            String JSONResponse = "{\"mensaje\":\"" + mensajeErrorDatos +"\"}";
+            return Response.ok(JSONResponse).build();
         }
-        return Response.status(Response.Status.UNAUTHORIZED).build();
+        String JSONResponse = controlRegistro.crearRevista();
+        return Response.ok(JSONResponse).build();
     }
     
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updatePerfil(Revista revista) {
+    public Response updatePerfil(RevistaTS revista) {
         RevistaDB dataRevista = new RevistaDB();
         if (dataRevista.actualizarRevista(revista)) {
             return Response.ok(revista).build();

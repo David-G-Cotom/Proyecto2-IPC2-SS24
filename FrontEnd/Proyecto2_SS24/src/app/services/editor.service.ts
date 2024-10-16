@@ -12,8 +12,8 @@ export class EditorService {
 
   constructor(private http: HttpClient) { }
 
-  public registrarRecarga(recarga: Recarga): Observable<Recarga> {
-    return this.http.post<Recarga>(`${this.urlBackend}RegistroRecarga`, recarga);
+  public registrarRecarga(recarga: Recarga): Observable<any> {
+    return this.http.post<any>(`${this.urlBackend}RegistroRecarga`, recarga);
   }
 
 }

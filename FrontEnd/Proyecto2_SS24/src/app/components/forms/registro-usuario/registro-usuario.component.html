@@ -28,9 +28,9 @@
                 <input type="file" accept="image/*" name="imageFile" id="imageFile" formControlName="archivoFoto" (change)="obtenerImagen($event)">                        
             </div>
             <button type="submit" [disabled]="formulario.invalid">Registrar</button>
+            <div *ngIf="errorDatos"><span style="color: red;">{{ mensajeErro }}</span></div>
         </form>
     </div>
-    <div *ngIf="errorDatos"><span style="color: red;">DEBE COMPLETAR TODOS LOS DATOS</span></div>
 </div>
 <pre>{{ formulario.value | json }}</pre>
 <pre>{{ formulario.valid | json }}</pre>

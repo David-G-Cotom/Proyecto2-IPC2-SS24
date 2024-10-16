@@ -1,17 +1,20 @@
 <div class="body-component">
     <div class="form-container">
         <h1>Recarga de Credito</h1>
-        <form>
+        <form [formGroup]="formulario" (ngSubmit)="registrarRecarga()">
             <input type="hidden" name="idUsuario">
             <div class="input-group">
                 <label for="cantidad">Cantidad a Recargar:</label>
-                <input type="text" id="cantidad" name="cantidad"/>
+                <input type="text" id="cantidad" name="cantidad" formControlName="cantidad">
             </div>
             <div class="input-group">
                 <label for="fecha">Fecha de Recarga</label>
-                <input type="date" id="fecha" name="fecha"/>
+                <input type="date" id="fecha" name="fecha" formControlName="fecha">
             </div>                
             <button type="submit">Recargar</button>
         </form>
+        <div *ngIf="errorDatos"><span style="color: red;">{{ mensajeErro }}</span></div>
+        <pre>{{ formulario.value | json }}</pre>
+        <pre>{{ formulario.valid | json }}</pre>
     </div>
 </div>

@@ -41,7 +41,7 @@ export class FormEdicionRevistaComponent {
     const puedeRecibirSuscripciones: boolean = (puedeRecibirSuscripcionesControl.value === 'SI' ? true : false);
     
     let revista = new Revista(puedeRecibirComentarios, puedeRecibirLikes, puedeRecibirSuscripciones, descripcionControl.value,
-      categoriaControl.value, etiqutasControl.value, 0, 0, [''], 0, Date.prototype, [''], nombreControl.value, 0, 0)
+      categoriaControl.value, etiqutasControl.value, 0, 0, [''], 0, '', [''], nombreControl.value, 0, 0)
 
     this.revistaServices.actualizarRevista(revista).subscribe({
       next: (nuevaRevista: Revista) => {

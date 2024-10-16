@@ -8,6 +8,7 @@ import com.mycompany.proyecto2_ss24.backend.model.CategoriaEnum;
 import com.mycompany.proyecto2_ss24.backend.model.EtiquetaEnum;
 import com.mycompany.proyecto2_ss24.backend.model.Publicacion;
 import com.mycompany.proyecto2_ss24.backend.model.Revista;
+import com.mycompany.proyecto2_ss24.backend.model.RevistaTS;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,29 +33,26 @@ public class RevistaDB {
         }
     }
 
-    public boolean crearRevista(Revista revista, int idUsuario) {
-        String query = "INSERT INTO revista (editor, descripcion, likes, costo, fecha_creacion, nombre, estado_comentarios, estado_likes, estado_suscripcion, categoria, archivo_pdf, costo_global) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public void crearRevista(Revista revista, int idUsuario) {
+        String query = "INSERT INTO revista (editor, descripcion, likes, costo, fecha_creacion, nombre, estado_comentarios, estado_likes, estado_suscripcion, categoria, costo_global) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
             int idAutor = this.getIdEditor(idUsuario);
             prepared.setInt(1, idAutor);
             prepared.setString(2, revista.getDescripcion());
             prepared.setInt(3, 0);
             prepared.setDouble(4, 0);
-            prepared.setString(5, revista.getFechaCreacion().toString());
+            prepared.setString(5, revista.getFechaCreacion());
             prepared.setString(6, revista.getNombreRevista());
             prepared.setBoolean(7, revista.isPuedeComentarse());
             prepared.setBoolean(8, revista.isPuedeTenerLikes());
             prepared.setBoolean(9, revista.isPuedeSuscribirse());
             int idCategoria = this.getIdCategoria(revista.getCategoria());
             prepared.setInt(10, idCategoria);
-            prepared.setBlob(11, revista.getArchivoPDF());
-            prepared.setDouble(12, 0);
+            prepared.setDouble(11, 0);
             prepared.executeUpdate();
             System.out.println("Revista Creada!!!");
-            return true;
         } catch (SQLException e) {
             System.out.println("Error en crear una Revista: " + e);
-            return false;
         }
     }
 
@@ -299,7 +297,7 @@ public class RevistaDB {
         
     }
     
-    public boolean actualizarRevista(Revista revista) {
+    public boolean actualizarRevista(RevistaTS revista) {
         
         return false;
         

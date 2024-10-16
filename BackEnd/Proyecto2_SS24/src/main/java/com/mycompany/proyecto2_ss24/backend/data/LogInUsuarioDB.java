@@ -4,7 +4,7 @@
  */
 package com.mycompany.proyecto2_ss24.backend.data;
 
-import com.mycompany.proyecto2_ss24.backend.mode.users.UsuarioAplicacion;
+import com.mycompany.proyecto2_ss24.backend.model.users.UsuarioAplicacion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -73,13 +73,17 @@ public class LogInUsuarioDB {
     }
     
     public void crearUsuario(UsuarioAplicacion usuario) {
-        String query = "INSERT INTO usuario (foto, tipo_usuario, user_name, user_password, nombre) VALUES (?, ?, ?, ?, ?)";        
+        String query = "INSERT INTO usuario (foto, tipo_usuario, user_name, user_password, nombre, hobbie, temas_interes, descripcion, gustos) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";        
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
             prepared.setString(1, usuario.getFoto());
             prepared.setInt(2, usuario.getIdTipoUsuario());
             prepared.setString(3, usuario.getUserName());
             prepared.setString(4, usuario.getPassword());
             prepared.setString(5, usuario.getNombre());
+            prepared.setString(6, "");
+            prepared.setString(7, "");
+            prepared.setString(8, "");
+            prepared.setString(9, "");
             prepared.executeUpdate();
             System.out.println("Nuevo Usuario Creado");
         } catch (SQLException e) {
@@ -91,18 +95,14 @@ public class LogInUsuarioDB {
     private void crearTipoUsuario(UsuarioAplicacion usuario) {
         int idUsuario = this.getIdUsuario(usuario);
         switch (usuario.getIdTipoUsuario()) {
-            case 1://editor
+            case 1 -> //editor
                 this.crearEditor(idUsuario);
-                break;
-            case 2://suscriptor
+            case 2 -> //suscriptor
                 this.crearSuscriptor(idUsuario);
-                break;
-            case 3://inverssionista
+            case 3 -> //inverssionista
                 this.crearInversionista(idUsuario);
-                break;
-            case 4://administrador
+            case 4 -> //administrador
                 this.crearSisAdmin(idUsuario);
-                break;            
         }
     }
     
@@ -126,9 +126,10 @@ public class LogInUsuarioDB {
     }
     
     private void crearEditor(int idUsuario) {
-        String query = "INSERT INTO editor (usuario) VALUES (?)";
+        String query = "INSERT INTO editor (usuario, credito) VALUES (?, ?)";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
             prepared.setInt(1, idUsuario);
+            prepared.setDouble(2, 0);
             prepared.executeUpdate();
             System.out.println("Nuevo Editor Creado!!!");
         } catch (SQLException e) {

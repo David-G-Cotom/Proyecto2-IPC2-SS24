@@ -13,8 +13,8 @@ export class RevistaService {
 
   constructor(private http: HttpClient) { }
 
-  public registrarRevista(revista: Revista): Observable<Revista> {
-    return this.http.post<Revista>(`${this.urlBackend}RegistroRevista`, revista);
+  public registrarRevista(revista: Revista): Observable<any> {
+    return this.http.post<any>(`${this.urlBackend}RegistroRevista`, revista);
   }
 
   public registrarPublicacion(publicacion: Publicacion): Observable<Publicacion> {

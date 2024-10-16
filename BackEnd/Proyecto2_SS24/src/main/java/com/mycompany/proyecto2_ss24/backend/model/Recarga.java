@@ -4,39 +4,57 @@
  */
 package com.mycompany.proyecto2_ss24.backend.model;
 
-import java.time.LocalDate;
-
 /**
  *
  * @author Carlos Cotom
  */
 public class Recarga {
     
-    private double cantidadPaog;
-    private LocalDate fechaPago;
+    private String cantidad;
+    private String fechaRecarga;
+    private int idUsuario;
+    private int idTipoUsuario;
 
     public Recarga() {
     }
 
-    public Recarga(double cantidadPaog, LocalDate fechaPago) {
-        this.cantidadPaog = cantidadPaog;
-        this.fechaPago = fechaPago;
+    public Recarga(String cantidadPaog, String fechaPago, int idUsuario, int idTipoUsuario) {
+        this.cantidad = cantidadPaog;
+        this.fechaRecarga = fechaPago;
+        this.idUsuario = idUsuario;
+        this.idTipoUsuario = idTipoUsuario;
     }
 
-    public double getCantidadPaog() {
-        return cantidadPaog;
+    public String getCantidad() {
+        return cantidad;
     }
 
-    public void setCantidadPaog(double cantidadPaog) {
-        this.cantidadPaog = cantidadPaog;
+    public void setCantidad(String cantidad) {
+        this.cantidad = cantidad;
     }
 
-    public LocalDate getFechaPago() {
-        return fechaPago;
+    public String getFechaRecarga() {
+        return fechaRecarga;
     }
 
-    public void setFechaPago(LocalDate fechaPago) {
-        this.fechaPago = fechaPago;
+    public void setFechaRecarga(String fechaRecarga) {
+        this.fechaRecarga = fechaRecarga;
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public int getIdTipoUsuario() {
+        return idTipoUsuario;
+    }
+
+    public void setIdTipoUsuario(int idTipoUsuario) {
+        this.idTipoUsuario = idTipoUsuario;
     }
     
 }

@@ -6,7 +6,6 @@ import { User } from '../../../models/user';
 import { Perfil } from '../../../models/perfil';
 import { AuthService } from '../../../services/auth.service';
 import { RoutingService } from '../../../services/routing.service';
-import { UsuarioAplicacionJava } from '../../../models/usuarioAplicacionJava';
 
 @Component({
   selector: 'app-registro-usuario',
@@ -20,6 +19,7 @@ export class RegistroUsuarioComponent {
   formulario: FormGroup;
   foto: File | null = null;
   errorDatos: boolean = false;
+  mensajeErro: string = '';
 
   constructor(private authService: AuthService, private routingService: RoutingService) {
     this.formulario = new FormGroup({
@@ -47,15 +47,15 @@ export class RegistroUsuarioComponent {
       if (this.foto != null) {
         let userAplication = new UsuarioAplicacion(new User(userNameControl.value, passwordControl.value, tipoUsuarioControl.value), new Perfil("", nombreControl.value));
         this.authService.registrarUsuario(userAplication, this.foto).subscribe({
-          next: (nuevoUsuario: UsuarioAplicacionJava) => {
-            if (nuevoUsuario) {
-              console.log('DENTRO DE NUEVO USUARIO? SI');
-              this.authService.setLocalStorageItem(nuevoUsuario);
+          next: (nuevoUsuario: any) => {
+            console.log(nuevoUsuario);
+            if (nuevoUsuario.mensaje === 'nuevo') {
+              this.authService.setLocalStorageItem(nuevoUsuario.usuario);
+              this.authService.setSessionStorage(nuevoUsuario.token);
               this.routingService.redireccionarUsuario();
             } else {
-              console.log('DENTRO DE NUEVO USUARIO? NO');
               this.errorDatos = true;
-              this.formulario.reset();
+              this.mensajeErro = nuevoUsuario.mensaje;
             }
           }, error: (error: any) => {
             this.routingService.enviarPagina('page-not-found');
@@ -64,6 +64,8 @@ export class RegistroUsuarioComponent {
           }
         });
       }
+    } else {
+      alert("Debe Completar TODOS los campos");
     }
   }
 

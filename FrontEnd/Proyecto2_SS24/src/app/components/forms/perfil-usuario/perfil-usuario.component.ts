@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { UsuarioAplicacionJava } from '../../../models/usuarioAplicacionJava';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JsonPipe } from '@angular/common';
 import { ProfileService } from '../../../services/profile.service';
 import { RoutingService } from '../../../services/routing.service';
@@ -17,16 +17,20 @@ export class PerfilUsuarioComponent {
   usuarioAnterior: UsuarioAplicacionJava;
   usuarioActualizado: UsuarioAplicacionJava | null = null;
   formulario: FormGroup;
+  passDecode: string;
 
   constructor (private perfileService: ProfileService, private routingService: RoutingService) {
     this.usuarioAnterior = JSON.parse(`${localStorage.getItem('Usuario-Actual')}`);
+    this.passDecode = atob(this.usuarioAnterior.password);
     this.formulario = new FormGroup({
       archivoFoto: new FormControl(this.usuarioAnterior.foto),
       nombre: new FormControl(this.usuarioAnterior.nombre),
       hobbies: new FormControl(this.usuarioAnterior.hobbies),
       temasInteres: new FormControl(this.usuarioAnterior.temasInteres),
       descripcion: new FormControl(this.usuarioAnterior.descripcion),
-      gustos: new FormControl(this.usuarioAnterior.gustos)
+      gustos: new FormControl(this.usuarioAnterior.gustos),
+      userName: new FormControl(this.usuarioAnterior.userName),
+      password: new FormControl(this.passDecode)
     });
   }
 
@@ -37,11 +41,15 @@ export class PerfilUsuarioComponent {
     const temasInteresControl: FormControl = this.formulario.get('temasInteres') as FormControl;
     const descripcionControl: FormControl = this.formulario.get('descripcion') as FormControl;
     const gustosControl: FormControl = this.formulario.get('gustos') as FormControl;
+    const userNameControl: FormControl = this.formulario.get('userName') as FormControl;
+    const passwordControl: FormControl = this.formulario.get('password') as FormControl;
     
     this.usuarioActualizado = new UsuarioAplicacionJava('', hobbiesControl.value, temasInteresControl.value,
       descripcionControl.value, gustosControl.value, this.usuarioAnterior.userName, this.usuarioAnterior.password,
       this.usuarioAnterior.idTipoUsuario, nombreControl.value, this.usuarioAnterior.idUsuario
     );
+    this.usuarioActualizado.userName = userNameControl.value;
+    this.usuarioActualizado.password = passwordControl.value;
 
     this.perfileService.actualizarPerfil(this.usuarioActualizado).subscribe({
       next: (nuevoUsuario: UsuarioAplicacionJava) => {

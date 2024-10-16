@@ -4,8 +4,9 @@
  */
 package com.mycompany.proyecto2_ss24.resources;
 
+import com.mycompany.proyecto2_ss24.backend.utils.TokenService;
 import com.mycompany.proyecto2_ss24.backend.data.LogInUsuarioDB;
-import com.mycompany.proyecto2_ss24.backend.mode.users.UsuarioAplicacion;
+import com.mycompany.proyecto2_ss24.backend.model.users.UsuarioAplicacion;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
@@ -25,7 +26,6 @@ public class InicioSesionResource {
     @Path("{user}/{pas}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getSesion(@PathParam("user") String userName, @PathParam("pas") String password) {
-        System.out.println(userName + password);
         if (userName.equals("") && password.equals("")) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
@@ -37,7 +37,10 @@ public class InicioSesionResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         System.out.println("USUARIO ENCONTRADO");
-        return Response.ok(usuario).build();
+        TokenService tokenService = new TokenService();
+        String token = tokenService.generarToken(usuario);
+        String JSONRespones = "{\"token\":\"" + token + "\", \"usuario\":" + usuario.toJSON() + "}";
+        return Response.ok(JSONRespones).build();
     }
 
 }

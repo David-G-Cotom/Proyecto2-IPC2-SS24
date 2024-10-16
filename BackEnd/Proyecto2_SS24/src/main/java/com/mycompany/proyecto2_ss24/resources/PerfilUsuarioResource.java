@@ -5,13 +5,14 @@
 package com.mycompany.proyecto2_ss24.resources;
 
 import com.mycompany.proyecto2_ss24.backend.data.PerfilDB;
-import com.mycompany.proyecto2_ss24.backend.mode.users.UsuarioAplicacion;
+import com.mycompany.proyecto2_ss24.backend.model.users.UsuarioAplicacion;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.util.Base64;
 
 /**
  *
@@ -24,6 +25,8 @@ public class PerfilUsuarioResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updatePerfil(UsuarioAplicacion usuario) {
+        String codificado = Base64.getEncoder().encodeToString(usuario.getPassword().getBytes());
+        usuario.setPassword(codificado);
         PerfilDB dataPerfil = new PerfilDB();
         if (dataPerfil.actualizarPerfil(usuario)) {
             return Response.ok(usuario).build();

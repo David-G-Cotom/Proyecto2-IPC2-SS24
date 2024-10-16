@@ -4,7 +4,7 @@
  */
 package com.mycompany.proyecto2_ss24.backend.data;
 
-import com.mycompany.proyecto2_ss24.backend.mode.users.UsuarioAplicacion;
+import com.mycompany.proyecto2_ss24.backend.model.users.UsuarioAplicacion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -70,7 +70,7 @@ public class PerfilDB {
     }
     
     public boolean actualizarPerfil(UsuarioAplicacion nuevoUsuario) {
-        String query = "UPDATE usuario SET foto = ?, hobbie = ?, temas_interes = ?, descripcion = ?, gustos = ?, nombre = ? WHERE id_usuario = ?";
+        String query = "UPDATE usuario SET foto = ?, hobbie = ?, temas_interes = ?, descripcion = ?, gustos = ?, nombre = ?, user_name = ?, user_password = ? WHERE id_usuario = ?";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
             prepared.setString(1, nuevoUsuario.getFoto());
             prepared.setString(2, nuevoUsuario.getHobbies());
@@ -78,7 +78,9 @@ public class PerfilDB {
             prepared.setString(4, nuevoUsuario.getDescripcion());
             prepared.setString(5, nuevoUsuario.getGustos());
             prepared.setString(6, nuevoUsuario.getNombre());
-            prepared.setInt(7, nuevoUsuario.getIdUsuario());
+            prepared.setString(7, nuevoUsuario.getUserName());
+            prepared.setString(8, nuevoUsuario.getPassword());
+            prepared.setInt(9, nuevoUsuario.getIdUsuario());
             prepared.executeUpdate();
             System.out.println("Perfil del Usuario Actualizado!!!");
             return true;

@@ -34,13 +34,12 @@ export class InicioSesionComponent {
       const passwordControl: FormControl = this.formulario.get('password') as FormControl;
       this.user.password = passwordControl.value;
 
-      console.log("UserName enviado: " + this.user.userName + ", Password enviado: " + this.user.password);
-
       this.authService.validarInicioSesion(this.user).subscribe({
-        next: (existeUsuario: UsuarioAplicacionJava) =>{
+        next: (existeUsuario: any) =>{
           if (existeUsuario) {
             console.log("DENTRO DE EXISTE USUARIO");
-            this.authService.setLocalStorageItem(existeUsuario);
+            this.authService.setLocalStorageItem(existeUsuario.usuario);
+            this.authService.setSessionStorage(existeUsuario.token);
             this.routingService.redireccionarUsuario();
           } else {
             console.log("DENTRO DE EXISTE USUARIO NO");
@@ -53,6 +52,8 @@ export class InicioSesionComponent {
           console.log(error);
         }
       });
+    } else {
+      alert("Debe Completar TODOS los campos");
     }
   }
 

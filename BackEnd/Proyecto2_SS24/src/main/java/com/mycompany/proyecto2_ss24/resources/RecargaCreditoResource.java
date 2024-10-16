@@ -4,7 +4,7 @@
  */
 package com.mycompany.proyecto2_ss24.resources;
 
-import com.mycompany.proyecto2_ss24.backend.data.CarteraDB;
+import com.mycompany.proyecto2_ss24.backend.controllers.RecargaCreditoController;
 import com.mycompany.proyecto2_ss24.backend.model.Recarga;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
@@ -24,11 +24,14 @@ public class RecargaCreditoResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response crearRegistro(Recarga recarga) {
-        CarteraDB dataRecarga = new CarteraDB();
-        if (dataRecarga.crearApago(recarga)) {
-            return Response.ok(recarga).build();
+        RecargaCreditoController controlRecarga = new RecargaCreditoController(recarga);
+        String mensajeErrorDatos = controlRecarga.verificarDatosRecarga();
+        if (!mensajeErrorDatos.equals("")) {
+            String JSONResponse = "{\"mensaje\":\"" + mensajeErrorDatos +"\"}";
+            return Response.ok(JSONResponse).build();
         }
-        return Response.status(Response.Status.UNAUTHORIZED).build();
+        String JSONResponse = controlRecarga.crearRegistro();
+        return Response.ok(JSONResponse).build();
     }
     
 }

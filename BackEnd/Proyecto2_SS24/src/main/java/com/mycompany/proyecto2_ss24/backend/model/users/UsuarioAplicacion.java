@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.proyecto2_ss24.backend.mode.users;
+package com.mycompany.proyecto2_ss24.backend.model.users;
 
 
 /**
@@ -123,6 +123,26 @@ public class UsuarioAplicacion {
 
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
+    }
+    
+    public String toJSON() {
+        return "{"
+                + "\"foto\":\"\","
+                + "\"hobbies\":\"" + hobbies + "\","
+                + "\"temasInteres\":\"" + temasInteres + "\","
+                + "\"descripcion\":\"" + descripcion + "\","
+                + "\"gustos\":\"" + gustos + "\","
+                + "\"userName\":\"" + userName + "\","
+                + "\"password\":\"" + password + "\","
+                + "\"idTipoUsuario\":" + idTipoUsuario + ","
+                + "\"nombre\":\"" + nombre + "\","
+                + "\"idUsuario\":" + idUsuario +
+                "}";
+    }
+
+    @Override
+    public String toString() {
+        return "UsuarioAplicacion{" + "foto=" + foto + ", hobbies=" + hobbies + ", temasInteres=" + temasInteres + ", descripcion=" + descripcion + ", gustos=" + gustos + ", userName=" + userName + ", password=" + password + ", idTipoUsuario=" + idTipoUsuario + ", nombre=" + nombre + ", idUsuario=" + idUsuario + '}';
     }
 
 }

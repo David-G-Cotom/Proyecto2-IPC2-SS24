@@ -4,59 +4,49 @@
  */
 package com.mycompany.proyecto2_ss24.backend.model;
 
-import com.mycompany.proyecto2_ss24.backend.model.users.Editor;
-import java.io.InputStream;
-import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
  * @author Carlos Cotom
  */
-public class Revista {
+public class RevistaTS {
     
     private boolean puedeComentarse;
     private boolean puedeTenerLikes;
     private boolean puedeSuscribirse;
     private String descripcion;
-    private CategoriaEnum categoria;
-    private ArrayList<EtiquetaEnum> etiquetas;
-    private Editor autor;
+    private String categoria;
+    private String[] etiquetas;
+    private int idUsuario;
     private int likes;
-    private ArrayList<Comentario> comentarios;
+    private String[] comentarios;
     private double costo;
     private String fechaCreacion;
-    private ArrayList<Suscripcion> suscripciones;
-    private String nombreRevista;
+    private String[] suscripciones;
+    private String nombre;
     private int idRevista;
     private double costoGlobal;
 
-    public Revista() {
+    public RevistaTS() {
     }
-    
-    public Revista(boolean puedeComentarse, boolean puedeTenerLikes, boolean puedeSuscribirse, String descripcion, CategoriaEnum categoria, ArrayList<EtiquetaEnum> etiquetas, Editor autor, int likes, ArrayList<Comentario> comentarios, double costo, String fechaCreacion, ArrayList<Suscripcion> suscripciones, String nombreRevista, InputStream archivoPDF, byte[] bytesArchivo) {
+
+    public RevistaTS(boolean puedeComentarse, boolean puedeTenerLikes, boolean puedeSuscribirse, String descripcion, String categoria, String[] etiquetas, int idUsuario, int likes, String[] comentarios, double costo, String fechaCreacion, String[] suscripciones, String nombre, int idRevista, double costoGlobal) {
         this.puedeComentarse = puedeComentarse;
         this.puedeTenerLikes = puedeTenerLikes;
         this.puedeSuscribirse = puedeSuscribirse;
         this.descripcion = descripcion;
         this.categoria = categoria;
         this.etiquetas = etiquetas;
-        this.autor = autor;
+        this.idUsuario = idUsuario;
         this.likes = likes;
         this.comentarios = comentarios;
         this.costo = costo;
         this.fechaCreacion = fechaCreacion;
         this.suscripciones = suscripciones;
-        this.nombreRevista = nombreRevista;
-    }
-
-    public Revista(String descripcion, CategoriaEnum categoria, ArrayList<EtiquetaEnum> etiquetas, int likes, String nombreRevista, int idRevista) {
-        this.descripcion = descripcion;
-        this.categoria = categoria;
-        this.etiquetas = etiquetas;
-        this.likes = likes;
-        this.nombreRevista = nombreRevista;
+        this.nombre = nombre;
         this.idRevista = idRevista;
+        this.costoGlobal = costoGlobal;
     }
 
     public boolean isPuedeComentarse() {
@@ -91,28 +81,28 @@ public class Revista {
         this.descripcion = descripcion;
     }
 
-    public CategoriaEnum getCategoria() {
+    public String getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(CategoriaEnum categoria) {
+    public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
 
-    public ArrayList<EtiquetaEnum> getEtiquetas() {
+    public String[] getEtiquetas() {
         return etiquetas;
     }
 
-    public void setEtiquetas(ArrayList<EtiquetaEnum> etiquetas) {
+    public void setEtiquetas(String[] etiquetas) {
         this.etiquetas = etiquetas;
     }
 
-    public Editor getAutor() {
-        return autor;
+    public int getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setAutor(Editor autor) {
-        this.autor = autor;
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public int getLikes() {
@@ -123,11 +113,11 @@ public class Revista {
         this.likes = likes;
     }
 
-    public ArrayList<Comentario> getComentarios() {
+    public String[] getComentarios() {
         return comentarios;
     }
 
-    public void setComentarios(ArrayList<Comentario> comentarios) {
+    public void setComentarios(String[] comentarios) {
         this.comentarios = comentarios;
     }
 
@@ -147,20 +137,20 @@ public class Revista {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public ArrayList<Suscripcion> getSuscripciones() {
+    public String[] getSuscripciones() {
         return suscripciones;
     }
 
-    public void setSuscripciones(ArrayList<Suscripcion> suscripciones) {
+    public void setSuscripciones(String[] suscripciones) {
         this.suscripciones = suscripciones;
     }
 
-    public String getNombreRevista() {
-        return nombreRevista;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreRevista(String nombreRevista) {
-        this.nombreRevista = nombreRevista;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public int getIdRevista() {
@@ -181,15 +171,13 @@ public class Revista {
 
     @Override
     public String toString() {
-        return "Revista{ "
-                + "<br>puedeComentarse = " + puedeComentarse
-                + "<br>puedeTenerLikes = " + puedeTenerLikes
-                + "<br>puedeSuscribirse = " + puedeSuscribirse
-                + "<br>descripcion = " + descripcion
-                + "<br>categoria = " + categoria
-                + "<br>etiquetas = " + etiquetas
-                + "<br>fechaCreacion = " + fechaCreacion
-                + "<br>nombreRevista = " + nombreRevista + '}';
+        return "RevistaTS{" + "puedeComentarse = " + puedeComentarse + ", puedeTenerLikes = " + puedeTenerLikes
+                + ", puedeSuscribirse = " + puedeSuscribirse + ", descripcion = " + descripcion
+                + ", categoria = " + categoria + ", etiquetas = " + Arrays.toString(etiquetas)
+                + ", idEditor = " + idUsuario + ", likes = " + likes + ", comentarios = " + Arrays.toString(comentarios)
+                + ", costo = " + costo + ", fechaCreacion = " + fechaCreacion
+                + ", suscripciones = " + Arrays.toString(suscripciones) + ", nombre = " + nombre
+                + ", idRevista = " + idRevista + ", costoGlobal = " + costoGlobal + '}';
     }
     
 }
