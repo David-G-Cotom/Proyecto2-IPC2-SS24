@@ -92,13 +92,17 @@ public class RevistaDB {
         return idAutor;
     }
 
-    public boolean editarRevista(int idRevista, boolean comentarios, boolean likes, boolean suscripciones) {
-        String query = "UPDATE revista SET estado_comentarios = ?, estado_likes = ?, estado_suscripcion = ? WHERE id_revista = ?";
+    public boolean editarRevista(RevistaTS revista) {
+        String query = "UPDATE revista SET descripcion = ?, nombre = ?, estado_comentarios = ?, estado_likes = ?, estado_suscripcion = ?, categoria = ? WHERE id_revista = ?";
+        int idCategoriaNueva = this.getIdCategoria(CategoriaEnum.valueOf(revista.getCategoria()));
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
-            prepared.setBoolean(1, comentarios);
-            prepared.setBoolean(2, likes);
-            prepared.setBoolean(3, suscripciones);
-            prepared.setInt(4, idRevista);
+            prepared.setString(1, revista.getDescripcion());
+            prepared.setString(2, revista.getNombre());
+            prepared.setBoolean(3, revista.isPuedeComentarse());
+            prepared.setBoolean(4, revista.isPuedeTenerLikes());
+            prepared.setBoolean(5, revista.isPuedeSuscribirse());
+            prepared.setInt(6, idCategoriaNueva);
+            prepared.setInt(7, revista.getIdRevista());
             prepared.executeUpdate();
             System.out.println("Estados de la Revista Actualizada!!!");
             return true;
@@ -292,12 +296,6 @@ public class RevistaDB {
     }
     
     public boolean crearPublicacion(Publicacion publicacion) {
-        
-        return false;
-        
-    }
-    
-    public boolean actualizarRevista(RevistaTS revista) {
         
         return false;
         

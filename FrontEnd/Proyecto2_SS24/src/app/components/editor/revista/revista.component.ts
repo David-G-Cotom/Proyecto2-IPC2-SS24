@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Revista } from '../../../models/revista';
 
 @Component({
   selector: 'app-revista',
@@ -9,5 +10,8 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
   styleUrl: './revista.component.css'
 })
 export class RevistaComponent {
+
+  @Input({required: true})
+  revista!: Revista;
 
 }

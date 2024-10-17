@@ -1,12 +1,12 @@
 <div>
-    <h2>Nombre de Revista:</h2>
-    <p>Descripcion de Revista:</p>
-    <p>Categoria:</p>
-    <p>Etiquetas:</p>
-    <p>Likes:</p>
-    <p>Puede tener Comentarios:</p>
-    <p>Puede tener Likes:</p>
-    <p>Puede tener Suscripciones:</p>
-    <a routerLink="editar-revista" routerLinkActive="active">Editar</a>
-    <a routerLink="nueva-publicacion" routerLinkActive="active">Crear Publicacion</a>
+    <h2>Nombre de Revista: {{revista.nombre}}</h2>
+    <p>Descripcion de Revista: {{revista.descripcion}}</p>
+    <p>Categoria: {{revista.categoria}}</p>
+    <p>Etiquetas: {{revista.etiquetas}}</p>
+    <p>Likes: {{revista.likes}}</p>
+    <p>Puede tener Comentarios: {{revista.puedeComentarse}}</p>
+    <p>Puede tener Likes: {{revista.puedeTenerLikes}}</p>
+    <p>Puede tener Suscripciones: {{revista.puedeSuscribirse}}</p>
+    <a routerLink="/editor/home-page/editar-revista/{{revista.idRevista}}" routerLinkActive="active">Editar</a>
+    <a routerLink="/editor/home-page/nueva-publicacion/{{revista.idRevista}}" routerLinkActive="active">Crear Publicacion</a>
 </div>

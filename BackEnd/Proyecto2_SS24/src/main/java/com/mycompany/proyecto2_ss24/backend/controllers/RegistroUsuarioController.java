@@ -81,6 +81,7 @@ public class RegistroUsuarioController {
     
     public String crearUsuario(UsuarioAplicacion nuevoUsuario) {
         dataUsuario.crearUsuario(nuevoUsuario);
+        nuevoUsuario.setIdUsuario(dataUsuario.getIdUsuario(nuevoUsuario));
         System.out.println("CREANDO EL NUEVO USUARIO");
         TokenService tokenService = new TokenService();
         String token = tokenService.generarToken(nuevoUsuario);

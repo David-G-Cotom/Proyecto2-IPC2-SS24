@@ -37,4 +37,8 @@ export class RoutingService {
     }
   }
 
+  public redireccionarRuta(path: string): void {
+    this.redireccionar.navigate([path]);
+  }
+
 }

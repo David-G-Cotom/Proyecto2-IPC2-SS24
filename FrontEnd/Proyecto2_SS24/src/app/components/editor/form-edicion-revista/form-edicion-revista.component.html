@@ -9,7 +9,7 @@
             </div>
             <div class="input-group">
                 <label for="descripcionRevista">Descripcion de la Revista:</label>
-                <textarea id="descripcionRevista" name="descripcionRevista" formControlName=""descripcion></textarea>
+                <textarea id="descripcionRevista" name="descripcionRevista" formControlName="descripcion"></textarea>
             </div>
             <div class="input-group">
                 <label for="categoria">Categoria:</label>
@@ -50,54 +50,19 @@
                     <option value="CELEBRIDADES">CELEBRIDADES</option>                
                 </select>
             </div>
-            <fieldset>
-                <legend>Etiquetas: </legend>
-                <div class="checkbox-group">
-                    <label><input type="checkbox" name="tags" value="TECNOLOGIA"> Tecnología</label>
-                    <label><input type="checkbox" name="tags" value="INNOVACION"> Innovacion</label>
-                    <label><input type="checkbox" name="tags" value="MODA"> Moda</label>
-                    <label><input type="checkbox" name="tags" value="ESTILO_DE_VIDA"> Estilo de Vida</label>
-                    <label><input type="checkbox" name="tags" value="SALUD"> Salud</label>
-                    <label><input type="checkbox" name="tags" value="BIENESTAR"> Bienestar</label>
-                    <label><input type="checkbox" name="tags" value="CULTURA"> Cultura</label>
-                    <label><input type="checkbox" name="tags" value="ARTE"> Arte</label>
-                    <label><input type="checkbox" name="tags" value="VIAJES"> Viajes</label>
-                    <label><input type="checkbox" name="tags" value="TURISMO"> Turismo</label>
-                    <label><input type="checkbox" name="tags" value="NEGOCIOS"> Negocios</label>
-                    <label><input type="checkbox" name="tags" value="FINANZAS"> Finanzas</label>
-                    <label><input type="checkbox" name="tags" value="EDUCACION"> Educacion</label>
-                    <label><input type="checkbox" name="tags" value="CIENCIA"> Ciencia</label>
-                    <label><input type="checkbox" name="tags" value="DEPORTES"> Deportes</label>
-                    <label><input type="checkbox" name="tags" value="ENTRETENIMISNTO"> Entretenimiento</label>
-                    <label><input type="checkbox" name="tags" value="MUSICA"> Musica</label>
-                    <label><input type="checkbox" name="tags" value="CINE"> Cine</label>
-                    <label><input type="checkbox" name="tags" value="SERIES"> Series</label>
-                    <label><input type="checkbox" name="tags" value="VIDEOJUEGOS"> Videojuegos</label>
-                    <label><input type="checkbox" name="tags" value="HOGAR"> Hogar</label>
-                    <label><input type="checkbox" name="tags" value="JARDINERIA"> Jardineria</label>
-                    <label><input type="checkbox" name="tags" value="NUTRICION"> Nutricion</label>
-                    <label><input type="checkbox" name="tags" value="EJERCICIO"> Ejercicio</label>
-                    <label><input type="checkbox" name="tags" value="SALUD_MENTAL"> Salud Mental</label>
-                    <label><input type="checkbox" name="tags" value="BELLEZA"> Belleza</label>
-                    <label><input type="checkbox" name="tags" value="ACCESORIOS"> Accesorios</label>
-                    <label><input type="checkbox" name="tags" value="DECORACION"> Decoracion</label>                    
-                </div>
-            </fieldset> 
             <div class="radio-group">
                 <div>                    
-                    <label for="comentario-si"><input type="radio" id="comentario-si" name="comentarios" value="SI" checked> Recibir Comentarios</label>                    
-                    <label for="comentario-no"><input type="radio" id="comentario-no" name="comentarios" value="NO"> NO Recibir Comentarios</label>
+                    <label for="comentario-no"><input type="checkbox" id="comentario" formControlName="puedeRecibirComentarios" (click)="cambiarEstadoComentarios()">Recibir Comentarios?</label>
                 </div>
                 <div>                    
-                    <label for="likes-si"><input type="radio" id="likes-si" name="likes" value="SI" checked> Recibir Likes</label>                    
-                    <label for="likes-no"><input type="radio" id="likes-no" name="likes" value="NO"> NO Recibir Likes</label>
+                    <label for="likes-no"><input type="checkbox" id="likes" formControlName="puedeRecibirLikes" (click)="cambiarEstadoLikes()">Recibir Likes?</label>
                 </div>
                 <div>                    
-                    <label for="suscripciones-si"><input type="radio" id="suscripciones-si" name="suscripciones" value="SI" checked> Recibir Suscripciones</label>                    
-                    <label for="suscripciones-no"><input type="radio" id="suscripciones-no" name="suscripciones" value="NO"> NO Recibir Suscripciones</label>
+                    <label for="suscripciones-no"><input type="checkbox" id="suscripciones" formControlName="puedeRecibirSuscripciones" (click)="cambiarEstadoSuscripciones()">Recibir Suscripciones?</label>
                 </div>
             </div>
             <button type="submit">Guardar Cambios</button>
         </form>
+        <div *ngIf="errorDatos"><span style="color: red;">{{ mensajeErro }}</span></div>
     </div>
 </div>

@@ -24,8 +24,16 @@ export class RevistaService {
     return this.http.post<Publicacion>(`${this.urlBackend}RegistroPublicacion`, formData);
   }
 
-  public actualizarRevista(revista: Revista): Observable<Revista> {
-    return this.http.put<Revista>(`${this.urlBackend}RegistroRevista`, revista)
+  public actualizarRevista(revista: Revista): Observable<any> {
+    return this.http.put<any>(`${this.urlBackend}RegistroRevista`, revista)
+  }
+
+  public getAllRevistasEditor(idUsuario: number): Observable<Revista[]> {
+    return this.http.get<Revista[]>(`${this.urlBackend}ObtenerRevista/${idUsuario}`);
+  }
+
+  public getRevista(idRevista: string | null): Observable<Revista> {
+    return this.http.get<Revista>(`${this.urlBackend}/${idRevista}`);
   }
 
 }

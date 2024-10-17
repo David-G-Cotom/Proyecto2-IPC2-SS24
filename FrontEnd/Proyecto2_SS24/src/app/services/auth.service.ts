@@ -23,6 +23,7 @@ export class AuthService {
   }
 
   public setSessionStorage(token: any): void {
+    sessionStorage.removeItem('token');
     sessionStorage.setItem('token', token);
   }
 

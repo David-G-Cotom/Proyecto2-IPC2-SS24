@@ -12,6 +12,7 @@ import { FormNuevaPublicacionComponent } from './components/editor/form-nueva-pu
 import { FormNuevaRevistaComponent } from './components/editor/form-nueva-revista/form-nueva-revista.component';
 import { FormEdicionRevistaComponent } from './components/editor/form-edicion-revista/form-edicion-revista.component';
 import { FormRecargaCreditoComponent } from './components/editor/form-recarga-credito/form-recarga-credito.component';
+import { ContentEditorComponent } from './components/editor/content-editor/content-editor.component';
 
 export const routes: Routes = [
   {
@@ -44,16 +45,20 @@ export const routes: Routes = [
         component: FormNuevaRevistaComponent
       },
       {
-        path: 'nueva-publicacion',
+        path: 'nueva-publicacion/:id',
         component: FormNuevaPublicacionComponent
       },
       {
-        path: 'editar-revista',
+        path: 'editar-revista/:id',
         component: FormEdicionRevistaComponent
       },
       {
         path: 'recargar-credito',
         component: FormRecargaCreditoComponent
+      },
+      {
+        path: 'revistas',
+        component: ContentEditorComponent,
       }
     ]
   },
