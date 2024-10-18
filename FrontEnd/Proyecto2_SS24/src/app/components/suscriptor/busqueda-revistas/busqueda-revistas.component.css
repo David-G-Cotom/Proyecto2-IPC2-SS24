@@ -36,3 +36,14 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
+.revistas-container {
+    margin-left: 300px; /* Espacio para las barras laterales y la barra de navegación */
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-right: 50px;
+    padding: 10px 25px;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    box-sizing: border-box;
+}

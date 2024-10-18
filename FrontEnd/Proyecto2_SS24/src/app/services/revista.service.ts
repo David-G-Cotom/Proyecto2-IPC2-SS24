@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Revista } from '../models/revista';
 import { Publicacion } from '../models/publicacion';
+import { FiltroBusquedaRevista } from '../models/filtroBusquedaRevista';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,10 @@ export class RevistaService {
 
   public getRevistasNOSuscritas(idUsuario: number): Observable<Revista[]> {
     return this.http.get<Revista[]>(`${this.urlBackend}RevistaNoSuscrita/${idUsuario}`);
+  }
+
+  public getRevistasSuscritas(filtro: FiltroBusquedaRevista): Observable<Revista[]> {
+    return this.http.post<Revista[]>(`${this.urlBackend}ObtenerRevista`, filtro);
   }
 
 }

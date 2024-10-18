@@ -4,10 +4,14 @@
  */
 package com.mycompany.proyecto2_ss24.resources;
 
+import com.mycompany.proyecto2_ss24.backend.controllers.BusquedaRevistasController;
 import com.mycompany.proyecto2_ss24.backend.data.RevistaDB;
+import com.mycompany.proyecto2_ss24.backend.model.FiltroBusquedaRevista;
 import com.mycompany.proyecto2_ss24.backend.model.Revista;
 import com.mycompany.proyecto2_ss24.backend.model.RevistaTS;
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
@@ -53,6 +57,15 @@ public class ObtencionRevistaResource {
             revistaTS.setCostoGlobal(0);
             revistas.add(revistaTS);
         }
+        return Response.ok(revistas).build();
+    }
+    
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getRevistasSuscritas(FiltroBusquedaRevista filtro) {
+        BusquedaRevistasController busquedaController = new BusquedaRevistasController(filtro);
+        ArrayList<RevistaTS> revistas = busquedaController.getRevistas();
         return Response.ok(revistas).build();
     }
     
