@@ -13,6 +13,9 @@ import { FormNuevaRevistaComponent } from './components/editor/form-nueva-revist
 import { FormEdicionRevistaComponent } from './components/editor/form-edicion-revista/form-edicion-revista.component';
 import { FormRecargaCreditoComponent } from './components/editor/form-recarga-credito/form-recarga-credito.component';
 import { ContentEditorComponent } from './components/editor/content-editor/content-editor.component';
+import { RevistasNoSuscritasComponent } from './components/suscriptor/revistas-no-suscritas/revistas-no-suscritas.component';
+import { BusquedaRevistasComponent } from './components/suscriptor/busqueda-revistas/busqueda-revistas.component';
+import { FormSuscripcionComponent } from './components/suscriptor/form-suscripcion/form-suscripcion.component';
 
 export const routes: Routes = [
   {
@@ -69,6 +72,18 @@ export const routes: Routes = [
       {
         path: 'perfil',
         component: PerfilUsuarioComponent
+      },
+      {
+        path: 'suscribir',
+        component: RevistasNoSuscritasComponent
+      },
+      {
+        path: 'busqueda',
+        component: BusquedaRevistasComponent
+      },
+      {
+        path: 'suscribir/:id',
+        component: FormSuscripcionComponent
       }
     ]
   },

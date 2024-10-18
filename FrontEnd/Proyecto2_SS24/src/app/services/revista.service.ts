@@ -32,8 +32,8 @@ export class RevistaService {
     return this.http.get<Revista[]>(`${this.urlBackend}ObtenerRevista/${idUsuario}`);
   }
 
-  public getRevista(idRevista: string | null): Observable<Revista> {
-    return this.http.get<Revista>(`${this.urlBackend}/${idRevista}`);
+  public getRevistasNOSuscritas(idUsuario: number): Observable<Revista[]> {
+    return this.http.get<Revista[]>(`${this.urlBackend}RevistaNoSuscrita/${idUsuario}`);
   }
 
 }

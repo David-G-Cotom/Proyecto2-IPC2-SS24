@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { RevistaComponent } from "../revista/revista.component";
+import { RevistaNoSuscritaComponent } from '../revista-no-suscrita/revista-no-suscrita.component';
 import { Revista } from '../../../models/revista';
-import { RevistaService } from '../../../services/revista.service';
 import { UsuarioAplicacionJava } from '../../../models/usuarioAplicacionJava';
 import { RoutingService } from '../../../services/routing.service';
+import { RevistaService } from '../../../services/revista.service';
 
 @Component({
-  selector: 'app-content-editor',
+  selector: 'app-revistas-no-suscritas',
   standalone: true,
-  imports: [RevistaComponent],
-  templateUrl: './content-editor.component.html',
-  styleUrl: './content-editor.component.css'
+  imports: [RevistaNoSuscritaComponent],
+  templateUrl: './revistas-no-suscritas.component.html',
+  styleUrl: './revistas-no-suscritas.component.css'
 })
-export class ContentEditorComponent implements OnInit{
+export class RevistasNoSuscritasComponent implements OnInit{
 
   revistas: Revista[] = [];
   usuarioLogeado: UsuarioAplicacionJava;
@@ -20,13 +20,13 @@ export class ContentEditorComponent implements OnInit{
   constructor(private revistaServices: RevistaService, private routingServices: RoutingService) {
     this.usuarioLogeado = JSON.parse(`${localStorage.getItem('Usuario-Actual')}`);
   }
-  
+
   ngOnInit(): void {
-    this.revistaServices.getAllRevistasEditor(this.usuarioLogeado.idUsuario).subscribe({
+    this.revistaServices.getRevistasNOSuscritas(this.usuarioLogeado.idUsuario).subscribe({
       next: (listado: Revista[]) => {
         console.log('Todo fue bien, procesando response...');
         if (listado.length === 0) {
-          alert('No Tienes Revistas Publicadas');
+          alert('No hay Revistas por Suscribirse');
           this.routingServices.redireccionarUsuario();
         } else {
           this.revistas = listado;

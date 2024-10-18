@@ -1,0 +1,15 @@
+<div class="body-component">
+    <div class="form-container">
+        <h1>Nueva Suscripcion</h1>
+        <form [formGroup]="formulario" (ngSubmit)="suscribirse()">            
+            <div class="input-group">
+                <label for="fecha">Fecha de Suscripcion:</label>
+                <input type="date" id="fecha" name="fecha" formControlName="fechaSuscripcion">
+            </div>
+            <button type="submit">Suscribirse</button>
+        </form>
+        <div *ngIf="errorDatos"><span style="color: red;">{{ mensajeErro }}</span></div>
+        <pre>{{ formulario.value | json }}</pre>
+        <pre>{{ formulario.valid | json }}</pre>
+    </div>
+</div>

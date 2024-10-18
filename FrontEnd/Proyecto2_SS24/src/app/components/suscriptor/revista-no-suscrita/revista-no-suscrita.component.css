@@ -1,0 +1,15 @@
+div {
+    margin: 30px 15px;
+    padding: 10px 25px;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+}
+
+div a{
+    padding: 10px 20px;
+    display: inline-block;
+    background-color: darkgray;
+    text-decoration: none;
+    color: white;
+    border-radius: 5px;
+}

@@ -4,48 +4,46 @@
  */
 package com.mycompany.proyecto2_ss24.backend.model;
 
-import java.time.LocalDate;
-
 /**
  *
  * @author Carlos Cotom
  */
 public class Suscripcion {
     
-    private int suscriptor;
-    private LocalDate fechaSuscripcion;
-    private int revista;
+    private int idUsuario;
+    private String fecha;
+    private int idRevista;
 
     public Suscripcion() {
     }
     
-    public Suscripcion(int suscriptor, LocalDate fechaSuscripcion) {
-        this.suscriptor = suscriptor;
-        this.fechaSuscripcion = fechaSuscripcion;
+    public Suscripcion(int suscriptor, String fechaSuscripcion) {
+        this.idUsuario = suscriptor;
+        this.fecha = fechaSuscripcion;
     }
 
-    public int getSuscriptor() {
-        return suscriptor;
+    public int getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setSuscriptor(int suscriptor) {
-        this.suscriptor = suscriptor;
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
-    public LocalDate getFechaSuscripcion() {
-        return fechaSuscripcion;
+    public String getFecha() {
+        return fecha;
     }
 
-    public void setFechaSuscripcion(LocalDate fechaSuscripcion) {
-        this.fechaSuscripcion = fechaSuscripcion;
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
     }      
 
-    public int getRevista() {
-        return revista;
+    public int getIdRevista() {
+        return idRevista;
     }
 
-    public void setRevista(int revista) {
-        this.revista = revista;
+    public void setIdRevista(int idRevista) {
+        this.idRevista = idRevista;
     }
     
 }

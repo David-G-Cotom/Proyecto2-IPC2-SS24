@@ -48,7 +48,7 @@ export class FormEdicionRevistaComponent {
     const categoriaControl: FormControl = this.formulario.get('categoria') as FormControl;
     
     let revista = new Revista(this.estadoComentarios, this.estadoLikes, this.estadoSuscripciones, descripcionControl.value,
-      categoriaControl.value, [''], 0, 0, [''], 0, '', [''], nombreControl.value, parseInt(this.revistaID!), 0)
+      categoriaControl.value, [''], 0, 0, [''], 0, '', [''], nombreControl.value, parseInt(this.revistaID!), 0, '')
 
     this.revistaServices.actualizarRevista(revista).subscribe({
       next: (nuevaRevista: any) => {

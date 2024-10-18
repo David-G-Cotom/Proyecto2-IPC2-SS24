@@ -27,11 +27,15 @@ public class RevistaTS {
     private String nombre;
     private int idRevista;
     private double costoGlobal;
+    private String nombreEditor;
 
     public RevistaTS() {
     }
 
-    public RevistaTS(boolean puedeComentarse, boolean puedeTenerLikes, boolean puedeSuscribirse, String descripcion, String categoria, String[] etiquetas, int idUsuario, int likes, String[] comentarios, double costo, String fechaCreacion, String[] suscripciones, String nombre, int idRevista, double costoGlobal) {
+    public RevistaTS(boolean puedeComentarse, boolean puedeTenerLikes, boolean puedeSuscribirse,
+            String descripcion, String categoria, String[] etiquetas, int idUsuario, int likes,
+            String[] comentarios, double costo, String fechaCreacion, String[] suscripciones,
+            String nombre, int idRevista, double costoGlobal, String nombreEditor) {
         this.puedeComentarse = puedeComentarse;
         this.puedeTenerLikes = puedeTenerLikes;
         this.puedeSuscribirse = puedeSuscribirse;
@@ -47,6 +51,7 @@ public class RevistaTS {
         this.nombre = nombre;
         this.idRevista = idRevista;
         this.costoGlobal = costoGlobal;
+        this.nombreEditor = nombreEditor;
     }
 
     public boolean isPuedeComentarse() {
@@ -167,6 +172,14 @@ public class RevistaTS {
 
     public void setCostoGlobal(double costoGlobal) {
         this.costoGlobal = costoGlobal;
+    }
+
+    public String getNombreEditor() {
+        return nombreEditor;
+    }
+
+    public void setNombreEditor(String nombreEditor) {
+        this.nombreEditor = nombreEditor;
     }
 
     @Override

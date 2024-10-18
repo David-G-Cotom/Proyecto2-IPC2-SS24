@@ -6,7 +6,6 @@ package com.mycompany.proyecto2_ss24.backend.model;
 
 import com.mycompany.proyecto2_ss24.backend.model.users.Editor;
 import java.io.InputStream;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -182,14 +181,14 @@ public class Revista {
     @Override
     public String toString() {
         return "Revista{ "
-                + "<br>puedeComentarse = " + puedeComentarse
-                + "<br>puedeTenerLikes = " + puedeTenerLikes
-                + "<br>puedeSuscribirse = " + puedeSuscribirse
-                + "<br>descripcion = " + descripcion
-                + "<br>categoria = " + categoria
-                + "<br>etiquetas = " + etiquetas
-                + "<br>fechaCreacion = " + fechaCreacion
-                + "<br>nombreRevista = " + nombreRevista + '}';
+                + "puedeComentarse = " + puedeComentarse
+                + "puedeTenerLikes = " + puedeTenerLikes
+                + "puedeSuscribirse = " + puedeSuscribirse
+                + "descripcion = " + descripcion
+                + "categoria = " + categoria
+                + "etiquetas = " + etiquetas
+                + "fechaCreacion = " + fechaCreacion
+                + "nombreRevista = " + nombreRevista + '}';
     }
     
 }
