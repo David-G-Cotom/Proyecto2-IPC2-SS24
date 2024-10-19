@@ -16,6 +16,8 @@ import { ContentEditorComponent } from './components/editor/content-editor/conte
 import { RevistasNoSuscritasComponent } from './components/suscriptor/revistas-no-suscritas/revistas-no-suscritas.component';
 import { BusquedaRevistasComponent } from './components/suscriptor/busqueda-revistas/busqueda-revistas.component';
 import { FormSuscripcionComponent } from './components/suscriptor/form-suscripcion/form-suscripcion.component';
+import { PerfilEditorComponent } from './components/suscriptor/perfil-editor/perfil-editor.component';
+import { FormComentarComponent } from './components/suscriptor/form-comentar/form-comentar.component';
 
 export const routes: Routes = [
   {
@@ -84,6 +86,14 @@ export const routes: Routes = [
       {
         path: 'suscribir/:id',
         component: FormSuscripcionComponent
+      },
+      {
+        path: 'busqueda/perfil-editor/:id',
+        component: PerfilEditorComponent
+      },
+      {
+        path: 'busqueda/comentar/:id',
+        component: FormComentarComponent
       }
     ]
   },

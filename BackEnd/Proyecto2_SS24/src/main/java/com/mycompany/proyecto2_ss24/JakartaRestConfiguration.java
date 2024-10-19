@@ -25,6 +25,8 @@ public class JakartaRestConfiguration extends Application {
         resources.add(com.mycompany.proyecto2_ss24.resources.RecargaCreditoResource.class);
         resources.add(com.mycompany.proyecto2_ss24.resources.RevistaNoSuscritaResource.class);
         resources.add(com.mycompany.proyecto2_ss24.resources.SuscripcionResource.class);
+        resources.add(com.mycompany.proyecto2_ss24.resources.ComentarioResource.class);
+        resources.add(com.mycompany.proyecto2_ss24.resources.LikeResource.class);
         return resources;
     }
     

@@ -4,11 +4,14 @@
  */
 package com.mycompany.proyecto2_ss24.resources;
 
+import com.mycompany.proyecto2_ss24.backend.data.EditorDB;
 import com.mycompany.proyecto2_ss24.backend.data.PerfilDB;
 import com.mycompany.proyecto2_ss24.backend.model.users.UsuarioAplicacion;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -32,6 +35,15 @@ public class PerfilUsuarioResource {
             return Response.ok(usuario).build();
         }
         return Response.status(Response.Status.UNAUTHORIZED).build();
+    }
+    
+    @GET
+    @Path("{idEditor}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getPerfilEditor(@PathParam("idEditor") int idEditor) {
+        EditorDB dataSuscriptor = new EditorDB();
+        UsuarioAplicacion editor = dataSuscriptor.getEditor(idEditor);
+        return Response.ok(editor).build();
     }
     
 }

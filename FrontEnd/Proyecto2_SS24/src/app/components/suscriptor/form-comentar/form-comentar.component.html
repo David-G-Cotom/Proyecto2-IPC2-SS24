@@ -1,0 +1,12 @@
+<div class="body-component">
+    <div class="form-container">
+        <h2>Nuevo Comentario</h2>
+        <form [formGroup]="formulario" (ngSubmit)="comentar()">
+            <div class="input-group">
+                <label for="comentario">Comentario para la Revista:</label>
+                <textarea id="comentario" name="comentario" formControlName="descripcion"></textarea>
+            </div>
+            <button type="submit">Crear Comentario</button>
+        </form>
+    </div>
+</div>

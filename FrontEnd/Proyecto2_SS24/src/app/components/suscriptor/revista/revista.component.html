@@ -5,10 +5,15 @@
     <p>Etiquetas: {{revista.etiquetas}}</p>
     <a href="#" target="_blank">Leer</a>                   
     <a href="#" target="_blank">Descargar</a>
-    <a href="#">Perfil de Autor</a>
-    <a href="#">Comentar</a>
-    <a href="#">Dar Like</a>
+    <a routerLink="perfil-editor/{{revista.idEditor}}" routerLinkActive="active">Perfil de Autor</a>
+    <a routerLink="comentar/{{revista.idRevista}}" routerLinkActive="active" *ngIf="revista.puedeComentarse">Comentar</a>
+    @if (revista.puedeTenerLikes) {
+        @if (!revista.tieneLike) {
+            <button type="button" (click)="darLike()">Dar Like</button>
+        } @else {
+            <p>Ya le diste Like!!!</p>
+        }
+    }
     <a href="#">Ver Publicaciones</a>
-    <p>Ya le diste Like!!!</p>
     <hr>
 </div>

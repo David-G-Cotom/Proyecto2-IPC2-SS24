@@ -24,7 +24,6 @@ public class SuscripcionResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response crearRegistro(Suscripcion suscripcion) {
-        System.out.println(suscripcion.toString());
         if (suscripcion.getFecha().equals("")) {
             String mensajeErrorDatos = "DEBE SELECCIONAR UNA FECHA";
             String JSONResponse = "{\"mensaje\":\"" + mensajeErrorDatos + "\"}";

@@ -12,8 +12,8 @@ export class SuscripcionService {
 
   constructor(private http: HttpClient) { }
 
-public registrarSuscripcion(suscripcion: Suscripcion): Observable<any> {
-  return this.http.post<any>(`${this.urlBackend}RegistroSuscripcion`, suscripcion);
-}
+  public registrarSuscripcion(suscripcion: Suscripcion): Observable<any> {
+    return this.http.post<any>(`${this.urlBackend}RegistroSuscripcion`, suscripcion);
+  }
 
 }

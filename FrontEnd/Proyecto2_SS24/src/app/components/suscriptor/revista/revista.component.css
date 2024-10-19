@@ -1,4 +1,4 @@
-div a{
+div a {
     padding: 10px 20px;
     display: inline-block;
     background-color: darkgray;
@@ -9,4 +9,18 @@ div a{
 
 div {
     margin-bottom: 30px; 
+}
+
+button {
+    padding: 12px 20px;
+    display: inline-block;
+    background-color: darkgray;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: gray;
 }

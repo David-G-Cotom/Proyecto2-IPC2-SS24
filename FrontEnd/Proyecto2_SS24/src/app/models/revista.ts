@@ -16,11 +16,13 @@ export class Revista {
     idRevista: number;
     costoGlobal: number;
     nombreEditor: string;
+    idEditor: number;
+    tieneLike: boolean;
 
     constructor (puedeComentarse: boolean, puedeTenerLikes: boolean, puedeSuscribirse: boolean, descripcion: string,
         categoria: string, etiquetas: string[], idUsuario: number, likes: number, comentarios: string[],
         costo: number, fechaCreacion: string, suscripciones: string[], nombre: string, idRevista: number,
-        costoGlobal: number, nombreEditor: string
+        costoGlobal: number, nombreEditor: string, idEditor: number, tieneLike: boolean
     ) {
         this.puedeComentarse = puedeComentarse;
         this.puedeTenerLikes = puedeTenerLikes;
@@ -38,6 +40,8 @@ export class Revista {
         this.idRevista = idRevista;
         this.costoGlobal = costoGlobal;
         this.nombreEditor = nombreEditor;
+        this.idEditor = idEditor;
+        this.tieneLike = tieneLike;
     }
 
 }

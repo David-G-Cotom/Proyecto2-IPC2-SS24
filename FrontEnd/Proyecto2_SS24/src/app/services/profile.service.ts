@@ -21,8 +21,8 @@ export class ProfileService {
     localStorage.setItem('Usuario-Actual', JSON.stringify(nuevoUsuario));
   }
 
-  public getPerfil() {
-
+  public getPerfilEditor(idEditor: number): Observable<UsuarioAplicacionJava> {
+    return this.http.get<UsuarioAplicacionJava>(`${this.urlBackend}PerfilUsuario/${idEditor}`);
   }
 
 }

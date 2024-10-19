@@ -90,6 +90,9 @@ public class BusquedaRevistasController {
             revistaTS.setNombre(revistaJava.getNombreRevista());
             revistaTS.setIdRevista(revistaJava.getIdRevista());
             revistaTS.setCostoGlobal(0);
+            revistaTS.setIdEditor(revistaJava.getAutor().getIdEditor());
+            int idSuscriptor = this.dataSuscriptor.getIdSuscriptor(this.filtro.getIdUsuario());
+            revistaTS.setTieneLike(this.dataSuscriptor.revistaConLike(revistaJava.getIdRevista(), idSuscriptor));
             revistas.add(revistaTS);
         }
         return revistas;
