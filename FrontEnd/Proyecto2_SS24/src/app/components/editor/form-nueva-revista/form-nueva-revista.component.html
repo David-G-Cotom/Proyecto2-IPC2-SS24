@@ -2,7 +2,6 @@
     <div class="form-container">
         <h1>Nueva Revista</h1>
         <form [formGroup]="formulario" (ngSubmit)="crearRevista()">
-            <input type="hidden" name="idUsuario">
             <div class="input-group">
                 <label for="nombreRevista">Nombre de la Revista:</label>
                 <input type="text" id="nombreRevista" name="nombreRevista" formControlName="nombre">

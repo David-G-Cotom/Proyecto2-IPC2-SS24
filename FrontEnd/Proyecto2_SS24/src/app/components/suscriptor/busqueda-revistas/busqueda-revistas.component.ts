@@ -57,6 +57,7 @@ export class BusquedaRevistasComponent {
         console.log('Todo fue bien, procesando response...');
         if (listado.length === 0) {
           alert('No hay Revistas por Mostrar');
+          this.mostrarRevistas = false;
           this.routingServices.redireccionarRuta('suscriptor/home-page/busqueda');
         } else {
           this.revistas = listado;

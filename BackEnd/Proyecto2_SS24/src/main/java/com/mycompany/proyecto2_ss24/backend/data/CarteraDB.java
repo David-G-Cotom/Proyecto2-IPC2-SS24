@@ -40,36 +40,22 @@ public class CarteraDB {
         }
     }
     
-    public void actualizarCreditoEditorAbono(double abono, int idUsuario) {
-        String query = "UPDATE editor SET credito= ? WHERE id_editor = ?";
-        double creditoActual = this.getCredito(idUsuario, "editor");
+    public void actualizarCreditoAbono(double abono, int idUsuario, String tablaConsulta) {
+        String query = "UPDATE " + tablaConsulta + " SET credito = ? WHERE usuario = ?";
+        double creditoActual = this.getCredito(idUsuario, tablaConsulta);
         creditoActual += abono;
         try (PreparedStatement prepared = connection.prepareStatement(query)) {
             prepared.setDouble(1, creditoActual);
             prepared.setInt(2, idUsuario);
             prepared.executeUpdate();
-            System.out.println("Credito del EDITOR actualizado");
-        } catch (SQLException e) {
-            System.out.println("Error al actualizar el Credito del Inversionista: " + e);
-        }
-    }
-    
-    public void actualizarCreditoAnuncianteAbono(double abono, int idUsuario) {
-        String query = "UPDATE inversionista SET credito= ? WHERE id_inversionista = ?";
-        double creditoActual = this.getCredito(idUsuario, "inversionista");
-        creditoActual += abono;
-        try (PreparedStatement prepared = connection.prepareStatement(query)) {
-            prepared.setDouble(1, creditoActual);
-            prepared.setInt(2, idUsuario);
-            prepared.executeUpdate();
-            System.out.println("Credito del ANUNCIANTE actualizado");
+            System.out.println("Credito del " + tablaConsulta + " actualizado");
         } catch (SQLException e) {
             System.out.println("Error al actualizar el Credito del Inversionista: " + e);
         }
     }
     
     private double getCredito(int idInversionista, String tablaConsulta) {
-        String query = "SELECT credito FROM " + tablaConsulta + " WHERE id_" + tablaConsulta + " = ?";
+        String query = "SELECT credito FROM " + tablaConsulta + " WHERE usuario = ?";
         double credito = 0;
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
             prepared.setInt(1, idInversionista);

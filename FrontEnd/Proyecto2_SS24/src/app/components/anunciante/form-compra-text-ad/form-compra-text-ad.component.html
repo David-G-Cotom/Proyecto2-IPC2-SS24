@@ -1,0 +1,31 @@
+<div class="body-component">
+    <div class="form-container">
+        <h1>Compra de Anuncio de Texto</h1>
+        <form [formGroup]="formulario" (ngSubmit)="hacerCompra()">
+            <div class="input-group">
+                <label for="fecha">Fecha de Compra:</label>
+                <input type="date" id="fecha" name="fecha" formControlName="fecha">
+            </div>
+            <input type="hidden" name="tipoanuncio" value="ANUNCIO_TEXTO">
+            <div class="input-group">
+                <label for="duracion">Duracion de Anuncio:</label>
+                <select id="duracion" name="duracion" formControlName="duracion">
+                    <option value="1">1 DIA</option>
+                    <option value="3">3 DIAS</option>
+                    <option value="7">7 DIAS</option>               
+                    <option value="14">14 DIAS</option>               
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="titulo">Titulo del Anuncio:</label>
+                <input type="text" id="titulo" name="titulo" formControlName="titulo">
+            </div>
+            <div class="input-group">
+                <label for="contenido">Contenido del Anuncio:</label>
+                <textarea id="contenido" name="contenido" formControlName="contenido"></textarea>
+            </div>
+            <button type="submit">Comprar</button>
+        </form>
+        <div *ngIf="errorDatos"><span style="color: red;">{{ mensajeErro }}</span></div>
+    </div>
+</div>

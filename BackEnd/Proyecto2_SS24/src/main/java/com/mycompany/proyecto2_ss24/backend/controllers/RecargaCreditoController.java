@@ -85,9 +85,9 @@ public class RecargaCreditoController {
         dataRecarga.crearApago(recarga);
         switch (recarga.getIdTipoUsuario()) {
             case 1 -> //editor
-                dataRecarga.actualizarCreditoEditorAbono(Double.parseDouble(recarga.getCantidad()), recarga.getIdUsuario());
+                dataRecarga.actualizarCreditoAbono(Double.parseDouble(recarga.getCantidad()), recarga.getIdUsuario(), "editor");
             case 3 -> //anunciante
-                dataRecarga.actualizarCreditoAnuncianteAbono(Double.parseDouble(recarga.getCantidad()), recarga.getIdUsuario());
+                dataRecarga.actualizarCreditoAbono(Double.parseDouble(recarga.getCantidad()), recarga.getIdUsuario(), "inversionista");
             default -> {
                 String mensaje = "ERROR EN PROCESAR LA RECARGA, VUELVA MAS TARDE att:Servidor";
                 return "{\"mensaje\":\"" + mensaje + "\"}";

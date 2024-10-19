@@ -4,7 +4,6 @@
  */
 package com.mycompany.proyecto2_ss24.backend.data;
 
-import com.mycompany.proyecto2_ss24.backend.model.users.Editor;
 import com.mycompany.proyecto2_ss24.backend.model.users.UsuarioAplicacion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -18,6 +18,9 @@ import { BusquedaRevistasComponent } from './components/suscriptor/busqueda-revi
 import { FormSuscripcionComponent } from './components/suscriptor/form-suscripcion/form-suscripcion.component';
 import { PerfilEditorComponent } from './components/suscriptor/perfil-editor/perfil-editor.component';
 import { FormComentarComponent } from './components/suscriptor/form-comentar/form-comentar.component';
+import { FormCompraTextAdComponent } from './components/anunciante/form-compra-text-ad/form-compra-text-ad.component';
+import { FormCompraImageAdComponent } from './components/anunciante/form-compra-image-ad/form-compra-image-ad.component';
+import { FormCompraVideoAdComponent } from './components/anunciante/form-compra-video-ad/form-compra-video-ad.component';
 
 export const routes: Routes = [
   {
@@ -104,6 +107,22 @@ export const routes: Routes = [
       {
         path: 'perfil',
         component: PerfilUsuarioComponent
+      },
+      {
+        path: 'recargar-credito',
+        component: FormRecargaCreditoComponent
+      },
+      {
+        path: 'compra-anuncio-texto',
+        component: FormCompraTextAdComponent
+      },
+      {
+        path: 'compra-anuncio-imagen',
+        component: FormCompraImageAdComponent
+      },
+      {
+        path: 'compra-anuncio-video',
+        component: FormCompraVideoAdComponent
       }
     ]
   },
