@@ -3,8 +3,8 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { UsuarioAplicacionJava } from '../../../models/usuarioAplicacionJava';
 import { RoutingService } from '../../../services/routing.service';
 import { CommonModule, formatDate } from '@angular/common';
-import { AnuncioTexto } from '../../../models/anuncioTexto';
 import { AnuncioService } from '../../../services/anuncio.service';
+import { Anuncio } from '../../../models/anuncio';
 
 @Component({
   selector: 'app-form-compra-text-ad',
@@ -46,7 +46,7 @@ export class FormCompraTextAdComponent {
         duracion = '0';
       }
       
-      let anuncioTexto = new AnuncioTexto(0, parseInt(duracion), true, this.usuairoLogeado.idUsuario,
+      let anuncioTexto = new Anuncio(0, parseInt(duracion), true, this.usuairoLogeado.idUsuario,
         0, 1, 0, tituloControl.value, contenidoControl.value, 0, fecha);
 
       this.anuncioService.registrarCompraAdText(anuncioTexto).subscribe({

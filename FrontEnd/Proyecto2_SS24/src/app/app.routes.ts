@@ -21,6 +21,8 @@ import { FormComentarComponent } from './components/suscriptor/form-comentar/for
 import { FormCompraTextAdComponent } from './components/anunciante/form-compra-text-ad/form-compra-text-ad.component';
 import { FormCompraImageAdComponent } from './components/anunciante/form-compra-image-ad/form-compra-image-ad.component';
 import { FormCompraVideoAdComponent } from './components/anunciante/form-compra-video-ad/form-compra-video-ad.component';
+import { ContentAnuncianteComponent } from './components/anunciante/content-anunciante/content-anunciante.component';
+import { FormEdicionAnuncioComponent } from './components/anunciante/form-edicion-anuncio/form-edicion-anuncio.component';
 
 export const routes: Routes = [
   {
@@ -123,6 +125,14 @@ export const routes: Routes = [
       {
         path: 'compra-anuncio-video',
         component: FormCompraVideoAdComponent
+      },
+      {
+        path: 'anuncios',
+        component: ContentAnuncianteComponent
+      },
+      {
+        path: 'editar-anuncio/:id',
+        component: FormEdicionAnuncioComponent
       }
     ]
   },

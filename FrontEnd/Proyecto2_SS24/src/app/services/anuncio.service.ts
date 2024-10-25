@@ -1,9 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AnuncioTexto } from '../models/anuncioTexto';
-import { AnuncioImagen } from '../models/anuncioImagen';
-import { AnuncioVideo } from '../models/anuncioVideo';
+import { Anuncio } from '../models/anuncio';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +12,11 @@ export class AnuncioService {
 
   constructor(private http: HttpClient) { }
 
-  public registrarCompraAdText(anuncio: AnuncioTexto): Observable<any> {
+  public registrarCompraAdText(anuncio: Anuncio): Observable<any> {
     return this.http.post<any>(`${this.urlBackend}RegistroAd/text`, anuncio);
   }
 
-  public registrarCompraAdImage(anuncio: AnuncioImagen, imagen: File): Observable<any> {
+  public registrarCompraAdImage(anuncio: Anuncio, imagen: File): Observable<any> {
     let formData = new FormData();
     formData.append('Fecha', anuncio.fechaCompra);
     formData.append('Duracion', anuncio.vigenciaDias.toString());
@@ -29,7 +27,7 @@ export class AnuncioService {
     return this.http.post<any>(`${this.urlBackend}RegistroAd/image`, formData);
   }
 
-  public registrarCompraAdVideo(anuncio: AnuncioVideo, video: File): Observable<any> {
+  public registrarCompraAdVideo(anuncio: Anuncio, video: File): Observable<any> {
     let formData = new FormData();
     formData.append('Fecha', anuncio.fechaCompra);
     formData.append('Duracion', anuncio.vigenciaDias.toString());
@@ -37,6 +35,14 @@ export class AnuncioService {
     formData.append('IdUsuario', anuncio.idInversionista.toString());
     formData.append('Video', video);
     return this.http.post<any>(`${this.urlBackend}RegistroAd/video`, formData);
+  }
+
+  public getAllAnuncios(idUsuarioAnunciante: number): Observable<Anuncio[]> {
+    return this.http.get<Anuncio[]>(`${this.urlBackend}ObtenerAnuncio/${idUsuarioAnunciante}`)
+  }
+
+  public actualizarAnuncio(anuncio: Anuncio): Observable<any> {
+    return this.http.put<any>(`${this.urlBackend}RegistroAd`, anuncio);
   }
 
 }

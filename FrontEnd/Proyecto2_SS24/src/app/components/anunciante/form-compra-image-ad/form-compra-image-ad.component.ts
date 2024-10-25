@@ -4,7 +4,7 @@ import { UsuarioAplicacionJava } from '../../../models/usuarioAplicacionJava';
 import { RoutingService } from '../../../services/routing.service';
 import { AnuncioService } from '../../../services/anuncio.service';
 import { CommonModule, formatDate } from '@angular/common';
-import { AnuncioImagen } from '../../../models/anuncioImagen';
+import { Anuncio } from '../../../models/anuncio';
 
 @Component({
   selector: 'app-form-compra-image-ad',
@@ -56,7 +56,7 @@ export class FormCompraImageAdComponent {
       }
       
       if (this.foto != null) {
-        let anuncioImagen = new AnuncioImagen(0, parseInt(duracion), true, this.usuarioLogeado.idUsuario,
+        let anuncioImagen = new Anuncio(0, parseInt(duracion), true, this.usuarioLogeado.idUsuario,
         0, 2, 0, tituloControl.value, contenidoControl.value, 0, fecha);
 
         this.anuncioService.registrarCompraAdImage(anuncioImagen, this.foto).subscribe({

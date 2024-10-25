@@ -8,7 +8,7 @@ import com.mycompany.proyecto2_ss24.backend.data.CompraAnuncioDB;
 import com.mycompany.proyecto2_ss24.backend.model.Recarga;
 import com.mycompany.proyecto2_ss24.backend.model.anuncios.AnuncioTexto;
 import com.mycompany.proyecto2_ss24.backend.model.anuncios.AnuncioTextoImagen;
-import com.mycompany.proyecto2_ss24.backend.model.anuncios.AnuncioTextoTS;
+import com.mycompany.proyecto2_ss24.backend.model.anuncios.AnuncioTS;
 import com.mycompany.proyecto2_ss24.backend.model.anuncios.AnuncioVideo;
 import java.io.InputStream;
 
@@ -19,21 +19,21 @@ import java.io.InputStream;
 public class RegistroAnuncioController {
     
     private final CompraAnuncioDB dataCompra = new CompraAnuncioDB();
-    private AnuncioTextoTS anuncio;
+    private AnuncioTS anuncio;
     private int idUsuario;
 
     public RegistroAnuncioController() {
     }
 
-    public RegistroAnuncioController(AnuncioTextoTS anuncioTexto) {
+    public RegistroAnuncioController(AnuncioTS anuncioTexto) {
         this.anuncio = anuncioTexto;
     }
 
-    public AnuncioTextoTS getAnuncio() {
+    public AnuncioTS getAnuncio() {
         return anuncio;
     }
 
-    public void setAnuncio(AnuncioTextoTS anuncio) {
+    public void setAnuncio(AnuncioTS anuncio) {
         this.anuncio = anuncio;
     }
     
@@ -93,7 +93,6 @@ public class RegistroAnuncioController {
         if (!mensajeDatosValidos.equals("")) {
             return mensajeDatosValidos;
         }
-        System.out.println("PROCESANDO EXTENSIONE");
         if (!this.extensCorrectVideo(videoName)) {
             return "DEBE ELEGIR UN ARCHIVO DE VIDEO EN FORMATO (.mp4, .mkv)";
         }

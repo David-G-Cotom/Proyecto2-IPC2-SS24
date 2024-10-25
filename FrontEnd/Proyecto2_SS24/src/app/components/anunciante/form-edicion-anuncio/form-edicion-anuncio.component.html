@@ -1,0 +1,18 @@
+<div class="body-component">
+    <div class="form-container">
+        <h1>Edicion de Anuncio</h1>
+        <form [formGroup]="formulario" (ngSubmit)="editarAnuncio()">
+            <div class="input-group">
+                <label for="titulo">Titulo del Anuncio:</label>
+                <input type="text" id="titulo" name="titulo" formControlName="titulo">
+            </div>
+            <div class="radio-group">
+                <div>              
+                    <label for="estado-si"><input type="checkbox" id="estado-si" name="estado" formControlName="estadoAnuncio" (click)="cambiarEstado()"> Activar?</label>
+                </div>
+            </div>
+            <button type="submit" [disabled]="formulario.invalid">Guardar</button>
+        </form>
+        <div *ngIf="errorDatos"><span style="color: red;">{{ mensajeErro }}</span></div>
+    </div>
+</div>

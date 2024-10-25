@@ -1,8 +1,16 @@
 <div class="content">
-    <h1>Bienvenido Inversionista:</h1>
-    <h3>Este es tu Credito Actual:</h3>
     <p>Estos son tus Anuncios Registradas en el Sistema</p>
-    <app-anuncio-texto></app-anuncio-texto>
-    <app-anuncio-texto-imagen></app-anuncio-texto-imagen>
-    <app-anuncio-video></app-anuncio-video>
+    @for (anuncio of anuncios; track $index) {
+        @switch (anuncio.idTipoAnuncio) {
+            @case (1) {
+                <app-anuncio-texto [anuncio]="anuncio"></app-anuncio-texto>
+            }
+            @case (2) {
+                <app-anuncio-texto-imagen [anuncio]="anuncio"></app-anuncio-texto-imagen>
+            }
+            @case (3) {
+                <app-anuncio-video [anuncio]="anuncio"></app-anuncio-video>
+            }
+        }
+    }
 </div> 

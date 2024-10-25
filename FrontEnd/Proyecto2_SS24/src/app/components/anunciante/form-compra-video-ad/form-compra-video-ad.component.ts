@@ -4,7 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { UsuarioAplicacionJava } from '../../../models/usuarioAplicacionJava';
 import { RoutingService } from '../../../services/routing.service';
 import { AnuncioService } from '../../../services/anuncio.service';
-import { AnuncioVideo } from '../../../models/anuncioVideo';
+import { Anuncio } from '../../../models/anuncio';
 
 @Component({
   selector: 'app-form-compra-video-ad',
@@ -54,8 +54,8 @@ export class FormCompraVideoAdComponent {
       }
       
       if (this.video != null) {
-        let anuncioVideo = new AnuncioVideo(0, parseInt(duracion), true, this.usuarioLogeado.idUsuario,
-        0, 3, 0, tituloControl.value,  0, fecha);
+        let anuncioVideo = new Anuncio(0, parseInt(duracion), true, this.usuarioLogeado.idUsuario,
+        0, 3, 0, tituloControl.value, '', 0, fecha);
 
         this.anuncioService.registrarCompraAdVideo(anuncioVideo, this.video).subscribe({
           next: (mensajeCreacion: any) => {

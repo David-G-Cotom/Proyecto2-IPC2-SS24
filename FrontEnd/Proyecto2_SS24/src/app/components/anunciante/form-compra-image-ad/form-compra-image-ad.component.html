@@ -27,7 +27,7 @@
                 <label for="mediaFile">Imagen del Anuncio</label>                    
                 <input type="file" data-buttonText="Foto" name="imageFile" id="mediaFile" formControlName="archivoFoto" (change)="obtenerImagen($event)" accept="image/*">                        
             </div>
-            <button type="submit">Comprar</button>
+            <button type="submit" [disabled]="formulario.invalid">Comprar</button>
         </form>
         <div *ngIf="errorDatos"><span style="color: red;">{{ mensajeErro }}</span></div>
     </div>

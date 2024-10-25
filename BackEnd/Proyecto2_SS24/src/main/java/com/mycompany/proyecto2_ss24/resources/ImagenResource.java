@@ -4,6 +4,7 @@
  */
 package com.mycompany.proyecto2_ss24.resources;
 
+import com.mycompany.proyecto2_ss24.backend.data.MediaAnunciosDB;
 import com.mycompany.proyecto2_ss24.backend.data.PerfilDB;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -34,6 +35,15 @@ public class ImagenResource {
         PerfilDB dataPerfil = new PerfilDB();
         int idUsuarioEditor = dataPerfil.getIdUsuarioEditor(idEditor);
         byte[] dataImage = dataPerfil.getImageUsuario(idUsuarioEditor);
+        return Response.ok(dataImage).build();
+    }
+    
+    @GET
+    @Path("anuncio/{idAnuncioImagen}")
+    @Produces("image/png")
+    public Response getImagenAnuncio(@PathParam("idAnuncioImagen") int idAnuncioImagen) {
+        MediaAnunciosDB dataPerfil = new MediaAnunciosDB();
+        byte[] dataImage = dataPerfil.getImageAnuncio(idAnuncioImagen);
         return Response.ok(dataImage).build();
     }
     

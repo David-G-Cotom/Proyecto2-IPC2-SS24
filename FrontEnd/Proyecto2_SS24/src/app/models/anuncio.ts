@@ -1,4 +1,4 @@
-export class AnuncioImagen {
+export class Anuncio {
 
     precio: number;
     vigenciaDias: number;
@@ -9,12 +9,12 @@ export class AnuncioImagen {
     idAnuncio: number;
     titulo: string;
     contenido: string;
-    idAnuncioImagen: number;
+    idAnuncioEspecifico: number;
     fechaCompra: string
 
     constructor(precio: number, vigenciaDias: number, isActivo: boolean,
         idInversionista: number, idPeriodoTiempo: number, idTipoAnuncio: number,
-        idAnuncio: number, titulo: string, contenido: string, idAnuncioImagen: number,
+        idAnuncio: number, titulo: string, contenido: string, idAnuncioEspecifico: number,
         fechaCompra: string
     ) {
         this.precio = precio;
@@ -26,7 +26,7 @@ export class AnuncioImagen {
         this.idAnuncio = idAnuncio;
         this.titulo = titulo;
         this.contenido = contenido;
-        this.idAnuncioImagen = idAnuncioImagen;
+        this.idAnuncioEspecifico = idAnuncioEspecifico;
         this.fechaCompra = fechaCompra;
     }
 

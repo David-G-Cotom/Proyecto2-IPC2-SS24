@@ -97,7 +97,7 @@
                     <label for="suscripciones-no"><input type="checkbox" id="suscripciones" formControlName="puedeRecibirSuscripciones">Recibir Suscripciones?</label>
                 </div>
             </div>
-            <button type="submit">Crear Revista</button>
+            <button type="submit" [disabled]="formulario.invalid">Crear Revista</button>
         </form>
         <div *ngIf="errorDatos"><span style="color: red;">{{ mensajeErro }}</span></div>
         <pre>{{ formulario.value | json }}</pre>

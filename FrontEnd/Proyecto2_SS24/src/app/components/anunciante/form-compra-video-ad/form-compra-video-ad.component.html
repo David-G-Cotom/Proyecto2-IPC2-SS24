@@ -23,7 +23,7 @@
                 <label for="mediaFile">Video del Anuncio</label>                    
                 <input type="file" data-buttonText="Foto" name="videoFile" id="mediaFile" formControlName="archivoVideo" (change)="obtenerVideo($event)">                        
             </div>
-            <button type="submit">Comprar</button>
+            <button type="submit" [disabled]="formulario.invalid">Comprar</button>
         </form>
         <div *ngIf="errorDatos"><span style="color: red;">{{ mensajeErro }}</span></div>
     </div>

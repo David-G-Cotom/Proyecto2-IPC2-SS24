@@ -19,4 +19,12 @@ export class ImagenService {
     return this.http.get(`${this.urlBackend}Imagen/editor/${idEditor}`, {responseType: 'blob'});
   }
 
+  public getImagenAnuncio(idAnuncioImagen: number): Observable<Blob> {
+    return this.http.get(`${this.urlBackend}Imagen/anuncio/${idAnuncioImagen}`, {responseType: 'blob'});
+  }
+
+  public getVideoAnuncio(idAnuncioVideo: number): Observable<Blob> {
+    return this.http.get(`${this.urlBackend}Media/anuncio/${idAnuncioVideo}`, {responseType: 'blob'});
+  }
+
 }

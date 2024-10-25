@@ -8,7 +8,7 @@ package com.mycompany.proyecto2_ss24.backend.model.anuncios;
  *
  * @author Carlos Cotom
  */
-public class AnuncioTextoTS {
+public class AnuncioTS {
     
     private double precio;
     private int vigenciaDias;
@@ -19,15 +19,15 @@ public class AnuncioTextoTS {
     private int idAnuncio;
     private String titulo;
     private String contenido;
-    private int idAnuncioTexto;
+    private int idAnuncioEspecifico;
     private String fechaCompra;
 
-    public AnuncioTextoTS() {
+    public AnuncioTS() {
     }
 
-    public AnuncioTextoTS(double precio, int vigenciaDias, boolean isActivo,
+    public AnuncioTS(double precio, int vigenciaDias, boolean isActivo,
             int idInversionista, int idPeriodoTiempo, int idTipoAnuncio,
-            int idAnuncio, String titulo, String contenido, int idAnuncioTexto,
+            int idAnuncio, String titulo, String contenido, int idAnuncioEspecifico,
             String fechaCompra) {
         this.precio = precio;
         this.vigenciaDias = vigenciaDias;
@@ -38,7 +38,7 @@ public class AnuncioTextoTS {
         this.idAnuncio = idAnuncio;
         this.titulo = titulo;
         this.contenido = contenido;
-        this.idAnuncioTexto = idAnuncioTexto;
+        this.idAnuncioEspecifico = idAnuncioEspecifico;
         this.fechaCompra = fechaCompra;
     }
 
@@ -114,12 +114,12 @@ public class AnuncioTextoTS {
         this.contenido = contenido;
     }
 
-    public int getIdAnuncioTexto() {
-        return idAnuncioTexto;
+    public int getIdAnuncioEspecifico() {
+        return idAnuncioEspecifico;
     }
 
-    public void setIdAnuncioTexto(int idAnuncioTexto) {
-        this.idAnuncioTexto = idAnuncioTexto;
+    public void setIdAnuncioEspecifico(int idAnuncioEspecifico) {
+        this.idAnuncioEspecifico = idAnuncioEspecifico;
     }
 
     public String getFechaCompra() {

@@ -5,9 +5,11 @@
 package com.mycompany.proyecto2_ss24.resources;
 
 import com.mycompany.proyecto2_ss24.backend.controllers.RegistroAnuncioController;
-import com.mycompany.proyecto2_ss24.backend.model.anuncios.AnuncioTextoTS;
+import com.mycompany.proyecto2_ss24.backend.data.AnuncioDB;
+import com.mycompany.proyecto2_ss24.backend.model.anuncios.AnuncioTS;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
@@ -27,7 +29,7 @@ public class AnuncioResource {
     @Path("text")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response crearRegistroText(AnuncioTextoTS anuncio) {
+    public Response crearRegistroText(AnuncioTS anuncio) {
         RegistroAnuncioController controlRegistro = new RegistroAnuncioController(anuncio);
         String mensajeErrorDatos = controlRegistro.verificarDatosAdText();
         if (!mensajeErrorDatos.equals("")) {
@@ -47,7 +49,7 @@ public class AnuncioResource {
             @FormDataParam("Fecha") String fecha, @FormDataParam("Duracion") String duracion,
             @FormDataParam("Titulo") String titulo, @FormDataParam("Contenido") String contenido,
             @FormDataParam("IdUsuario") String idUsuarioAnunciante) {
-        AnuncioTextoTS anuncio = new AnuncioTextoTS();
+        AnuncioTS anuncio = new AnuncioTS();
         anuncio.setFechaCompra(fecha);
         anuncio.setVigenciaDias(Integer.parseInt(duracion));
         anuncio.setTitulo(titulo);
@@ -72,7 +74,7 @@ public class AnuncioResource {
             @FormDataParam("Video") FormDataContentDisposition detalleVideo,
             @FormDataParam("Fecha") String fecha, @FormDataParam("Duracion") String duracion,
             @FormDataParam("Titulo") String titulo, @FormDataParam("IdUsuario") String idUsuarioAnunciante) {
-        AnuncioTextoTS anuncio = new AnuncioTextoTS();
+        AnuncioTS anuncio = new AnuncioTS();
         anuncio.setFechaCompra(fecha);
         anuncio.setVigenciaDias(Integer.parseInt(duracion));
         anuncio.setTitulo(titulo);
@@ -85,6 +87,26 @@ public class AnuncioResource {
             return Response.ok(JSONResponse).build();
         }
         String JSONResponse = controlRegistro.crearAnuncioVideo(video);
+        return Response.ok(JSONResponse).build();
+    }
+    
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updatePerfil(AnuncioTS anuncio) {
+        if (anuncio.getTitulo().equals("")) {
+            String mensajeErrorDatos = "ERROR EN LA ACTUALIZACION DE TITULO, debe de rellenar el campo";
+            String JSONResponse = "{\"mensaje\":\"" + mensajeErrorDatos + "\"}";
+            return Response.ok(JSONResponse).build();
+        }
+        AnuncioDB dataRevista = new AnuncioDB();
+        if (dataRevista.editarAnuncio(anuncio.getIdAnuncio(), anuncio.isIsActivo(), anuncio.getTitulo())) {
+            String mensaje = "exito";
+            String JSONResponse = "{\"mensaje\":\"" + mensaje + "\"}";
+            return Response.ok(JSONResponse).build();
+        }
+        String mensaje = "error";
+        String JSONResponse = "{\"mensaje\":\"" + mensaje + "\"}";
         return Response.ok(JSONResponse).build();
     }
     
