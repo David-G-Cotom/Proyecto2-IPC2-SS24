@@ -53,7 +53,7 @@ export class FormCompraTextAdComponent {
         next: (mensajeCreacion: any) => {
           console.log(mensajeCreacion);
           if (mensajeCreacion.mensaje  === 'nuevo') {
-            alert('ANUNCIO CREADO CON EXITO');
+            alert('ANUNCIO COMPRADO CON EXITO');
             this.routingServices.redireccionarUsuario();
           } else if (mensajeCreacion.mensaje  === 'error') {
             alert('NO TIENS EL CREDITO SUFUCIENTE PARA LA COMPRA');

@@ -7,7 +7,10 @@ package com.mycompany.proyecto2_ss24.backend.controllers;
 import com.mycompany.proyecto2_ss24.backend.data.CompraAnuncioDB;
 import com.mycompany.proyecto2_ss24.backend.model.Recarga;
 import com.mycompany.proyecto2_ss24.backend.model.anuncios.AnuncioTexto;
+import com.mycompany.proyecto2_ss24.backend.model.anuncios.AnuncioTextoImagen;
 import com.mycompany.proyecto2_ss24.backend.model.anuncios.AnuncioTextoTS;
+import com.mycompany.proyecto2_ss24.backend.model.anuncios.AnuncioVideo;
+import java.io.InputStream;
 
 /**
  *
@@ -15,20 +18,34 @@ import com.mycompany.proyecto2_ss24.backend.model.anuncios.AnuncioTextoTS;
  */
 public class RegistroAnuncioController {
     
-    private CompraAnuncioDB dataCompra = new CompraAnuncioDB();
-    private final AnuncioTextoTS anuncioTexto;
+    private final CompraAnuncioDB dataCompra = new CompraAnuncioDB();
+    private AnuncioTextoTS anuncio;
     private int idUsuario;
 
+    public RegistroAnuncioController() {
+    }
+
     public RegistroAnuncioController(AnuncioTextoTS anuncioTexto) {
-        this.anuncioTexto = anuncioTexto;
+        this.anuncio = anuncioTexto;
+    }
+
+    public AnuncioTextoTS getAnuncio() {
+        return anuncio;
+    }
+
+    public void setAnuncio(AnuncioTextoTS anuncio) {
+        this.anuncio = anuncio;
     }
     
     public String verificarDatosAdText() {
-        String mensajeDatosVacios = isDatosVaciosAdText();
+        String mensajeDatosVacios = isDatosVaciosAd();
         if (!mensajeDatosVacios.equals("")) {
             return mensajeDatosVacios;
         }
-        String mensajeDatosValidos = isDatosVAlidosAdText();
+        if (this.anuncio.getContenido().equals("")) {
+            return "DEBE RELLENAR EL CAMPO PARA EL CONTENIDO DEL ANUNCIO";
+        }
+        String mensajeDatosValidos = isDatosValidosAd();
         if (!mensajeDatosValidos.equals("")) {
             return mensajeDatosValidos;
         }
@@ -39,27 +56,72 @@ public class RegistroAnuncioController {
         return "";
     }
     
-    private String isDatosVaciosAdText() {
-        if (this.anuncioTexto.getFechaCompra().equals("")) {
-            return "DEBE SELECCIONAR UNA FECHA";
+    public String verificarDatosAdImage(String imageName) {
+        String mensajeDatosVacios = isDatosVaciosAd();
+        if (!mensajeDatosVacios.equals("")) {
+            return mensajeDatosVacios;
         }
-        if (this.anuncioTexto.getVigenciaDias() == 0) {
-            return "DEBE SELECCIONAR UNA DURACION PARA EL ANUNCIO";
-        }
-        if (this.anuncioTexto.getTitulo().equals("")) {
-            return "DEBE RELLENAR EL CAMPO PARA EL TIRULO DEL ANUNCIO";
-        }
-        if (this.anuncioTexto.getContenido().equals("")) {
+        if (this.anuncio.getContenido().equals("")) {
             return "DEBE RELLENAR EL CAMPO PARA EL CONTENIDO DEL ANUNCIO";
+        }
+        if (imageName.equals("")) {
+            return "DEBE SELECCIONAR UNA IMAGEN PARA EL ANUNCIO";
+        }
+        String mensajeDatosValidos = isDatosValidosAd();
+        if (!mensajeDatosValidos.equals("")) {
+            return mensajeDatosValidos;
+        }
+        if (!this.extensCorrectImage(imageName)) {
+            return "DEBE ELEGIR UN ARCHIVO DE IMAGEN PARA LA FOTO (.png, .jpg, jpeg)";
+        }
+        String mensajeCreditValidos = hayCredito();
+        if (!mensajeCreditValidos.equals("")) {
+            return mensajeCreditValidos;
         }
         return "";
     }
     
-    private String isDatosVAlidosAdText() {
-        if (!this.anuncioTexto.getFechaCompra().contains("-")) {
+    public String verificarDatosAdVideo(String videoName) {
+        String mensajeDatosVacios = isDatosVaciosAd();
+        if (!mensajeDatosVacios.equals("")) {
+            return mensajeDatosVacios;
+        }
+        if (videoName.equals("")) {
+            return "DEBE SELECCIONAR UN VIDEO PARA EL ANUNCIO";
+        }
+        String mensajeDatosValidos = isDatosValidosAd();
+        if (!mensajeDatosValidos.equals("")) {
+            return mensajeDatosValidos;
+        }
+        System.out.println("PROCESANDO EXTENSIONE");
+        if (!this.extensCorrectVideo(videoName)) {
+            return "DEBE ELEGIR UN ARCHIVO DE VIDEO EN FORMATO (.mp4, .mkv)";
+        }
+        String mensajeCreditValidos = hayCredito();
+        if (!mensajeCreditValidos.equals("")) {
+            return mensajeCreditValidos;
+        }
+        return "";
+    }
+    
+    private String isDatosVaciosAd() {
+        if (this.anuncio.getFechaCompra().equals("")) {
+            return "DEBE SELECCIONAR UNA FECHA";
+        }
+        if (this.anuncio.getVigenciaDias() == 0) {
+            return "DEBE SELECCIONAR UNA DURACION PARA EL ANUNCIO";
+        }
+        if (this.anuncio.getTitulo().equals("")) {
+            return "DEBE RELLENAR EL CAMPO PARA EL TIRULO DEL ANUNCIO";
+        }
+        return "";
+    }
+    
+    private String isDatosValidosAd() {
+        if (!this.anuncio.getFechaCompra().contains("-")) {
             return "FORMATO DE FECHA INCORRECTO";
         }
-        String[] datos = this.anuncioTexto.getFechaCompra().split("-");
+        String[] datos = this.anuncio.getFechaCompra().split("-");
         if (datos.length != 3) {
             return "FORMATO DE FECHA INCORRECTO";
         }
@@ -76,7 +138,7 @@ public class RegistroAnuncioController {
         int[] duracionDiasValidos = {1, 3, 7, 14};
         boolean duracionValida = false;
         for (int duracionDiaValido : duracionDiasValidos) {
-            if (this.anuncioTexto.getVigenciaDias() ==  duracionDiaValido) {
+            if (this.anuncio.getVigenciaDias() ==  duracionDiaValido) {
                 duracionValida = true;
                 break;
             }
@@ -88,16 +150,42 @@ public class RegistroAnuncioController {
         return "";
     }
     
+    private boolean extensCorrectImage(String fileName) {
+        String[] extens = {".png", ".jpg", ".jpeg"};        
+        for (String exten : extens) {
+            if (fileName.toLowerCase().endsWith(exten)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private boolean extensCorrectVideo(String fileName) {
+        String[] extens = {".mp4", ".mkv"};        
+        for (String exten : extens) {
+            if (fileName.toLowerCase().endsWith(exten)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     private String hayCredito() {
-        this.idUsuario = this.anuncioTexto.getIdInversionista();
+        this.idUsuario = this.anuncio.getIdInversionista();
         int idInversionista = dataCompra.getIdInversionista(this.idUsuario);
-        double costoCompra = dataCompra.getCostoCompra("ANUNCIO_TEXTO", this.anuncioTexto.getVigenciaDias());
+        String tipoAnuncio = "";
+        switch (this.anuncio.getIdTipoAnuncio()) {
+            case 1 -> tipoAnuncio = "ANUNCIO_TEXTO";
+            case 2 -> tipoAnuncio = "ANUNCIO_TEXTO_IMAGEN";
+            case 3 -> tipoAnuncio = "ANUNCIO_VIDEO";
+        }
+        double costoCompra = dataCompra.getCostoCompra(tipoAnuncio, this.anuncio.getVigenciaDias());
         double creditoInversionista = dataCompra.getCredito(idInversionista);
         if (costoCompra > creditoInversionista) {
             return "error";
         }
-        this.anuncioTexto.setPrecio(costoCompra);
-        this.anuncioTexto.setIdInversionista(idInversionista);
+        this.anuncio.setPrecio(costoCompra);
+        this.anuncio.setIdInversionista(idInversionista);
         return "";
     }
     
@@ -112,22 +200,60 @@ public class RegistroAnuncioController {
     }
     
     public String crearAnuncioText() {
-        AnuncioTexto anuncio = convertirAdText();
-        dataCompra.crearAnuncio(anuncio, this.anuncioTexto.getIdInversionista());
-        dataCompra.crearAnuncioTexto(anuncio);
-        Recarga pago = new Recarga(anuncio.getPrecio()+"", this.anuncioTexto.getFechaCompra(), this.idUsuario, 3);
+        AnuncioTexto anuncioTexto = convertirAdText();
+        dataCompra.crearAnuncio(anuncioTexto, this.anuncio.getIdInversionista());
+        dataCompra.crearAnuncioTexto(anuncioTexto);
+        Recarga pago = new Recarga(anuncioTexto.getPrecio()+"", this.anuncio.getFechaCompra(), this.idUsuario, 3);
         dataCompra.crearApago(pago);
-        dataCompra.actualizarCreditoInversionistaCompra(Double.parseDouble(pago.getCantidad()), this.anuncioTexto.getIdInversionista());
+        dataCompra.actualizarCreditoInversionistaCompra(Double.parseDouble(pago.getCantidad()), this.anuncio.getIdInversionista());
+        String mensaje = "nuevo";
+        return "{\"mensaje\":\"" + mensaje + "\"}";
+    }
+    
+    public String crearAnuncioImage(InputStream imagen) {
+        AnuncioTextoImagen anuncioImagen = convertirAdImage(imagen);
+        dataCompra.crearAnuncio(anuncioImagen, this.anuncio.getIdInversionista());
+        dataCompra.crearAnuncioTextoImagen(anuncioImagen);
+        Recarga pago = new Recarga(anuncioImagen.getPrecio()+"", this.anuncio.getFechaCompra(), this.idUsuario, 3);
+        dataCompra.crearApago(pago);
+        dataCompra.actualizarCreditoInversionistaCompra(Double.parseDouble(pago.getCantidad()), this.anuncio.getIdInversionista());
+        String mensaje = "nuevo";
+        return "{\"mensaje\":\"" + mensaje + "\"}";
+    }
+    
+    public String crearAnuncioVideo(InputStream video) {
+        AnuncioVideo anuncioVideo = convertirAdVideo(video);
+        dataCompra.crearAnuncio(anuncioVideo, this.anuncio.getIdInversionista());
+        dataCompra.crearAnuncioVideo(anuncioVideo);
+        Recarga pago = new Recarga(anuncioVideo.getPrecio()+"", this.anuncio.getFechaCompra(), this.idUsuario, 3);
+        dataCompra.crearApago(pago);
+        dataCompra.actualizarCreditoInversionistaCompra(Double.parseDouble(pago.getCantidad()), this.anuncio.getIdInversionista());
         String mensaje = "nuevo";
         return "{\"mensaje\":\"" + mensaje + "\"}";
     }
     
     private AnuncioTexto convertirAdText() {
-        int idPeriodoTiempo = dataCompra.getIdPeriodoTiempo(this.anuncioTexto.getVigenciaDias());
-        AnuncioTexto adTextJava = new AnuncioTexto(this.anuncioTexto.getContenido(), this.anuncioTexto.getPrecio(),
-                this.anuncioTexto.getVigenciaDias(), true, this.anuncioTexto.getIdInversionista(), idPeriodoTiempo, 1);
-        adTextJava.setTitulo(this.anuncioTexto.getTitulo());
+        int idPeriodoTiempo = dataCompra.getIdPeriodoTiempo(this.anuncio.getVigenciaDias());
+        AnuncioTexto adTextJava = new AnuncioTexto(this.anuncio.getContenido(), this.anuncio.getPrecio(),
+                this.anuncio.getVigenciaDias(), true, this.anuncio.getIdInversionista(), idPeriodoTiempo, 1);
+        adTextJava.setTitulo(this.anuncio.getTitulo());
         return adTextJava;
+    }
+    
+    private AnuncioTextoImagen convertirAdImage(InputStream imagen) {
+        int idPeriodoTiempo = dataCompra.getIdPeriodoTiempo(this.anuncio.getVigenciaDias());
+        AnuncioTextoImagen adImageJava = new AnuncioTextoImagen(this.anuncio.getContenido(), imagen, this.anuncio.getPrecio(),
+                this.anuncio.getVigenciaDias(), true, this.anuncio.getIdInversionista(), idPeriodoTiempo, 2);
+        adImageJava.setTitulo(this.anuncio.getTitulo());
+        return adImageJava;
+    }
+    
+    private AnuncioVideo convertirAdVideo(InputStream video) {
+        int idPeriodoTiempo = dataCompra.getIdPeriodoTiempo(this.anuncio.getVigenciaDias());
+        AnuncioVideo adVideoJava = new AnuncioVideo(video, this.anuncio.getPrecio(),
+                this.anuncio.getVigenciaDias(), true, this.anuncio.getIdInversionista(), idPeriodoTiempo, 3);
+        adVideoJava.setTitulo(this.anuncio.getTitulo());
+        return adVideoJava;
     }
     
 }

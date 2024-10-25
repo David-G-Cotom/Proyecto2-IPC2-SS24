@@ -5,6 +5,7 @@
 package com.mycompany.proyecto2_ss24.backend.data;
 
 import com.mycompany.proyecto2_ss24.backend.model.users.UsuarioAplicacion;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -72,10 +73,10 @@ public class LogInUsuarioDB {
         return idTipo;
     }
     
-    public void crearUsuario(UsuarioAplicacion usuario) {
+    public void crearUsuario(UsuarioAplicacion usuario, InputStream foto) {
         String query = "INSERT INTO usuario (foto, tipo_usuario, user_name, user_password, nombre, hobbie, temas_interes, descripcion, gustos) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";        
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
-            prepared.setString(1, usuario.getFoto());
+            prepared.setBlob(1, foto);
             prepared.setInt(2, usuario.getIdTipoUsuario());
             prepared.setString(3, usuario.getUserName());
             prepared.setString(4, usuario.getPassword());

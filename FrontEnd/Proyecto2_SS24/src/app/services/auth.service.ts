@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { User } from '../models/user';
 import { Observable } from 'rxjs';
 import { UsuarioAplicacion } from '../models/usuarioAplicacion';
-import { UsuarioAplicacionJava } from '../models/usuarioAplicacionJava';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +23,7 @@ export class AuthService {
 
   public setSessionStorage(token: any): void {
     sessionStorage.removeItem('token');
+    sessionStorage.clear();
     sessionStorage.setItem('token', token);
   }
 
@@ -40,6 +40,8 @@ export class AuthService {
   public removeLocalStorageItem(): void {
     localStorage.removeItem('Usuario-Actual');
     localStorage.clear();
+    sessionStorage.removeItem('token');
+    sessionStorage.clear();
   }
 
 }

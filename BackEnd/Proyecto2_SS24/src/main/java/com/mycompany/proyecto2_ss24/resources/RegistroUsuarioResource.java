@@ -4,7 +4,6 @@
  */
 package com.mycompany.proyecto2_ss24.resources;
 
-import com.mycompany.proyecto2_ss24.backend.controllers.ArchivosController;
 import com.mycompany.proyecto2_ss24.backend.controllers.RegistroUsuarioController;
 import com.mycompany.proyecto2_ss24.backend.model.users.PerfilTS;
 import com.mycompany.proyecto2_ss24.backend.model.users.UsuarioAplicacion;
@@ -34,10 +33,8 @@ public class RegistroUsuarioResource {
             @FormDataParam("Foto") FormDataContentDisposition detalleFoto,
             @FormDataParam("UserName") String userName, @FormDataParam("Password") String password,
             @FormDataParam("TipoUsuario") String tipoUsuario, @FormDataParam("Nombre") String nombre) {
-        ArchivosController archivoController = new ArchivosController();
-        String pathFoto = archivoController.guardarArchivo(foto, "FOTO-" + nombre + detalleFoto.getFileName());
-        UsuarioAplicacionTS usuario = new UsuarioAplicacionTS(new UsuarioTS(tipoUsuario, userName, password), new PerfilTS(pathFoto, nombre));
-        RegistroUsuarioController controlRegistro = new RegistroUsuarioController(usuario);
+        UsuarioAplicacionTS usuario = new UsuarioAplicacionTS(new UsuarioTS(tipoUsuario, userName, password), new PerfilTS(detalleFoto.getFileName(), nombre));
+        RegistroUsuarioController controlRegistro = new RegistroUsuarioController(usuario, foto);
         String mensajeErrorDatos = controlRegistro.verificarDatosUsuario();
         if (!mensajeErrorDatos.equals("")) {
             String JSONRespones = "{\"mensaje\":\"" + mensajeErrorDatos +"\"}";

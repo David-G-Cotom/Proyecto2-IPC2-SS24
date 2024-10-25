@@ -1,1 +1,34 @@
-<p>form-compra-image-ad works!</p>
+<div class="body-component">
+    <div class="form-container">
+        <h1>Compra de Anuncio de Texto e Imagen</h1>
+        <form enctype="multipart/form-data" [formGroup]="formulario" (ngSubmit)="hacerCompra()">
+            <div class="input-group">
+                <label for="fecha">Fecha de Compra:</label>
+                <input type="date" id="fecha" name="fecha" formControlName="fecha">
+            </div>
+            <div class="input-group">
+                <label for="duracion">Duracion de Anuncio:</label>
+                <select id="duracion" name="duracion" formControlName="duracion">
+                    <option value="1">1 DIA</option>
+                    <option value="3">3 DIAS</option>
+                    <option value="7">7 DIAS</option>               
+                    <option value="14">14 DIAS</option>               
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="titulo">Titulo del Anuncio:</label>
+                <input type="text" id="titulo" name="titulo" formControlName="titulo">
+            </div>
+            <div class="input-group">
+                <label for="contenido">Contenido del Anuncio:</label>
+                <textarea id="contenido" name="contenido" formControlName="contenido"></textarea>
+            </div>
+            <div class="input-group">
+                <label for="mediaFile">Imagen del Anuncio</label>                    
+                <input type="file" data-buttonText="Foto" name="imageFile" id="mediaFile" formControlName="archivoFoto" (change)="obtenerImagen($event)" accept="image/*">                        
+            </div>
+            <button type="submit">Comprar</button>
+        </form>
+        <div *ngIf="errorDatos"><span style="color: red;">{{ mensajeErro }}</span></div>
+    </div>
+</div>

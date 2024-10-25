@@ -12,8 +12,23 @@ export class ProfileService {
 
   constructor(private http: HttpClient) { }
 
-  public actualizarPerfil(user: UsuarioAplicacionJava): Observable<UsuarioAplicacionJava> {
-    return this.http.put<UsuarioAplicacionJava>(`${this.urlBackend}PerfilUsuario`, user);
+  public actualizarPerfil1(user: UsuarioAplicacionJava, imagenNueva: File): Observable<UsuarioAplicacionJava> {
+    let formData = new FormData();
+    formData.append('UserName', user.userName);
+    formData.append('Password', user.password);
+    formData.append('Nombre', user.nombre);
+    formData.append('Hobbies', user.hobbies);
+    formData.append('TemasInteres', user.temasInteres);
+    formData.append('Desripcion', user.descripcion);
+    formData.append('Gustos', user.gustos);
+    formData.append('IDusuario', user.idUsuario.toString());
+    formData.append('IDtipoUsuario', user.idTipoUsuario.toString());
+    formData.append('Foto', imagenNueva);
+    return this.http.put<UsuarioAplicacionJava>(`${this.urlBackend}PerfilUsuario/v1`, formData);
+  }
+
+  public actualizarPerfil2(user: UsuarioAplicacionJava): Observable<UsuarioAplicacionJava> {
+    return this.http.put<UsuarioAplicacionJava>(`${this.urlBackend}PerfilUsuario/v2`, user);
   }
 
   public actualizarLocalStorage(nuevoUsuario: UsuarioAplicacionJava) {

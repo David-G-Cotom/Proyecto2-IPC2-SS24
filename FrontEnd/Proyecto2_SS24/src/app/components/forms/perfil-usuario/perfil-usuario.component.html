@@ -3,8 +3,8 @@
         <div class="form-container">
             <form enctype="multipart/form-data" [formGroup]="formulario" (ngSubmit)="guardarCambios()">
                 <div class="input-group">
-                    <img src="#" alt="Foto de perfil" class="profile-img">
-                    <input type="file" data-buttonText="Foto" name="imagefile" id="imageFile" [src]="usuarioAnterior.foto">                        
+                    <img [src]="fotoSrc" alt="Foto de perfil" class="profile-img">
+                    <input type="file" accept="image/*" name="imagefile" id="imageFile" formControlName="archivoFotoNueva" (change)="obtenerImagenNueva($event)">                        
                 </div>
                 <div class="input-group">
                     <label for="nombre">Nombre del Usuario:</label>

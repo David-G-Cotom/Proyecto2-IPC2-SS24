@@ -8,6 +8,7 @@ import com.mycompany.proyecto2_ss24.backend.data.LogInUsuarioDB;
 import com.mycompany.proyecto2_ss24.backend.model.users.UsuarioAplicacion;
 import com.mycompany.proyecto2_ss24.backend.model.users.UsuarioAplicacionTS;
 import com.mycompany.proyecto2_ss24.backend.utils.TokenService;
+import java.io.InputStream;
 import java.util.Base64;
 
 /**
@@ -18,9 +19,11 @@ public class RegistroUsuarioController {
     
     private final LogInUsuarioDB dataUsuario = new LogInUsuarioDB();
     private final UsuarioAplicacionTS usuario;
+    private final InputStream foto;
 
-    public RegistroUsuarioController(UsuarioAplicacionTS usuario) {
+    public RegistroUsuarioController(UsuarioAplicacionTS usuario, InputStream foto) {
         this.usuario = usuario;
+        this.foto = foto;
     }
     
     public String verificarDatosUsuario() {
@@ -54,7 +57,7 @@ public class RegistroUsuarioController {
     }
     
     private boolean extensCorrect(String fileName) {
-        String[] extens = {".ico", ".png", ".jpg", ".jpeg"};        
+        String[] extens = {".png", ".jpg", ".jpeg"};        
         for (String exten : extens) {
             if (fileName.toLowerCase().endsWith(exten)) {
                 return true;
@@ -80,7 +83,7 @@ public class RegistroUsuarioController {
     }
     
     public String crearUsuario(UsuarioAplicacion nuevoUsuario) {
-        dataUsuario.crearUsuario(nuevoUsuario);
+        dataUsuario.crearUsuario(nuevoUsuario, this.foto);
         nuevoUsuario.setIdUsuario(dataUsuario.getIdUsuario(nuevoUsuario));
         System.out.println("CREANDO EL NUEVO USUARIO");
         TokenService tokenService = new TokenService();

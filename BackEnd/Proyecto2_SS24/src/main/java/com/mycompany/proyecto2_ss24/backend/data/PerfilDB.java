@@ -5,6 +5,7 @@
 package com.mycompany.proyecto2_ss24.backend.data;
 
 import com.mycompany.proyecto2_ss24.backend.model.users.UsuarioAplicacion;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -70,9 +71,29 @@ public class PerfilDB {
     }
     
     public boolean actualizarPerfil(UsuarioAplicacion nuevoUsuario) {
+        String query = "UPDATE usuario SET hobbie = ?, temas_interes = ?, descripcion = ?, gustos = ?, nombre = ?, user_name = ?, user_password = ? WHERE id_usuario = ?";
+        try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            prepared.setString(1, nuevoUsuario.getHobbies());
+            prepared.setString(2, nuevoUsuario.getTemasInteres());
+            prepared.setString(3, nuevoUsuario.getDescripcion());
+            prepared.setString(4, nuevoUsuario.getGustos());
+            prepared.setString(5, nuevoUsuario.getNombre());
+            prepared.setString(6, nuevoUsuario.getUserName());
+            prepared.setString(7, nuevoUsuario.getPassword());
+            prepared.setInt(8, nuevoUsuario.getIdUsuario());
+            prepared.executeUpdate();
+            System.out.println("Perfil del Usuario Actualizado!!!");
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Error al Actualizar los Datos del Usuario " + e);
+            return false;
+        }
+    }
+    
+    public boolean actualizarPerfil(UsuarioAplicacion nuevoUsuario, InputStream foto) {
         String query = "UPDATE usuario SET foto = ?, hobbie = ?, temas_interes = ?, descripcion = ?, gustos = ?, nombre = ?, user_name = ?, user_password = ? WHERE id_usuario = ?";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
-            prepared.setString(1, nuevoUsuario.getFoto());
+            prepared.setBlob(1, foto);
             prepared.setString(2, nuevoUsuario.getHobbies());
             prepared.setString(3, nuevoUsuario.getTemasInteres());
             prepared.setString(4, nuevoUsuario.getDescripcion());
@@ -88,6 +109,24 @@ public class PerfilDB {
             System.out.println("Error al Actualizar los Datos del Usuario " + e);
             return false;
         }
+    }
+    
+    public int getIdUsuarioEditor(int idEditor) {
+        String query = "SELECT usuario FROM editor WHERE id_editor = ?";
+        int idUsuarioEditor = 0;
+        try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            prepared.setInt(1, idEditor);
+            try (ResultSet resul = prepared.executeQuery()) {
+                if (resul.next()) {
+                    idUsuarioEditor = resul.getInt("usuario");
+                }
+            } catch (SQLException e) {
+                System.out.println("Error en recibir el id del Usuario Autor: " + e);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error en recibir el id del Usuario Autor: " + e);
+        }
+        return idUsuarioEditor;
     }
     
 }

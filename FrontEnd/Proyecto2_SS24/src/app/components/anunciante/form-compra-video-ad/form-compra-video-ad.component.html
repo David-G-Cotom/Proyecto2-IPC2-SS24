@@ -1,1 +1,30 @@
-<p>form-compra-video-ad works!</p>
+<div class="body-component">
+    <div class="form-container">
+        <h1>Compra de Anuncio de Video</h1>
+        <form enctype="multipart/form-data" [formGroup]="formulario" (ngSubmit)="hacerCompra()">
+            <div class="input-group">
+                <label for="fecha">Fecha de Compra:</label>
+                <input type="date" id="fecha" name="fecha" formControlName="fecha">
+            </div>
+            <div class="input-group">
+                <label for="duracion">Duracion de Anuncio:</label>
+                <select id="duracion" name="duracion" formControlName="duracion">
+                    <option value="1">1 DIA</option>
+                    <option value="3">3 DIAS</option>
+                    <option value="7">7 DIAS</option>               
+                    <option value="14">14 DIAS</option>               
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="titulo">Titulo del Anuncio:</label>
+                <input type="text" id="titulo" name="titulo" formControlName="titulo">
+            </div>
+            <div class="input-group">
+                <label for="mediaFile">Video del Anuncio</label>                    
+                <input type="file" data-buttonText="Foto" name="videoFile" id="mediaFile" formControlName="archivoVideo" (change)="obtenerVideo($event)">                        
+            </div>
+            <button type="submit">Comprar</button>
+        </form>
+        <div *ngIf="errorDatos"><span style="color: red;">{{ mensajeErro }}</span></div>
+    </div>
+</div>
