@@ -30,6 +30,7 @@ public class RevistaTS {
     private String nombreEditor;
     private int idEditor;
     private boolean tieneLike;
+    private int[] idPublicaciones;
 
     public RevistaTS() {
     }
@@ -37,7 +38,8 @@ public class RevistaTS {
     public RevistaTS(boolean puedeComentarse, boolean puedeTenerLikes, boolean puedeSuscribirse,
             String descripcion, String categoria, String[] etiquetas, int idUsuario, int likes,
             String[] comentarios, double costo, String fechaCreacion, String[] suscripciones,
-            String nombre, int idRevista, double costoGlobal, String nombreEditor, int idEditor, boolean tieneLike) {
+            String nombre, int idRevista, double costoGlobal, String nombreEditor, int idEditor,
+            boolean tieneLike, int[] idPublicaciones) {
         this.puedeComentarse = puedeComentarse;
         this.puedeTenerLikes = puedeTenerLikes;
         this.puedeSuscribirse = puedeSuscribirse;
@@ -56,6 +58,7 @@ public class RevistaTS {
         this.nombreEditor = nombreEditor;
         this.idEditor = idEditor;
         this.tieneLike = tieneLike;
+        this.idPublicaciones = idPublicaciones;
     }
 
     public boolean isPuedeComentarse() {
@@ -200,6 +203,14 @@ public class RevistaTS {
 
     public void setTieneLike(boolean tieneLike) {
         this.tieneLike = tieneLike;
+    }
+
+    public int[] getIdPublicaciones() {
+        return idPublicaciones;
+    }
+
+    public void setIdPublicaciones(int[] idPublicaciones) {
+        this.idPublicaciones = idPublicaciones;
     }
 
     @Override

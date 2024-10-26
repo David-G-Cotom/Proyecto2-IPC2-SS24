@@ -23,6 +23,7 @@ import { FormCompraImageAdComponent } from './components/anunciante/form-compra-
 import { FormCompraVideoAdComponent } from './components/anunciante/form-compra-video-ad/form-compra-video-ad.component';
 import { ContentAnuncianteComponent } from './components/anunciante/content-anunciante/content-anunciante.component';
 import { FormEdicionAnuncioComponent } from './components/anunciante/form-edicion-anuncio/form-edicion-anuncio.component';
+import { PublicacionComponent } from './components/suscriptor/publicacion/publicacion.component';
 
 export const routes: Routes = [
   {
@@ -145,6 +146,10 @@ export const routes: Routes = [
         component: PerfilUsuarioComponent
       }
     ]
+  },
+  {
+    path: 'publicacion/:id',
+    component: PublicacionComponent
   },
   {
     path: '**',

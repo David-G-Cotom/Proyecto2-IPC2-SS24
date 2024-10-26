@@ -18,11 +18,12 @@ export class RevistaService {
     return this.http.post<any>(`${this.urlBackend}RegistroRevista`, revista);
   }
 
-  public registrarPublicacion(publicacion: Publicacion): Observable<Publicacion> {
+  public registrarPublicacion(publicacion: Publicacion, idRevista: string): Observable<any> {
     let formData = new FormData;
     formData.append('numeroPublicacion', publicacion.numeroPublicacion);
+    formData.append('idRevista', idRevista);
     formData.append('PDF', publicacion.pdf);
-    return this.http.post<Publicacion>(`${this.urlBackend}RegistroPublicacion`, formData);
+    return this.http.post<any>(`${this.urlBackend}RegistroPublicacion`, formData);
   }
 
   public actualizarRevista(revista: Revista): Observable<any> {

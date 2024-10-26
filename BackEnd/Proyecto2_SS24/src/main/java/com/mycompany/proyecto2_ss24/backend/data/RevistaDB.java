@@ -9,6 +9,7 @@ import com.mycompany.proyecto2_ss24.backend.model.EtiquetaEnum;
 import com.mycompany.proyecto2_ss24.backend.model.Publicacion;
 import com.mycompany.proyecto2_ss24.backend.model.Revista;
 import com.mycompany.proyecto2_ss24.backend.model.RevistaTS;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -246,20 +247,21 @@ public class RevistaDB {
         return idsTipoEtiqueta;
     }
 
-    public byte[] getPdfRevista(int idRevista) {
-        String query = "SELECT archivo_pdf FROM revista WHERE id_revista= ?";
+    public byte[] getPdfPublicacion(int idPublicaicon) {
+        String query = "SELECT archivo_pdf FROM publicacion WHERE id_publicacion= ?";
         byte[] dataPdf = null;
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
-            prepared.setInt(1, idRevista);
+            prepared.setInt(1, idPublicaicon);
             try (ResultSet resul = prepared.executeQuery()) {
                 if (resul.next()) {
                     dataPdf = resul.getBytes("archivo_pdf");
+                    System.out.println("CARGO LOS BYTES");
                 }
             } catch (SQLException e) {
-                System.out.println("Error en recibir el Contenido de la Revista PDF: " + e);
+                System.out.println("Error en recibir el Contenido de la Publicacion PDF: " + e);
             }
         } catch (SQLException e) {
-            System.out.println("Error en recibir el Contenido de la Revista PDF: " + e);
+            System.out.println("Error en recibir el Contenido de la Publicacion PDF: " + e);
         }
         return dataPdf;
     }
@@ -295,10 +297,19 @@ public class RevistaDB {
         return cantidadLikes;
     }
     
-    public boolean crearPublicacion(Publicacion publicacion) {
-        
-        return false;
-        
+    public boolean crearPublicacion(String numeroPublicacion, InputStream archivo, int idRevista) {
+        String query = "INSERT INTO publicacion (archivo_pdf, id_revista, numero_publicacion) VALUES (?, ?, ?)";
+        try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            prepared.setBlob(1, archivo);
+            prepared.setInt(2, idRevista);
+            prepared.setString(3, numeroPublicacion);
+            prepared.executeUpdate();
+            System.out.println("Publicacion Creada!!!");
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Error en crear una Publicacion: " + e);
+            return false;
+        }
     }
 
 }

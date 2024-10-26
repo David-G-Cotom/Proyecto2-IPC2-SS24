@@ -27,4 +27,8 @@ export class ImagenService {
     return this.http.get(`${this.urlBackend}Media/anuncio/${idAnuncioVideo}`, {responseType: 'blob'});
   }
 
+  public getPdfPublicacion(idPublicacion: number): Observable<Blob> {
+    return this.http.get(`${this.urlBackend}Media/publicacion/${idPublicacion}`, {responseType: 'blob'});
+  }
+
 }

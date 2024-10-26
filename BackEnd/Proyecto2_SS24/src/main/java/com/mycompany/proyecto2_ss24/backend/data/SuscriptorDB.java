@@ -410,4 +410,22 @@ public class SuscriptorDB {
         return revistasSuscritas;
     }
     
+    public ArrayList<Integer> getIdPublicaciones(int idRevista) {
+        ArrayList<Integer> ids = new ArrayList<>();
+        String query = "SELECT id_publicacion FROM publicacion WHERE id_revista = ?";
+        try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            prepared.setInt(1, idRevista);
+            try (ResultSet resul = prepared.executeQuery()) {
+                while (resul.next()) {
+                    ids.add(resul.getInt("id_publicacion"));
+                }
+            } catch (SQLException e) {
+                System.out.println("Error en recibir el id de la publicacion: " + e);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error en recibir el id de la publicacion: " + e);
+        }
+        return ids;
+    }
+    
 }

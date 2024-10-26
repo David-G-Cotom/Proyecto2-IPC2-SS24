@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * @author Carlos Cotom
  */
 public class BusquedaRevistasController {
-    
+
     private final SuscriptorDB dataSuscriptor = new SuscriptorDB();
     private final FiltroBusquedaRevista filtro;
     private ArrayList<String> etiquetasFiltradas;
@@ -26,7 +26,7 @@ public class BusquedaRevistasController {
     public BusquedaRevistasController(FiltroBusquedaRevista filtro) {
         this.filtro = filtro;
     }
-    
+
     private void verificarEtiquetas() {
         etiquetasFiltradas = new ArrayList<>();
         for (String etiqueta : this.filtro.getEtiquetas()) {
@@ -38,7 +38,7 @@ public class BusquedaRevistasController {
             }
         }
     }
-    
+
     private void verificarCategorias() {
         this.categoriasFiltradas = new ArrayList<>();
         for (String categoria : this.filtro.getCategorias()) {
@@ -50,25 +50,33 @@ public class BusquedaRevistasController {
             }
         }
     }
-    
+
     public ArrayList<RevistaTS> getRevistas() {
         this.verificarEtiquetas();
         this.verificarCategorias();
         ArrayList<Revista> revistasJava;
         ArrayList<RevistaTS> revistas;
+        ArrayList<ArrayList<Integer>> idsPublicaciones = new ArrayList<>();
         int idSuscriptor = this.dataSuscriptor.getIdSuscriptor(this.filtro.getIdUsuario());
         if (this.etiquetasFiltradas.isEmpty() && this.categoriasFiltradas.isEmpty()) {
             revistasJava = this.dataSuscriptor.getAllRevistasSuscriptor(idSuscriptor);
-            revistas = this.convertirRevistas(revistasJava);
+            for (Revista revista : revistasJava) {
+                idsPublicaciones.add(this.dataSuscriptor.getIdPublicaciones(revista.getIdRevista()));
+            }
+            revistas = this.convertirRevistas(revistasJava, idsPublicaciones);
             return revistas;
         }
         revistasJava = this.dataSuscriptor.getRevistasSuscritasFiltro(idSuscriptor, etiquetasFiltradas, categoriasFiltradas);
-        revistas = this.convertirRevistas(revistasJava);
+        for (Revista revista : revistasJava) {
+            idsPublicaciones.add(this.dataSuscriptor.getIdPublicaciones(revista.getIdRevista()));
+        }
+        revistas = this.convertirRevistas(revistasJava, idsPublicaciones);
         return revistas;
     }
-    
-    private ArrayList<RevistaTS> convertirRevistas(ArrayList<Revista> revistasJava) {
+
+    private ArrayList<RevistaTS> convertirRevistas(ArrayList<Revista> revistasJava, ArrayList<ArrayList<Integer>> idsPublicaciones) {
         ArrayList<RevistaTS> revistas = new ArrayList<>();
+        int indice = 0;
         for (Revista revistaJava : revistasJava) {
             RevistaTS revistaTS = new RevistaTS();
             revistaTS.setPuedeComentarse(revistaJava.isPuedeComentarse());
@@ -93,9 +101,17 @@ public class BusquedaRevistasController {
             revistaTS.setIdEditor(revistaJava.getAutor().getIdEditor());
             int idSuscriptor = this.dataSuscriptor.getIdSuscriptor(this.filtro.getIdUsuario());
             revistaTS.setTieneLike(this.dataSuscriptor.revistaConLike(revistaJava.getIdRevista(), idSuscriptor));
+            int[] publicaciones = new int[idsPublicaciones.get(indice).size()];
+            int i = 0;
+            for (Integer idPublicacion : idsPublicaciones.get(indice)) {
+                publicaciones[i] = idPublicacion;
+                i++;
+            }
+            revistaTS.setIdPublicaciones(publicaciones);
             revistas.add(revistaTS);
+            indice++;
         }
         return revistas;
     }
-    
+
 }

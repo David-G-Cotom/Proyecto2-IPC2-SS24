@@ -19,7 +19,6 @@ public class JakartaRestConfiguration extends Application {
         resources.add(com.mycompany.proyecto2_ss24.resources.RegistroUsuarioResource.class);
         resources.add(com.mycompany.proyecto2_ss24.resources.InicioSesionResource.class);
         resources.add(com.mycompany.proyecto2_ss24.resources.PerfilUsuarioResource.class);
-        resources.add(com.mycompany.proyecto2_ss24.resources.PublicacionResource.class);
         resources.add(com.mycompany.proyecto2_ss24.resources.RevistaResource.class);
         resources.add(com.mycompany.proyecto2_ss24.resources.ObtencionRevistaResource.class);
         resources.add(com.mycompany.proyecto2_ss24.resources.RecargaCreditoResource.class);
@@ -31,6 +30,7 @@ public class JakartaRestConfiguration extends Application {
         resources.add(com.mycompany.proyecto2_ss24.resources.ImagenResource.class);
         resources.add(com.mycompany.proyecto2_ss24.resources.ObtencionAnuncioResource.class);
         resources.add(com.mycompany.proyecto2_ss24.resources.MediaResource.class);
+        resources.add(com.mycompany.proyecto2_ss24.resources.RegistroPublicacionResource.class);
         return resources;
     }
     
