@@ -31,6 +31,8 @@ public class JakartaRestConfiguration extends Application {
         resources.add(com.mycompany.proyecto2_ss24.resources.ObtencionAnuncioResource.class);
         resources.add(com.mycompany.proyecto2_ss24.resources.MediaResource.class);
         resources.add(com.mycompany.proyecto2_ss24.resources.RegistroPublicacionResource.class);
+        resources.add(com.mycompany.proyecto2_ss24.resources.ObtencionPreciosResource.class);
+        resources.add(com.mycompany.proyecto2_ss24.resources.RegistroPreciosResource.class);
         return resources;
     }
     

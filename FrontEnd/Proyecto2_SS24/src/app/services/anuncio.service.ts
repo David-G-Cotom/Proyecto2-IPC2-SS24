@@ -45,4 +45,20 @@ export class AnuncioService {
     return this.http.put<any>(`${this.urlBackend}RegistroAd`, anuncio);
   }
 
+  public getrPreciosTipoAnuncio(): Observable<number[]> {
+    return this.http.get<number[]>(`${this.urlBackend}ObtenerPrecio/tipoAnuncio`);
+  }
+
+  public registrarPreciosTipoAnuncio(precios: string[]): Observable<any> {
+    return this.http.post<any>(`${this.urlBackend}RegistroPrecio/tipoAnuncio`, precios);
+  }
+
+  public getrPreciosTiempoAnuncio(): Observable<number[]> {
+    return this.http.get<number[]>(`${this.urlBackend}ObtenerPrecio/tiempoAnuncio`);
+  }
+  
+  public registrarPreciosTiempoAnuncio(precios: string[]): Observable<any> {
+    return this.http.post<any>(`${this.urlBackend}RegistroPrecio/tiempoAnuncio`, precios);
+  }
+
 }

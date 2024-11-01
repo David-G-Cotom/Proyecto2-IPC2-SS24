@@ -1,24 +1,25 @@
-<div>
+<div class="content">
     <h2>Edicion de Precios para los Periodos de Tiempos en los Anuncios</h2>
     <div class="form-container">
-        <form method="POST">
+        <form [formGroup]="formulario" (ngSubmit)="editarPrecios()">
             <div class="input-group">
                 <label for="precio-1">Precio para 1 dia:</label>
-                <input type="text" id="precio-1" name="precio-1"/>
+                <input type="text" id="precio-1" name="precio-1" formControlName="precioDia1">
             </div>
             <div class="input-group">
                 <label for="precio-3">Precio para 3 dias:</label>
-                <input type="text" id="precio-3" name="precio-3"/>
+                <input type="text" id="precio-3" name="precio-3" formControlName="precioDia3">
             </div>
             <div class="input-group">
                 <label for="precio-7">Precio para 7 dias</label>
-                <input type="text" id="precio-7" name="precio-7"/>
+                <input type="text" id="precio-7" name="precio-7" formControlName="precioDia7">
             </div>
             <div class="input-group">
                 <label for="precio-14">Precio para 14 dias</label>
-                <input type="text" id="precio-14" name="precio-14"/>
+                <input type="text" id="precio-14" name="precio-14" formControlName="precioDia14">
             </div>
             <button type="submit">Guardar</button>
         </form>
+        <div *ngIf="errorDatos"><span style="color: red;">{{ mensajeErro }}</span></div>
     </div>
 </div>

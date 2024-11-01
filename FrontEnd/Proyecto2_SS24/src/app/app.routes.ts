@@ -24,8 +24,9 @@ import { FormCompraVideoAdComponent } from './components/anunciante/form-compra-
 import { ContentAnuncianteComponent } from './components/anunciante/content-anunciante/content-anunciante.component';
 import { FormEdicionAnuncioComponent } from './components/anunciante/form-edicion-anuncio/form-edicion-anuncio.component';
 import { PublicacionComponent } from './components/suscriptor/publicacion/publicacion.component';
-import { FormEdicionPrecioTipoAnuncioComponent } from './components/administrador/form-edicion-precio-tipo-anuncio/form-edicion-precio-tipo-anuncio.component';
-import { FormEdicionPrecioTiempoAnuncioComponent } from './components/administrador/form-edicion-precio-tiempo-anuncio/form-edicion-precio-tiempo-anuncio.component';
+import { EdicionPreciosTipoAnuncioComponent } from './components/administrador/edicion-precios-tipo-anuncio/edicion-precios-tipo-anuncio.component';
+import { EdicionPreciosTiempoAnuncioComponent } from './components/administrador/edicion-precios-tiempo-anuncio/edicion-precios-tiempo-anuncio.component';
+import { EdicionPreciosRevistaComponent } from './components/administrador/edicion-precios-revista/edicion-precios-revista.component';
 
 export const routes: Routes = [
   {
@@ -149,11 +150,15 @@ export const routes: Routes = [
       },
       {
         path: 'editar-precio-tipo-anuncio',
-        component: FormEdicionPrecioTipoAnuncioComponent
+        component: EdicionPreciosTipoAnuncioComponent
       },
       {
         path: 'editar-precio-periodo-tiempo-anuncio',
-        component: FormEdicionPrecioTiempoAnuncioComponent
+        component: EdicionPreciosTiempoAnuncioComponent
+      },
+      {
+        path: 'editar-precio-revista',
+        component: EdicionPreciosRevistaComponent
       }
     ]
   },
