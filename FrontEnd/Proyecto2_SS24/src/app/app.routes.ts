@@ -24,6 +24,8 @@ import { FormCompraVideoAdComponent } from './components/anunciante/form-compra-
 import { ContentAnuncianteComponent } from './components/anunciante/content-anunciante/content-anunciante.component';
 import { FormEdicionAnuncioComponent } from './components/anunciante/form-edicion-anuncio/form-edicion-anuncio.component';
 import { PublicacionComponent } from './components/suscriptor/publicacion/publicacion.component';
+import { FormEdicionPrecioTipoAnuncioComponent } from './components/administrador/form-edicion-precio-tipo-anuncio/form-edicion-precio-tipo-anuncio.component';
+import { FormEdicionPrecioTiempoAnuncioComponent } from './components/administrador/form-edicion-precio-tiempo-anuncio/form-edicion-precio-tiempo-anuncio.component';
 
 export const routes: Routes = [
   {
@@ -144,6 +146,14 @@ export const routes: Routes = [
       {
         path: 'perfil',
         component: PerfilUsuarioComponent
+      },
+      {
+        path: 'editar-precio-tipo-anuncio',
+        component: FormEdicionPrecioTipoAnuncioComponent
+      },
+      {
+        path: 'editar-precio-periodo-tiempo-anuncio',
+        component: FormEdicionPrecioTiempoAnuncioComponent
       }
     ]
   },

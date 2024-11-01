@@ -1,10 +1,7 @@
 <div>
     <h2>Anuncio de Video</h2>
     <h3>Titulo: {{anuncio.titulo}}</h3>
-    <video width="300" height="300" controls>
-        <source [src]="videoSrc" type="video/mp4">
-        Tu navegador no soporta el video
-    </video>
+    <video [src]="videoSrc" width="300" height="300" controls></video>
     <p>Vigencia en Dias: {{anuncio.vigenciaDias}}</p>
     <p>Esta Activo: {{anuncio.isActivo}}</p>
     <p>Costo: {{anuncio.precio}}</p>
