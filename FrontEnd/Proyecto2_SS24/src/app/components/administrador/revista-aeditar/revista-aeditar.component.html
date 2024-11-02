@@ -1,16 +1,19 @@
 <div class="content-revistas">
     <div>
-        <h3>Nombre de Revista:</h3>
-        <p>Descripcion de Revista:</p>
-        <p>Likes:</p>
-        <form method="POST">
+        <h3>Nombre de Revista: {{revista.nombre}}</h3>
+        <p>Descripcion de Revista: {{revista.descripcion}}</p>
+        <p>Likes: {{revista.likes}}</p>
+        <form [formGroup]="formulario" (ngSubmit)="editarPrecios()">
             <div class="input-group">
                 <label for="precio">Precio por Dia Actual: </label>
-                <input type="text" id="precio" name="precio"/>
+                <input type="text" id="precio{{revista.idRevista}}" name="precio" value="{{revista.costo}}">
                 <label for="precioGlobal">Precio Global Actual: </label>
-                <input type="text" id="precioGlobal" name="precioGlobal"/>
+                <input type="text" id="precioGlobal{{revista.idRevista}}" name="precioGlobal" value="{{revista.costoGlobal}}">
+                <label for="precioOcultacion">Precio para Ocultacion de Anuncios Actual: </label>
+                <input type="text" id="precioOcultacion{{revista.idRevista}}" name="precioOcultacion" value="{{revista.costoOcultacion}}">
                 <button type="submit">Cambiar</button>
             </div>
         </form>
+        <div *ngIf="errorDatos"><span style="color: red;">{{ mensajeErro }}</span></div>
     </div>
 </div>

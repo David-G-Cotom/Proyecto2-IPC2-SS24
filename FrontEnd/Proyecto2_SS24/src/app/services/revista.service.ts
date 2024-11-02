@@ -42,4 +42,12 @@ export class RevistaService {
     return this.http.post<Revista[]>(`${this.urlBackend}ObtenerRevista`, filtro);
   }
 
+  public getAllRevistas(): Observable<Revista[]> {
+    return this.http.get<Revista[]>(`${this.urlBackend}ObtenerRevista`);
+  }
+
+  public registrarPreciosNuevos(precios: string[], idRevista: number): Observable<any> {
+    return this.http.post<any>(`${this.urlBackend}RegistroPrecio/revista/${idRevista}`, precios);
+  }
+
 }

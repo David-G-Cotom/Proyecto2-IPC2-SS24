@@ -5,6 +5,7 @@
 package com.mycompany.proyecto2_ss24.resources;
 
 import com.mycompany.proyecto2_ss24.backend.controllers.BusquedaRevistasController;
+import com.mycompany.proyecto2_ss24.backend.data.PreciosRevistaDB;
 import com.mycompany.proyecto2_ss24.backend.data.RevistaDB;
 import com.mycompany.proyecto2_ss24.backend.model.FiltroBusquedaRevista;
 import com.mycompany.proyecto2_ss24.backend.model.Revista;
@@ -55,6 +56,39 @@ public class ObtencionRevistaResource {
             revistaTS.setNombre(revistaJ.getNombreRevista());
             revistaTS.setIdRevista(revistaJ.getIdRevista());
             revistaTS.setCostoGlobal(0);
+            revistas.add(revistaTS);
+        }
+        return Response.ok(revistas).build();
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllRevistas() {
+        PreciosRevistaDB dataRevistas = new PreciosRevistaDB();
+        ArrayList<Revista> revistasJava = dataRevistas.getAllRevistas();
+        ArrayList<RevistaTS> revistas = new ArrayList<>();
+        for (Revista revistaJ : revistasJava) {
+            RevistaTS revistaTS = new RevistaTS();
+            revistaTS.setPuedeComentarse(revistaJ.isPuedeComentarse());
+            revistaTS.setPuedeSuscribirse(revistaJ.isPuedeSuscribirse());
+            revistaTS.setPuedeTenerLikes(revistaJ.isPuedeTenerLikes());
+            revistaTS.setDescripcion(revistaJ.getDescripcion());
+            revistaTS.setCategoria(revistaJ.getCategoria().toString());
+            String[] etiquetas = new String[revistaJ.getEtiquetas().size()];
+            for (int i = 0; i < etiquetas.length; i++) {
+                etiquetas[i] = revistaJ.getEtiquetas().get(i).toString();
+            }
+            revistaTS.setEtiquetas(etiquetas);
+            revistaTS.setIdUsuario(0);
+            revistaTS.setLikes(revistaJ.getLikes());
+            revistaTS.setComentarios(new String[0]);
+            revistaTS.setCosto(revistaJ.getCosto());
+            revistaTS.setFechaCreacion("");
+            revistaTS.setSuscripciones(new String[0]);
+            revistaTS.setNombre(revistaJ.getNombreRevista());
+            revistaTS.setIdRevista(revistaJ.getIdRevista());
+            revistaTS.setCostoGlobal(revistaJ.getCostoGlobal());
+            revistaTS.setCostoOcultacion(revistaJ.getCostoOcultacion());
             revistas.add(revistaTS);
         }
         return Response.ok(revistas).build();

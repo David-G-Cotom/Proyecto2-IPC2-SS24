@@ -31,6 +31,7 @@ public class RevistaTS {
     private int idEditor;
     private boolean tieneLike;
     private int[] idPublicaciones;
+    private double costoOcultacion;
 
     public RevistaTS() {
     }
@@ -39,7 +40,7 @@ public class RevistaTS {
             String descripcion, String categoria, String[] etiquetas, int idUsuario, int likes,
             String[] comentarios, double costo, String fechaCreacion, String[] suscripciones,
             String nombre, int idRevista, double costoGlobal, String nombreEditor, int idEditor,
-            boolean tieneLike, int[] idPublicaciones) {
+            boolean tieneLike, int[] idPublicaciones, double costoOcultacion) {
         this.puedeComentarse = puedeComentarse;
         this.puedeTenerLikes = puedeTenerLikes;
         this.puedeSuscribirse = puedeSuscribirse;
@@ -59,6 +60,7 @@ public class RevistaTS {
         this.idEditor = idEditor;
         this.tieneLike = tieneLike;
         this.idPublicaciones = idPublicaciones;
+        this.costoOcultacion = costoOcultacion;
     }
 
     public boolean isPuedeComentarse() {
@@ -213,6 +215,14 @@ public class RevistaTS {
         this.idPublicaciones = idPublicaciones;
     }
 
+    public double getCostoOcultacion() {
+        return costoOcultacion;
+    }
+
+    public void setCostoOcultacion(double costoOcultacion) {
+        this.costoOcultacion = costoOcultacion;
+    }
+
     @Override
     public String toString() {
         return "RevistaTS{" + "puedeComentarse = " + puedeComentarse + ", puedeTenerLikes = " + puedeTenerLikes
@@ -221,7 +231,8 @@ public class RevistaTS {
                 + ", idEditor = " + idUsuario + ", likes = " + likes + ", comentarios = " + Arrays.toString(comentarios)
                 + ", costo = " + costo + ", fechaCreacion = " + fechaCreacion
                 + ", suscripciones = " + Arrays.toString(suscripciones) + ", nombre = " + nombre
-                + ", idRevista = " + idRevista + ", costoGlobal = " + costoGlobal + '}';
+                + ", idRevista = " + idRevista + ", costoGlobal = " + costoGlobal
+                + ", costoOcultacion = " + costoOcultacion + '}';
     }
     
 }

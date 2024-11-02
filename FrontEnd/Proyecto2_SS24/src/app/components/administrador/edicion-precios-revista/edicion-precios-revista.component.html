@@ -1,6 +1,7 @@
 <div>
-    <h2>Edicion de Precios por Dia para las Revistas</h2>
+    <h2>Edicion de Precios para las Revistas</h2>
     <p>Estas son las Revistas Registradas en el Sistema</p>
-    <app-revista-aeditar></app-revista-aeditar>
-    <app-revista-aeditar></app-revista-aeditar>
+    @for (revista of revistas; track $index) {
+        <app-revista-aeditar [revista]="revista"></app-revista-aeditar>
+    }
 </div>

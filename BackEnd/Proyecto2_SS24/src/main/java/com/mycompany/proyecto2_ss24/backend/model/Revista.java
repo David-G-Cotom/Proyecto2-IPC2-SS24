@@ -29,6 +29,7 @@ public class Revista {
     private String nombreRevista;
     private int idRevista;
     private double costoGlobal;
+    private double costoOcultacion;
 
     public Revista() {
     }
@@ -176,6 +177,14 @@ public class Revista {
 
     public void setCostoGlobal(double costoGlobal) {
         this.costoGlobal = costoGlobal;
+    }
+
+    public double getCostoOcultacion() {
+        return costoOcultacion;
+    }
+
+    public void setCostoOcultacion(double costoOcultacion) {
+        this.costoOcultacion = costoOcultacion;
     }
 
     @Override

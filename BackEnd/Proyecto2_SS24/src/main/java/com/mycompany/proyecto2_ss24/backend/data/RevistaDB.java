@@ -35,7 +35,7 @@ public class RevistaDB {
     }
 
     public void crearRevista(Revista revista, int idUsuario) {
-        String query = "INSERT INTO revista (editor, descripcion, likes, costo, fecha_creacion, nombre, estado_comentarios, estado_likes, estado_suscripcion, categoria, costo_global) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO revista (editor, descripcion, likes, costo, fecha_creacion, nombre, estado_comentarios, estado_likes, estado_suscripcion, categoria, costo_global, costo_ocultacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
             int idAutor = this.getIdEditor(idUsuario);
             prepared.setInt(1, idAutor);
@@ -50,6 +50,7 @@ public class RevistaDB {
             int idCategoria = this.getIdCategoria(revista.getCategoria());
             prepared.setInt(10, idCategoria);
             prepared.setDouble(11, 0);
+            prepared.setDouble(12, 0);
             prepared.executeUpdate();
             System.out.println("Revista Creada!!!");
         } catch (SQLException e) {

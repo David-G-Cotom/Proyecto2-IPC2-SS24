@@ -5,6 +5,7 @@
 package com.mycompany.proyecto2_ss24.backend.controllers;
 
 import com.mycompany.proyecto2_ss24.backend.data.PreciosAnuncioDB;
+import com.mycompany.proyecto2_ss24.backend.data.PreciosRevistaDB;
 
 /**
  *
@@ -50,14 +51,14 @@ public class RegistroPreciosController {
     private boolean isDoublePositive(String texto) {
         try {
             double numero = Double.parseDouble(texto);
-            return numero > 0;
+            return numero >= 0;
         } catch (NumberFormatException e) {
             System.out.println("Texto ingresado NO puede ser Numero Entero");
             return false;
         }
     }
 
-    public String actualizar(String tipoActualizacio) {
+    public String actualizar(String tipoActualizacio, int idRevista) {
         PreciosAnuncioDB dataPrecios = new PreciosAnuncioDB();
         double[] nuevosPrecios = new double[this.precios.length];
         for (int i = 0; i < nuevosPrecios.length; i++) {
@@ -66,6 +67,10 @@ public class RegistroPreciosController {
         switch (tipoActualizacio) {
             case "TipoAnuncio" -> dataPrecios.actualizarPrecioTipoAnuncios(nuevosPrecios);
             case "PeriodoTiempoAnuncio" -> dataPrecios.actualizarPrecioPeriodoTiempo(nuevosPrecios);
+            case "Revista" -> {
+                PreciosRevistaDB data = new PreciosRevistaDB();
+                data.actualizarPrecioRevista(nuevosPrecios[0], nuevosPrecios[1], nuevosPrecios[2], idRevista);
+            }
         }
         String mensaje = "exito";
         return "{\"mensaje\":\"" + mensaje + "\"}";
