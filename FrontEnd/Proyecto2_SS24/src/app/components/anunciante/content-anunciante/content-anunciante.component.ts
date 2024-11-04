@@ -24,7 +24,7 @@ export class ContentAnuncianteComponent {
   }
 
   ngOnInit(): void {
-    this.anuncioService.getAllAnuncios(this.usuarioLogeado.idUsuario).subscribe({
+    this.anuncioService.getAllAnunciosAnunciante(this.usuarioLogeado.idUsuario).subscribe({
       next: (listado: Anuncio[]) => {
         console.log('Todo fue bien, procesando response...');
         if (listado.length === 0) {

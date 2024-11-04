@@ -27,6 +27,8 @@ import { PublicacionComponent } from './components/suscriptor/publicacion/public
 import { EdicionPreciosTipoAnuncioComponent } from './components/administrador/edicion-precios-tipo-anuncio/edicion-precios-tipo-anuncio.component';
 import { EdicionPreciosTiempoAnuncioComponent } from './components/administrador/edicion-precios-tiempo-anuncio/edicion-precios-tiempo-anuncio.component';
 import { EdicionPreciosRevistaComponent } from './components/administrador/edicion-precios-revista/edicion-precios-revista.component';
+import { FormBloqueoAnunciosComponent } from './components/editor/form-bloqueo-anuncios/form-bloqueo-anuncios.component';
+import { AnunciosRegistradosComponent } from './components/administrador/anuncios-registrados/anuncios-registrados.component';
 
 export const routes: Routes = [
   {
@@ -73,6 +75,10 @@ export const routes: Routes = [
       {
         path: 'revistas',
         component: ContentEditorComponent,
+      },
+      {
+        path: 'bloquear-anuncios/:id',
+        component: FormBloqueoAnunciosComponent
       }
     ]
   },
@@ -159,6 +165,10 @@ export const routes: Routes = [
       {
         path: 'editar-precio-revista',
         component: EdicionPreciosRevistaComponent
+      },
+      {
+        path: 'editar-anuncio',
+        component: AnunciosRegistradosComponent
       }
     ]
   },

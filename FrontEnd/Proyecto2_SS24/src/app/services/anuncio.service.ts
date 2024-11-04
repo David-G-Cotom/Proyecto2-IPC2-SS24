@@ -37,12 +37,20 @@ export class AnuncioService {
     return this.http.post<any>(`${this.urlBackend}RegistroAd/video`, formData);
   }
 
-  public getAllAnuncios(idUsuarioAnunciante: number): Observable<Anuncio[]> {
+  public getAllAnunciosAnunciante(idUsuarioAnunciante: number): Observable<Anuncio[]> {
     return this.http.get<Anuncio[]>(`${this.urlBackend}ObtenerAnuncio/${idUsuarioAnunciante}`)
   }
 
-  public actualizarAnuncio(anuncio: Anuncio): Observable<any> {
-    return this.http.put<any>(`${this.urlBackend}RegistroAd`, anuncio);
+  public getAllAnuncios(): Observable<Anuncio[]> {
+    return this.http.get<Anuncio[]>(`${this.urlBackend}ObtenerAnuncio`);
+  }
+
+  public actualizarAnuncioAnunciante(anuncio: Anuncio): Observable<any> {
+    return this.http.put<any>(`${this.urlBackend}RegistroAd/anunciante`, anuncio);
+  }
+
+  public actualizarAnuncioAdmin(anuncio: Anuncio): Observable<any> {
+    return this.http.put<any>(`${this.urlBackend}RegistroAd/administrador`, anuncio);
   }
 
   public getrPreciosTipoAnuncio(): Observable<number[]> {

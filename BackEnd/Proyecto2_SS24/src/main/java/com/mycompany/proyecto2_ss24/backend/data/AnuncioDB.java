@@ -46,6 +46,20 @@ public class AnuncioDB {
             return false;
         }
     }
+    
+    public boolean editarAnuncio(int idAnuncio, boolean estado) {
+        String query = "UPDATE anuncio SET estado = ? WHERE id_anuncio = ?";
+        try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            prepared.setBoolean(1, estado);
+            prepared.setInt(2, idAnuncio);
+            prepared.execute();
+            System.out.println("Estados del Anuncio Actualizado!!!");
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Error al Actualizar el Estado del Anuncio: " + e);
+            return false;
+        }
+    }
 
     public int getIdInversionista(int idUsuario) {
         String query = "SELECT id_inversionista FROM inversionista WHERE usuario = ?";
@@ -65,7 +79,7 @@ public class AnuncioDB {
         return idInversionista;
     }
 
-    public ArrayList<Anuncio> getAnuncios(int idInversionista) {
+    public ArrayList<Anuncio> getAnunciosAnunciante(int idInversionista) {
         String query = "SELECT * FROM anuncio WHERE inversionista = ?";
         ArrayList<Anuncio> anuncios = new ArrayList<>();
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
@@ -88,6 +102,29 @@ public class AnuncioDB {
             }
         } catch (SQLException e) {
             System.out.println("Error en recibir los Anuncios de un Inversionista: " + e);
+        }
+        return anuncios;
+    }
+    
+    public ArrayList<Anuncio> getAllAnuncios() {
+        String query = "SELECT * FROM anuncio";
+        ArrayList<Anuncio> anuncios = new ArrayList<>();
+        try (Statement state = this.connection.createStatement(); ResultSet resul = state.executeQuery(query)) {
+            while (resul.next()) {
+                int idAnuncio = resul.getInt("id_anuncio");
+                double costo = resul.getDouble("costo");
+                int idTipoAnuncio = resul.getInt("tipo_anuncio");
+                int idInversionista = resul.getInt("inversionista");
+                int vigencia = resul.getInt("vigencia_dias");
+                boolean isActivo = resul.getBoolean("estado");
+                int idPeriodo = resul.getInt("id_periodo");
+                Anuncio anuncio = new Anuncio(costo, vigencia, isActivo, idInversionista, idPeriodo, idTipoAnuncio);
+                anuncio.setIdAnuncio(idAnuncio);
+                anuncio.setTitulo(resul.getString("titulo"));
+                this.agregarAnuncioEspecifico(anuncios, anuncio);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al Consultar getAllAnuncios() en AnuncioDB: " + e);
         }
         return anuncios;
     }

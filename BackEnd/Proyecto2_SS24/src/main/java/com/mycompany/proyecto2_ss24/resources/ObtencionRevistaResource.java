@@ -56,6 +56,7 @@ public class ObtencionRevistaResource {
             revistaTS.setNombre(revistaJ.getNombreRevista());
             revistaTS.setIdRevista(revistaJ.getIdRevista());
             revistaTS.setCostoGlobal(0);
+            revistaTS.setTieneOcultacionAnuncios(revistaJ.isTieneOcultacionAnuncios());
             revistas.add(revistaTS);
         }
         return Response.ok(revistas).build();

@@ -44,7 +44,7 @@ export class FormEdicionAnuncioComponent {
       let anuncio = new Anuncio(0, 0, this.estado, 0, 0, 0, parseInt(this.anuncioID!),
                                 tituloControl.value, '', 0, '')
 
-      this.anuncioService.actualizarAnuncio(anuncio).subscribe({
+      this.anuncioService.actualizarAnuncioAnunciante(anuncio).subscribe({
         next: (nuevaRevista: any) => {
           console.log(nuevaRevista);
           if (nuevaRevista.mensaje === 'exito') {

@@ -7,6 +7,10 @@
     <p>Puede tener Comentarios: {{revista.puedeComentarse}}</p>
     <p>Puede tener Likes: {{revista.puedeTenerLikes}}</p>
     <p>Puede tener Suscripciones: {{revista.puedeSuscribirse}}</p>
+    <p>Tiene Ocultacion de Anuncios: {{revista.tieneOcultacionAnuncios}}</p>
     <a routerLink="/editor/home-page/editar-revista/{{revista.idRevista}}" routerLinkActive="active">Editar</a>
     <a routerLink="/editor/home-page/nueva-publicacion/{{revista.idRevista}}" routerLinkActive="active">Crear Publicacion</a>
+    @if (!revista.tieneOcultacionAnuncios) {
+        <a routerLink="/editor/home-page/bloquear-anuncios/{{revista.idRevista}}" routerLinkActive="active">Bloquear Anuncios para Revista</a>
+    }
 </div>

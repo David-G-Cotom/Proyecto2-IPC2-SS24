@@ -6,7 +6,6 @@ package com.mycompany.proyecto2_ss24.backend.data;
 
 import com.mycompany.proyecto2_ss24.backend.model.CategoriaEnum;
 import com.mycompany.proyecto2_ss24.backend.model.EtiquetaEnum;
-import com.mycompany.proyecto2_ss24.backend.model.Publicacion;
 import com.mycompany.proyecto2_ss24.backend.model.Revista;
 import com.mycompany.proyecto2_ss24.backend.model.RevistaTS;
 import java.io.InputStream;
@@ -35,7 +34,7 @@ public class RevistaDB {
     }
 
     public void crearRevista(Revista revista, int idUsuario) {
-        String query = "INSERT INTO revista (editor, descripcion, likes, costo, fecha_creacion, nombre, estado_comentarios, estado_likes, estado_suscripcion, categoria, costo_global, costo_ocultacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO revista (editor, descripcion, likes, costo, fecha_creacion, nombre, estado_comentarios, estado_likes, estado_suscripcion, categoria, costo_global, costo_ocultacion, estado_ocultacion_anuncios) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
             int idAutor = this.getIdEditor(idUsuario);
             prepared.setInt(1, idAutor);
@@ -51,6 +50,7 @@ public class RevistaDB {
             prepared.setInt(10, idCategoria);
             prepared.setDouble(11, 0);
             prepared.setDouble(12, 0);
+            prepared.setBoolean(13, false);
             prepared.executeUpdate();
             System.out.println("Revista Creada!!!");
         } catch (SQLException e) {
@@ -132,6 +132,7 @@ public class RevistaDB {
                     revista.setPuedeComentarse(resul.getBoolean("estado_comentarios"));
                     revista.setPuedeSuscribirse(resul.getBoolean("estado_suscripcion"));
                     revista.setPuedeTenerLikes(resul.getBoolean("estado_likes"));
+                    revista.setTieneOcultacionAnuncios(resul.getBoolean("estado_ocultacion_anuncios"));
                     revistas.add(revista);
                 }
             } catch (SQLException e) {
@@ -248,15 +249,14 @@ public class RevistaDB {
         return idsTipoEtiqueta;
     }
 
-    public byte[] getPdfPublicacion(int idPublicaicon) {
+    public InputStream getPdfPublicacion(int idPublicaicon) {
         String query = "SELECT archivo_pdf FROM publicacion WHERE id_publicacion= ?";
-        byte[] dataPdf = null;
+        InputStream dataPdf = null;
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
             prepared.setInt(1, idPublicaicon);
             try (ResultSet resul = prepared.executeQuery()) {
                 if (resul.next()) {
-                    dataPdf = resul.getBytes("archivo_pdf");
-                    System.out.println("CARGO LOS BYTES");
+                    dataPdf = resul.getBinaryStream("archivo_pdf");
                 }
             } catch (SQLException e) {
                 System.out.println("Error en recibir el Contenido de la Publicacion PDF: " + e);

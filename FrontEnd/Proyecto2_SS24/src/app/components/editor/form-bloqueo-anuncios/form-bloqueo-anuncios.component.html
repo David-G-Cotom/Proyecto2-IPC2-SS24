@@ -1,0 +1,15 @@
+<div class="body-component">
+    <div class="form-container">
+        <h1>Recarga de Credito</h1>
+        <form [formGroup]="formulario" (ngSubmit)="registrarBloque()">
+            <div class="input-group">
+                <label for="cantidad">Cantidad de Dias a Bloquear Anuncios:</label>
+                <input type="text" id="cantidad" name="cantidad" formControlName="cantidadDias">
+            </div>               
+            <button type="submit">Hacer Bloqueo</button>
+        </form>
+        <div *ngIf="errorDatos"><span style="color: red;">{{ mensajeErro }}</span></div>
+        <pre>{{ formulario.value | json }}</pre>
+        <pre>{{ formulario.valid | json }}</pre>
+    </div>
+</div>

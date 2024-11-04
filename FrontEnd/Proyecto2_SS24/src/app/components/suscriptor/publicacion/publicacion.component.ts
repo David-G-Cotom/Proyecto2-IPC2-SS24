@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ImagenService } from '../../../services/imagen.service';
 import { CommonModule } from '@angular/common';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-publicacion',
@@ -12,10 +13,12 @@ import { CommonModule } from '@angular/common';
 })
 export class PublicacionComponent {
 
-  archivoSrc!: string;
+  archivoSrc!: SafeResourceUrl;
   idPublicacion!: string | null;
 
-  constructor(private routParam: ActivatedRoute, private imageService: ImagenService) {
+  constructor(private routParam: ActivatedRoute,
+              private imageService: ImagenService,
+              private d: DomSanitizer) {
     this.routParam.paramMap.subscribe(paramMap => {
       this.idPublicacion = paramMap.get('id');
     });
@@ -24,9 +27,10 @@ export class PublicacionComponent {
   ngOnInit(): void {
     if (this.idPublicacion != null) {
       this.imageService.getPdfPublicacion(parseInt(this.idPublicacion)).subscribe({
-        next: (imagen: Blob) => {
-          const url = window.URL.createObjectURL(imagen);
-          this.archivoSrc = url;
+        next: (archivo: Blob) => {
+          console.log(archivo);
+          const url = URL.createObjectURL(archivo);
+          this.archivoSrc = this.d.bypassSecurityTrustResourceUrl(url);
         }
       });
     }

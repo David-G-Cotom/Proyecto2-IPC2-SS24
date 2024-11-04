@@ -16,4 +16,8 @@ export class EditorService {
     return this.http.post<any>(`${this.urlBackend}RegistroRecarga`, recarga);
   }
 
+  public registrarBloqueo(idRevista: string, cantidadDias: string): Observable<any> {
+    return this.http.post<any>(`${this.urlBackend}RegistroBloque/${idRevista}/${cantidadDias}`, null);
+  }
+
 }

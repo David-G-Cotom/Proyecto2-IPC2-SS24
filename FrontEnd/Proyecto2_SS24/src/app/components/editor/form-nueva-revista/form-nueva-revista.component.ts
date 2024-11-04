@@ -72,7 +72,7 @@ export class FormNuevaRevistaComponent {
       }
       
       let revista = new Revista(puedeRecibirComentarios, puedeRecibirLikes, puedeRecibirSuscripciones, descripcionControl.value,
-        categoriaControl.value, this.etiquetas, this.usuairoLogeado.idUsuario, 0, [''], 0.0, fecha, [''], nombreControl.value, 0, 0, '', 0, false, [], 0);
+        categoriaControl.value, this.etiquetas, this.usuairoLogeado.idUsuario, 0, [''], 0.0, fecha, [''], nombreControl.value, 0, 0, '', 0, false, [], 0, false);
       
       this.revistaServices.registrarRevista(revista).subscribe({
         next: (mensajeCreacion: any) => {

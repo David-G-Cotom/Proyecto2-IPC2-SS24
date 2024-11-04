@@ -1,0 +1,16 @@
+<div class="content">
+    <p>Estos son Todos los Anuncios Registradas en el Sistema</p>
+    @for (anuncio of anuncios; track $index) {
+        @switch (anuncio.idTipoAnuncio) {
+            @case (1) {
+                <app-ad-text-aeditar [anuncio]="anuncio"></app-ad-text-aeditar>
+            }
+            @case (2) {
+                <app-ad-image-aeditar [anuncio]="anuncio"></app-ad-image-aeditar>
+            }
+            @case (3) {
+                <app-ad-video-aeditar [anuncio]="anuncio"></app-ad-video-aeditar>
+            }
+        }
+    }
+</div>

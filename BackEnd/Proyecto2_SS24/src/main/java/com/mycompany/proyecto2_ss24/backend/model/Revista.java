@@ -30,6 +30,7 @@ public class Revista {
     private int idRevista;
     private double costoGlobal;
     private double costoOcultacion;
+    private boolean tieneOcultacionAnuncios;
 
     public Revista() {
     }
@@ -185,6 +186,14 @@ public class Revista {
 
     public void setCostoOcultacion(double costoOcultacion) {
         this.costoOcultacion = costoOcultacion;
+    }
+
+    public boolean isTieneOcultacionAnuncios() {
+        return tieneOcultacionAnuncios;
+    }
+
+    public void setTieneOcultacionAnuncios(boolean tieneOcultacionAnuncios) {
+        this.tieneOcultacionAnuncios = tieneOcultacionAnuncios;
     }
 
     @Override

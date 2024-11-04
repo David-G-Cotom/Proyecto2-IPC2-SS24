@@ -91,14 +91,31 @@ public class AnuncioResource {
     }
     
     @PUT
+    @Path("anunciante")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updatePerfil(AnuncioTS anuncio) {
+    public Response updateAnuncioAnunciante(AnuncioTS anuncio) {
         if (anuncio.getTitulo().equals("")) {
             String mensajeErrorDatos = "ERROR EN LA ACTUALIZACION DE TITULO, debe de rellenar el campo";
             String JSONResponse = "{\"mensaje\":\"" + mensajeErrorDatos + "\"}";
             return Response.ok(JSONResponse).build();
         }
+        AnuncioDB dataRevista = new AnuncioDB();
+        if (dataRevista.editarAnuncio(anuncio.getIdAnuncio(), anuncio.isIsActivo(), anuncio.getTitulo())) {
+            String mensaje = "exito";
+            String JSONResponse = "{\"mensaje\":\"" + mensaje + "\"}";
+            return Response.ok(JSONResponse).build();
+        }
+        String mensaje = "error";
+        String JSONResponse = "{\"mensaje\":\"" + mensaje + "\"}";
+        return Response.ok(JSONResponse).build();
+    }
+    
+    @PUT
+    @Path("administrador")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateAnuncioAdministrador(AnuncioTS anuncio) {
         AnuncioDB dataRevista = new AnuncioDB();
         if (dataRevista.editarAnuncio(anuncio.getIdAnuncio(), anuncio.isIsActivo(), anuncio.getTitulo())) {
             String mensaje = "exito";
