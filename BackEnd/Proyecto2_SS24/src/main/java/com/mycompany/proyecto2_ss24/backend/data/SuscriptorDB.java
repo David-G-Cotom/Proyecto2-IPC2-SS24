@@ -33,12 +33,13 @@ public class SuscriptorDB {
     }
     
     public void crearComentario(Comentario comentario, int idUsuario) {
-        String query = "INSERT INTO comentario (revista, contenido, suscriptor) VALUES (?, ?, ?)";
+        String query = "INSERT INTO comentario (revista, contenido, suscriptor, fecha_comentario) VALUES (?, ?, ?, ?)";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
             int idSuscriptor = this.getIdSuscriptor(idUsuario);
             prepared.setInt(1, comentario.getRevista());
             prepared.setString(2, comentario.getContenido());
             prepared.setInt(3, idSuscriptor);
+            prepared.setString(4, comentario.getFechaComentario());
             prepared.executeUpdate();
             System.out.println("Comentario Creado!!!");
         } catch (SQLException e) {

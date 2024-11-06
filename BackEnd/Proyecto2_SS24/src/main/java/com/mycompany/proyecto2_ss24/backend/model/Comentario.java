@@ -14,6 +14,7 @@ public class Comentario {
     private String contenido;
     private int comentarista;
     private int revista;
+    private String fechaComentario;
 
     public Comentario() {
     }
@@ -45,6 +46,14 @@ public class Comentario {
 
     public void setRevista(int revista) {
         this.revista = revista;
+    }
+
+    public String getFechaComentario() {
+        return fechaComentario;
+    }
+
+    public void setFechaComentario(String fechaComentario) {
+        this.fechaComentario = fechaComentario;
     }
     
 }

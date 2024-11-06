@@ -29,6 +29,7 @@ import { EdicionPreciosTiempoAnuncioComponent } from './components/administrador
 import { EdicionPreciosRevistaComponent } from './components/administrador/edicion-precios-revista/edicion-precios-revista.component';
 import { FormBloqueoAnunciosComponent } from './components/editor/form-bloqueo-anuncios/form-bloqueo-anuncios.component';
 import { AnunciosRegistradosComponent } from './components/administrador/anuncios-registrados/anuncios-registrados.component';
+import { ReporteComentariosComponent } from './components/editor/reporte-comentarios/reporte-comentarios.component';
 
 export const routes: Routes = [
   {
@@ -79,6 +80,10 @@ export const routes: Routes = [
       {
         path: 'bloquear-anuncios/:id',
         component: FormBloqueoAnunciosComponent
+      },
+      {
+        path: 'reporte-comentarios',
+        component: ReporteComentariosComponent
       }
     ]
   },

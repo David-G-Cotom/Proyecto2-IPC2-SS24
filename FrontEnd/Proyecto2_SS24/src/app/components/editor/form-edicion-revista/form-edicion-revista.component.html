@@ -2,7 +2,6 @@
     <div class="form-container">
         <h1>Edicion de Revista</h1>
         <form [formGroup]="formulario" (ngSubmit)="editarRevista()">                
-            <input type="hidden" name="idRevista">
             <div class="input-group">
                 <label for="nombreRevista">Nombre de la Revista:</label>
                 <input type="text" id="nombreRevista" name="nombreRevista" formControlName="nombre">

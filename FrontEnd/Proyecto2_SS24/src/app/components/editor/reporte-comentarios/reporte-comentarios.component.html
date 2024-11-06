@@ -1,0 +1,47 @@
+<div class="content-body">
+    <div class="form-container">
+        <h2>Reporte de Comentarios</h2>
+        <form [formGroup]="formulario" (ngSubmit)="hacerBusqueda()">
+            <div class="input-group">
+                <label for="fechaInicio">Fecha de Inicio:</label>
+                <input type="date" id="fechaInicio" name="fechaInicio" formControlName="fechaInicio">
+            </div>
+            <div class="input-group">
+                <label for="fechaFin">Fecha de Fin:</label>
+                <input type="date" id="fechaFin" name="fechaFin" formControlName="fechaFin">
+            </div>
+            <p style="font-size: small;">Fechas Vacias: Muestran Todos los Datos</p>
+            <div class="input-group">
+                <label for="revista">Revista:</label>
+                <select id="revista" formControlName="revista">
+                    @for (idRevista of cantidadRevistas; track $index) {
+                        <option value="{{idRevista}}">Revista{{$index+1}}</option>
+                    }
+                </select>
+            </div>
+            <button type="submit">Buscar</button>
+        </form>
+        <div *ngIf="errorDatos"><span style="color: red;">{{ mensajeErro }}</span></div>
+    </div>
+</div>
+<div class="comentarios-container" *ngIf="mostrarTabla" style="margin-left: 255px;">
+    <h2 style="text-align: center;">Reporte</h2>
+    <table style="width:100%;">
+        <tr>
+          <th>Numero Revista</th>
+          <th>Nombre Revista</th> 
+          <th>Fecha Comentario</th>
+          <th>Contenido Comentario</th>
+          <th>Nombre Comentarista</th>
+        </tr>
+        @for (comentario of contenidoReporte; track $index) {
+            <tr>
+              <td>{{comentario.numeroRevista}}</td>
+              <td>{{comentario.nombreRevista}}</td>
+              <td>{{comentario.fechaComentario}}</td>
+              <td>{{comentario.contenidoComentario}}</td>
+              <td>{{comentario.nombreComentarista}}</td>
+            </tr>
+        }
+    </table>
+</div>

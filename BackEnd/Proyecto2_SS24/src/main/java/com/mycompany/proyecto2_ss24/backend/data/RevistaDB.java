@@ -312,5 +312,24 @@ public class RevistaDB {
             return false;
         }
     }
+    
+    public ArrayList<String> getCantidadRevistasEditor(int idEditor) {
+        String query = "SELECT id_revista FROM revista WHERE editor = ?";
+        ArrayList<String> revistas = new ArrayList<>();
+        try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            prepared.setInt(1, idEditor);
+            try (ResultSet resul = prepared.executeQuery()) {
+                while (resul.next()) {
+                    int idRevista = resul.getInt("id_revista");
+                    revistas.add(idRevista + "");
+                }
+            } catch (SQLException e) {
+                System.out.println("Error  getCantidadRevistasEditor(idEditor) en RevistaDB: " + e);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error  getCantidadRevistasEditor(idEditor) en RevistaDB: " + e);
+        }
+        return revistas;
+    }
 
 }

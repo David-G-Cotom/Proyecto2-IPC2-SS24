@@ -2,7 +2,6 @@
     <h2>Busqueda de Revistas Suscritas</h2>
     <form [formGroup]="formulario" (ngSubmit)="hacerBusqueda()">
         <h3>Filtrar por Categorias</h3>
-        <input type="hidden" name="id">
         <div class="checkbox-group">
             <label><input type="checkbox" (click)="agregarCategoria('SOFTWARE')"> SOFTWARE</label>
             <label><input type="checkbox" (click)="agregarCategoria('IA')"> IA</label>

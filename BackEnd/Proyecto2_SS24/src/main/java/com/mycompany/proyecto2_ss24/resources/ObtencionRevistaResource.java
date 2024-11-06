@@ -104,4 +104,14 @@ public class ObtencionRevistaResource {
         return Response.ok(revistas).build();
     }
     
+    @GET
+    @Path("cantidad/{idUsuario}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCantidadRevistasEditor(@PathParam("idUsuario") int idUsuario) {
+        RevistaDB dataRevistas = new RevistaDB();
+        int idEditor = dataRevistas.getIdEditor(idUsuario);
+        ArrayList<String> revistas = dataRevistas.getCantidadRevistasEditor(idEditor);
+        return Response.ok(revistas).build();
+    }
+    
 }

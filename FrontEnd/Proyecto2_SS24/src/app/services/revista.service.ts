@@ -50,4 +50,8 @@ export class RevistaService {
     return this.http.post<any>(`${this.urlBackend}RegistroPrecio/revista/${idRevista}`, precios);
   }
 
+  public getCantidadRevistasEditor(idUsuario: number): Observable<string[]> {
+    return this.http.get<string[]>(`${this.urlBackend}ObtenerRevista/cantidad/${idUsuario}`);
+  }
+
 }
