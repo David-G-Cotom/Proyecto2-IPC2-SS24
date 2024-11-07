@@ -19,28 +19,4 @@ export class RevistaComponent {
   @Input({required: true})
   revista!: Revista;
 
-  usuarioLogeado: UsuarioAplicacionJava;
-
-  constructor(private suscriptorService: SuscriptorService, private routingServices: RoutingService) {
-    this.usuarioLogeado = JSON.parse(`${localStorage.getItem('Usuario-Actual')}`);
-  }
-
-  public darLike() {
-    let like = new Like(this.usuarioLogeado.idUsuario, this.revista.idRevista);
-    this.suscriptorService.registrarLike(like).subscribe({
-      next: (nuevoLike: any) => {
-        console.log(nuevoLike);
-        if (nuevoLike.mensaje === 'exito') {
-          alert('LIKE REALIZADO CON EXITO');
-          this.routingServices.redireccionarUsuario();
-        } else {
-          alert('No se pudo hacer like, vuelva mas tarde');
-        }
-      }, error: (error: any) => {
-        console.log('HUBO ERROR');
-        console.log(error);
-      }
-    });
-  }
-
 }

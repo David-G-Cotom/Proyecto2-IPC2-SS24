@@ -1,0 +1,55 @@
+<div class="content-body">
+    <div class="form-container">
+        <h2>Reporte de Revistas Top</h2>
+        <form [formGroup]="formulario" (ngSubmit)="hacerBusqueda()">
+            <div class="input-group">
+                <label for="fechaInicio">Fecha de Inicio:</label>
+                <input type="date" id="fechaInicio" name="fechaInicio" formControlName="fechaInicio">
+            </div>
+            <div class="input-group">
+                <label for="fechaFin">Fecha de Fin:</label>
+                <input type="date" id="fechaFin" name="fechaFin" formControlName="fechaFin">
+            </div>
+            <p style="font-size: small;">Fechas Vacias: Muestran Todos los Datos</p>
+            <div class="input-group">
+                <label for="revista">Revista:</label>
+                <select id="revista" formControlName="revista">
+                    @for (idRevista of cantidadRevistas; track $index) {
+                        <option value="{{idRevista}}">Revista{{$index+1}}</option>
+                    }
+                </select>
+            </div>
+            <button type="submit">Buscar</button>
+        </form>
+        <div *ngIf="errorDatos"><span style="color: red;">{{ mensajeErro }}</span></div>
+    </div>
+</div>
+<div class="comentarios-container" *ngIf="mostrarTabla" style="margin-left: 255px;">
+    <h2 style="text-align: center;">Reporte</h2>
+    <table style="width:100%;">
+        @for (like of contenidoReporte; track $index) {
+            <tr style="background-color: aliceblue;">
+              <th>Numero Revista</th>
+              <th>Nombre Revista</th> 
+              <th>Cantidad Likes</th>
+            </tr>
+            <tr>
+              <td>{{like.numeroRevista}}</td>
+              <td>{{like.nombreRevista}}</td>
+              <td>{{like.cantidadLikes}}</td>
+            </tr>
+            <tr>
+                <th>Nombre Suscriptor</th>
+                <th>Fecha Like</th> 
+                <th>-</th>
+              </tr>
+            @for (item of like.nombresSuscriptores; track $index) {
+                <tr>
+                    <td>{{item}}</td>
+                    <td>{{like.fechasLikes[$index]}}</td>
+                    <td>-</td>
+                </tr>
+            }
+        }
+    </table>
+</div>

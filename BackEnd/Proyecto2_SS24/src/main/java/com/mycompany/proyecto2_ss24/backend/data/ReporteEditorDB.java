@@ -5,7 +5,11 @@
 package com.mycompany.proyecto2_ss24.backend.data;
 
 import com.mycompany.proyecto2_ss24.backend.model.reportes.ContenidoReporteComentarios;
+import com.mycompany.proyecto2_ss24.backend.model.reportes.ContenidoReporteRevistasTop;
+import com.mycompany.proyecto2_ss24.backend.model.reportes.ContenidoReporteSuscripcion;
 import com.mycompany.proyecto2_ss24.backend.model.reportes.ReporteComentarios;
+import com.mycompany.proyecto2_ss24.backend.model.reportes.ReporteRevistasTop;
+import com.mycompany.proyecto2_ss24.backend.model.reportes.ReporteSuscripcion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -187,6 +191,156 @@ public class ReporteEditorDB {
             System.out.println("Error getIdsRevistasEditor(idEditor) en ReporteEditorDB: " + e);
         }
         return ids;
+    }
+
+    public ArrayList<ContenidoReporteSuscripcion> getReporteSuscripciones(String clausulaWHERE, int cantidadInterrogantes, ReporteSuscripcion datos) {
+        String query = "SELECT * FROM suscripcion " + clausulaWHERE;
+        System.out.println(query);
+        System.out.println("? = " + cantidadInterrogantes);
+        ArrayList<ContenidoReporteSuscripcion> contenido = new ArrayList<>();
+        try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            switch (cantidadInterrogantes) {
+                case 1 ->
+                    prepared.setInt(1, Integer.parseInt(datos.getIdRevista()));
+                case 2 -> {
+                    prepared.setString(1, datos.getFechaInicio());
+                    prepared.setString(2, datos.getFechaFin());
+                }
+                case 3 -> {
+                    prepared.setString(1, datos.getFechaInicio());
+                    prepared.setString(2, datos.getFechaFin());
+                    prepared.setInt(3, Integer.parseInt(datos.getIdRevista()));
+                }
+            }
+            try (ResultSet resul = prepared.executeQuery()) {
+                while (resul.next()) {
+                    String nombreRevista = this.getNombreRevista(resul.getInt("revista"));
+                    String fechaSuscripcion = resul.getString("fecha_suscripcion");
+                    String nombreComentarista = this.getNomreComentarista(resul.getInt("suscriptor"));
+                    ContenidoReporteSuscripcion contenidoComentario = new ContenidoReporteSuscripcion("0",
+                            nombreRevista, fechaSuscripcion, nombreComentarista);
+                    contenido.add(contenidoComentario);
+                }
+            } catch (SQLException e) {
+                System.out.println("Error getReporteSuscripciones() en ReporteEditorDB: " + e);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error getReporteSuscripciones() en ReporteEditorDB: " + e);
+        }
+        return contenido;
+    }
+
+    public ArrayList<ContenidoReporteSuscripcion> getFullReporteSuscripciones(ArrayList<Integer> idsRevistaEditor) {
+        ArrayList<ContenidoReporteSuscripcion> reporte = new ArrayList<>();
+        for (Integer id : idsRevistaEditor) {
+            String query = "SELECT * FROM suscripcion WHERE revista = ?";
+            try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+                prepared.setInt(1, id);
+                try (ResultSet resul = prepared.executeQuery()) {
+                    while (resul.next()) {
+                        String nombreRevista = this.getNombreRevista(resul.getInt("revista"));
+                        String fechaSuscripcion = resul.getString("fecha_suscripcion");
+                        String nombreComentarista = this.getNomreComentarista(resul.getInt("suscriptor"));
+                        ContenidoReporteSuscripcion contenidoComentario = new ContenidoReporteSuscripcion("0",
+                                nombreRevista, fechaSuscripcion, nombreComentarista);
+                        reporte.add(contenidoComentario);
+                    }
+                } catch (SQLException e) {
+                    System.out.println("Error getFullReporteSuscripciones(idsRevistaEditor) en ReporteEditorDB: " + e);
+                }
+            } catch (SQLException e) {
+                System.out.println("Error getFullReporteSuscripciones(idsRevistaEditor) en ReporteEditorDB: " + e);
+            }
+        }
+        return reporte;
+    }
+
+    public ArrayList<String[]> getReporteRevistasTop(String clausulaWHERE, int cantidadInterrogantes, ReporteRevistasTop datos) {
+        String query = "SELECT * FROM likes " + clausulaWHERE;
+        System.out.println(query);
+        System.out.println("? = " + cantidadInterrogantes);
+        ArrayList<String[]> contenido = new ArrayList<>();
+        try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            switch (cantidadInterrogantes) {
+                case 1 ->
+                    prepared.setInt(1, Integer.parseInt(datos.getIdRevista()));
+                case 2 -> {
+                    prepared.setString(1, datos.getFechaInicio());
+                    prepared.setString(2, datos.getFechaFin());
+                }
+                case 3 -> {
+                    prepared.setString(1, datos.getFechaInicio());
+                    prepared.setString(2, datos.getFechaFin());
+                    prepared.setInt(3, Integer.parseInt(datos.getIdRevista()));
+                }
+            }
+            try (ResultSet resul = prepared.executeQuery()) {
+                while (resul.next()) {
+                    String[] contenidoFila = new String[5];
+                    String nombreRevista = this.getNombreRevista(resul.getInt("revista"));
+                    int cantidadLikes = this.getCantidadLikesRevista(resul.getInt("revista"));
+                    String nombreSuscriptor = this.getNomreComentarista(resul.getInt("suscriptor"));
+                    contenidoFila[0] = "0";
+                    contenidoFila[1] = nombreRevista;
+                    contenidoFila[2] = cantidadLikes + "";
+                    contenidoFila[3] = nombreSuscriptor;
+                    contenidoFila[4] = resul.getString("fecha_like");
+                    contenido.add(contenidoFila);
+                }
+            } catch (SQLException e) {
+                System.out.println("Error getReporteRevistasTop() en ReporteEditorDB: " + e);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error getReporteRevistasTop() en ReporteEditorDB: " + e);
+        }
+        return contenido;
+    }
+
+    public ArrayList<String[]> getFullReporteRevistasTop(ArrayList<Integer> idsRevistaEditor) {
+        ArrayList<String[]> reporte = new ArrayList<>();
+        for (Integer id : idsRevistaEditor) {
+            String query = "SELECT * FROM likes WHERE revista = ?";
+            try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+                prepared.setInt(1, id);
+                try (ResultSet resul = prepared.executeQuery()) {
+                    while (resul.next()) {
+                        String[] contenidoFila = new String[5];
+                        String nombreRevista = this.getNombreRevista(resul.getInt("revista"));
+                        int cantidadLikes = this.getCantidadLikesRevista(resul.getInt("revista"));
+                        String nombreSuscriptor = this.getNomreComentarista(resul.getInt("suscriptor"));
+                        contenidoFila[0] = "0";
+                        contenidoFila[1] = nombreRevista;
+                        contenidoFila[2] = cantidadLikes + "";
+                        contenidoFila[3] = nombreSuscriptor;
+                        contenidoFila[4] = resul.getString("fecha_like");
+                        reporte.add(contenidoFila);
+                    }
+                } catch (SQLException e) {
+                    System.out.println("Error getFullReporteRevistasTop(idsRevistaEditor) en ReporteEditorDB: " + e);
+                }
+            } catch (SQLException e) {
+                System.out.println("Error getFullReporteRevistasTop(idsRevistaEditor) en ReporteEditorDB: " + e);
+            }
+        }
+        return reporte;
+    }
+
+    private int getCantidadLikesRevista(int idRevista) {
+        String query = "SELECT likes FROM revista WHERE id_revista = ?";
+        int cantidadLikesRevista = 0;
+        try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            prepared.setInt(1, idRevista);
+            try (ResultSet resul = prepared.executeQuery()) {
+                if (resul.next()) {
+                    cantidadLikesRevista = resul.getInt("likes");
+                }
+            } catch (SQLException e) {
+                System.out.println("Error getCantidadLikesRevista(idRevista) en ReporteEditorDB: " + e);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error getCantidadLikesRevista(idRevista) en ReporteEditorDB: " + e);
+        }
+        return cantidadLikesRevista;
     }
 
 }

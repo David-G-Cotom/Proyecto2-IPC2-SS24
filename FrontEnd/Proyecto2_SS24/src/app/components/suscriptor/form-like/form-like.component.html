@@ -1,0 +1,13 @@
+<div class="body-component">
+    <div class="form-container">
+        <h1>Registrar Like</h1>
+        <form [formGroup]="formulario" (ngSubmit)="darLike()">            
+            <div class="input-group">
+                <label for="fecha">Fecha de Like:</label>
+                <input type="date" id="fecha" name="fecha" formControlName="fechaLike">
+            </div>
+            <button type="submit">Dar Like</button>
+        </form>
+        <div *ngIf="errorDatos"><span style="color: red;">{{ mensajeErro }}</span></div>
+    </div>
+</div>

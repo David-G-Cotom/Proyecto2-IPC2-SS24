@@ -7,6 +7,7 @@ package com.mycompany.proyecto2_ss24.backend.data;
 import com.mycompany.proyecto2_ss24.backend.model.CategoriaEnum;
 import com.mycompany.proyecto2_ss24.backend.model.Comentario;
 import com.mycompany.proyecto2_ss24.backend.model.EtiquetaEnum;
+import com.mycompany.proyecto2_ss24.backend.model.Like;
 import com.mycompany.proyecto2_ss24.backend.model.Revista;
 import com.mycompany.proyecto2_ss24.backend.model.users.Editor;
 import java.sql.Connection;
@@ -65,12 +66,13 @@ public class SuscriptorDB {
         return idSuscriptor;
     }
     
-    public boolean crearLike(int idUsuario, int idRevista) {
-        String query = "INSERT INTO likes (revista, suscriptor) VALUES (?, ?)";
+    public boolean crearLike(Like datosLike) {
+        String query = "INSERT INTO likes (revista, suscriptor, fecha_like) VALUES (?, ?, ?)";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
-            int idSuscriptor = this.getIdSuscriptor(idUsuario);
-            prepared.setInt(1, idRevista);
+            int idSuscriptor = this.getIdSuscriptor(datosLike.getIdUsuario());
+            prepared.setInt(1, datosLike.getIdRevista());
             prepared.setInt(2, idSuscriptor);
+            prepared.setString(3, datosLike.getFechaLike());
             prepared.executeUpdate();
             System.out.println("Like Creado!!!");
             return true;

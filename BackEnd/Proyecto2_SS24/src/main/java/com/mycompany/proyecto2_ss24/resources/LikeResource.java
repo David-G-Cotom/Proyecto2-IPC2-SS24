@@ -25,8 +25,37 @@ public class LikeResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response crearRegistro(Like like) {
+        if (like.getFechaLike().equals("")) {
+            String mensajeErrorDatos = "DEBE SELECCIONAR UNA FECHA";
+            String JSONResponse = "{\"mensaje\":\"" + mensajeErrorDatos + "\"}";
+            return Response.ok(JSONResponse).build();
+        }
+        if (!like.getFechaLike().contains("-")) {
+            String mensajeErrorDatos = "FORMATO DE FECHA INCORRECTO";
+            String JSONResponse = "{\"mensaje\":\"" + mensajeErrorDatos + "\"}";
+            return Response.ok(JSONResponse).build();
+        }
+        String[] datos = like.getFechaLike().split("-");
+        if (datos.length != 3) {
+            String mensajeErrorDatos = "FORMATO DE FECHA INCORRECTO";
+            String JSONResponse = "{\"mensaje\":\"" + mensajeErrorDatos + "\"}";
+            return Response.ok(JSONResponse).build();
+        }
+        String yyyy = datos[0];
+        String mm = datos[1];
+        String dd = datos[2];
+        if (!isIntegerPositive(yyyy) || !isIntegerPositive(mm) || !isIntegerPositive(dd)) {
+            String mensajeErrorDatos = "FORMATO DE FECHA INCORRECTO";
+            String JSONResponse = "{\"mensaje\":\"" + mensajeErrorDatos + "\"}";
+            return Response.ok(JSONResponse).build();
+        }
+        if (Integer.parseInt(mm) > 12 && Integer.parseInt(dd) > 31 && Integer.parseInt(yyyy) > 9999) {
+            String mensajeErrorDatos = "FORMATO DE FECHA INCORRECTO";
+            String JSONResponse = "{\"mensaje\":\"" + mensajeErrorDatos + "\"}";
+            return Response.ok(JSONResponse).build();
+        }
         SuscriptorDB dataSuscriptor = new SuscriptorDB();
-        if (!dataSuscriptor.crearLike(like.getIdUsuario(), like.getIdRevista())) {
+        if (!dataSuscriptor.crearLike(like)) {
             String mensaje = "error";
             String JSONResponse = "{\"mensaje\":\"" + mensaje + "\"}";
             return Response.ok(JSONResponse).build();
@@ -36,6 +65,16 @@ public class LikeResource {
         String mensaje = "exito";
         String JSONResponse = "{\"mensaje\":\"" + mensaje + "\"}";
         return Response.ok(JSONResponse).build();
+    }
+    
+    private boolean isIntegerPositive(String texto) {
+        try {
+            int numero = Integer.parseInt(texto);
+            return numero > 0;
+        } catch (NumberFormatException e) {
+            System.out.println("Texto ingresado NO puede ser Numero Entero");
+            return false;
+        }
     }
 
 }

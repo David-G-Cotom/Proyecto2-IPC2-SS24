@@ -30,6 +30,9 @@ import { EdicionPreciosRevistaComponent } from './components/administrador/edici
 import { FormBloqueoAnunciosComponent } from './components/editor/form-bloqueo-anuncios/form-bloqueo-anuncios.component';
 import { AnunciosRegistradosComponent } from './components/administrador/anuncios-registrados/anuncios-registrados.component';
 import { ReporteComentariosComponent } from './components/editor/reporte-comentarios/reporte-comentarios.component';
+import { ReporteSuscripcionesComponent } from './components/editor/reporte-suscripciones/reporte-suscripciones.component';
+import { FormLikeComponent } from './components/suscriptor/form-like/form-like.component';
+import { ReporteRevistasTopComponent } from './components/editor/reporte-revistas-top/reporte-revistas-top.component';
 
 export const routes: Routes = [
   {
@@ -84,6 +87,14 @@ export const routes: Routes = [
       {
         path: 'reporte-comentarios',
         component: ReporteComentariosComponent
+      },
+      {
+        path: 'reporte-suscripciones',
+        component: ReporteSuscripcionesComponent
+      },
+      {
+        path: 'reporte-revistas-top',
+        component: ReporteRevistasTopComponent
       }
     ]
   },
@@ -114,6 +125,10 @@ export const routes: Routes = [
       {
         path: 'busqueda/comentar/:id',
         component: FormComentarComponent
+      },
+      {
+        path: 'busqueda/dar-like/:id',
+        component: FormLikeComponent
       }
     ]
   },

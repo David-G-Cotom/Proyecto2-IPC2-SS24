@@ -11,13 +11,15 @@ package com.mycompany.proyecto2_ss24.backend.model;
 public class Like {
     
     private int idUsuario;
+    private String fechaLike;
     private int idRevista;
 
     public Like() {
     }
 
-    public Like(int idUsuario, int idRevista) {
+    public Like(int idUsuario, String fechaLike, int idRevista) {
         this.idUsuario = idUsuario;
+        this.fechaLike = fechaLike;
         this.idRevista = idRevista;
     }
 
@@ -35,6 +37,14 @@ public class Like {
 
     public void setIdRevista(int idRevista) {
         this.idRevista = idRevista;
+    }
+
+    public String getFechaLike() {
+        return fechaLike;
+    }
+
+    public void setFechaLike(String fechaLike) {
+        this.fechaLike = fechaLike;
     }
     
 }

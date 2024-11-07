@@ -7,7 +7,7 @@
     <a routerLink="comentar/{{revista.idRevista}}" routerLinkActive="active" *ngIf="revista.puedeComentarse">Comentar</a>
     @if (revista.puedeTenerLikes) {
         @if (!revista.tieneLike) {
-            <button type="button" (click)="darLike()">Dar Like</button>
+            <a routerLink="dar-like/{{revista.idRevista}}" routerLinkActive="active">Dar Like</a>
         } @else {
             <p>Ya le diste Like!!!</p>
         }
