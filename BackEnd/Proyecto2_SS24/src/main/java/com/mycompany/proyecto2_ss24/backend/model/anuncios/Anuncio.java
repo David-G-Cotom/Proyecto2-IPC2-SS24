@@ -19,6 +19,8 @@ public class Anuncio {
     private int idTipoAnuncio;
     private int idAnuncio;
     private String titulo;
+    private String fechaCompra;
+    private boolean isVigente;
     
     public Anuncio() {
     }
@@ -96,19 +98,29 @@ public class Anuncio {
         this.titulo = titulo;
     }
 
+    public String getFechaCompra() {
+        return fechaCompra;
+    }
+
+    public void setFechaCompra(String fechaCompra) {
+        this.fechaCompra = fechaCompra;
+    }
+
+    public boolean isIsVigente() {
+        return isVigente;
+    }
+
+    public void setIsVigente(boolean isVigente) {
+        this.isVigente = isVigente;
+    }
+
     @Override
     public String toString() {
         String tipoAnuncio = "";
         switch (idTipoAnuncio) {
-            case 1:
-                tipoAnuncio = "Anuncio de Texto";
-                break;
-            case 2:
-                tipoAnuncio = "Anuncio de Texto e Imagen";
-                break;
-            case 3:
-                tipoAnuncio = "Anuncio de Video";
-                break;
+            case 1 -> tipoAnuncio = "Anuncio de Texto";
+            case 2 -> tipoAnuncio = "Anuncio de Texto e Imagen";
+            case 3 -> tipoAnuncio = "Anuncio de Video";
         }
         return "Anuncio{ "
                 + "<br>precio = " + precio

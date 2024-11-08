@@ -57,7 +57,7 @@ export class FormCompraImageAdComponent {
       
       if (this.foto != null) {
         let anuncioImagen = new Anuncio(0, parseInt(duracion), true, this.usuarioLogeado.idUsuario,
-        0, 2, 0, tituloControl.value, contenidoControl.value, 0, fecha);
+        0, 2, 0, tituloControl.value, contenidoControl.value, 0, fecha, true);
 
         this.anuncioService.registrarCompraAdImage(anuncioImagen, this.foto).subscribe({
           next: (mensajeCreacion: any) => {

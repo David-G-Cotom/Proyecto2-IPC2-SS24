@@ -11,11 +11,12 @@ export class Anuncio {
     contenido: string;
     idAnuncioEspecifico: number;
     fechaCompra: string
+    isVigente: boolean;
 
     constructor(precio: number, vigenciaDias: number, isActivo: boolean,
         idInversionista: number, idPeriodoTiempo: number, idTipoAnuncio: number,
         idAnuncio: number, titulo: string, contenido: string, idAnuncioEspecifico: number,
-        fechaCompra: string
+        fechaCompra: string, isVigente: boolean
     ) {
         this.precio = precio;
         this.vigenciaDias = vigenciaDias;
@@ -28,6 +29,7 @@ export class Anuncio {
         this.contenido = contenido;
         this.idAnuncioEspecifico = idAnuncioEspecifico;
         this.fechaCompra = fechaCompra;
+        this.isVigente = isVigente;
     }
 
 }

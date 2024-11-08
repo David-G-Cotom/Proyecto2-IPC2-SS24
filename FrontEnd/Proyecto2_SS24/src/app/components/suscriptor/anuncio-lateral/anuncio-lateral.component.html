@@ -1,0 +1,13 @@
+@for (anuncio of anuncios; track $index) {
+    @switch (anuncio.idTipoAnuncio) {
+        @case (1) {
+            <app-publicidad-ad-text [anuncio]="anuncio"></app-publicidad-ad-text>
+        }
+        @case (2) {
+            <app-publicidad-ad-image [anuncio]="anuncio"></app-publicidad-ad-image>
+        }
+        @case (3) {
+            <app-publicidad-ad-video [anuncio]="anuncio"></app-publicidad-ad-video>
+        }
+    }
+}

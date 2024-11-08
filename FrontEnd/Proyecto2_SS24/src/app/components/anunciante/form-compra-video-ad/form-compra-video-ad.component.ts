@@ -55,7 +55,7 @@ export class FormCompraVideoAdComponent {
       
       if (this.video != null) {
         let anuncioVideo = new Anuncio(0, parseInt(duracion), true, this.usuarioLogeado.idUsuario,
-        0, 3, 0, tituloControl.value, '', 0, fecha);
+        0, 3, 0, tituloControl.value, '', 0, fecha, true);
 
         this.anuncioService.registrarCompraAdVideo(anuncioVideo, this.video).subscribe({
           next: (mensajeCreacion: any) => {

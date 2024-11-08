@@ -42,7 +42,7 @@ export class FormEdicionAnuncioComponent {
       const tituloControl: FormControl = this.formulario.get('titulo') as FormControl;
     
       let anuncio = new Anuncio(0, 0, this.estado, 0, 0, 0, parseInt(this.anuncioID!),
-                                tituloControl.value, '', 0, '')
+                                tituloControl.value, '', 0, '', false)
 
       this.anuncioService.actualizarAnuncioAnunciante(anuncio).subscribe({
         next: (nuevaRevista: any) => {

@@ -13,7 +13,7 @@
         }
     }
     @for (idPublicacion of revista.idPublicaciones; track $index) {
-        <a routerLink="/publicacion/{{idPublicacion}}" routerLinkActive="active" target="_blank">Ver Publicacion {{$index+1}}</a>
+        <a routerLink="/publicacion/{{idPublicacion}}/{{revista.tieneOcultacionAnuncios}}" routerLinkActive="active" target="_blank">Ver Publicacion {{$index+1}}</a>
     }
     <hr>
 </div>

@@ -24,7 +24,7 @@ export class AdTextAEditarComponent {
 
   public editarAnuncio() {
     let anuncioNuevo = new Anuncio(0, 0, this.anuncio.isActivo, 0, 0, 0, this.anuncio.idAnuncio,
-      '', '', 0, '');
+      '', '', 0, '', false);
 
     this.anuncioService.actualizarAnuncioAdmin(anuncioNuevo).subscribe({
       next: (nuevoAnuncio: any) => {
@@ -47,6 +47,23 @@ export class AdTextAEditarComponent {
     this.anuncio.isActivo = !this.anuncio.isActivo;
     console.log(this.anuncio.isActivo);
     console.log(this.anuncio.idAnuncio);
+  }
+
+  public eliminarAnuncio() {
+    this.anuncioService.deleteAnuncio(this.anuncio.idAnuncio).subscribe({
+      next: (mensaje: any) => {
+        console.log(mensaje);
+        if (mensaje.mensaje === 'exito') {
+          alert('ELIMINACION REALIZADA CON EXITO');
+        } else if (mensaje.mensaje === 'error') {
+          alert('NO SE PUDO REALIZAR LA ELIMINACION, vuelva mas tarde')
+        }
+        this.routingServices.redireccionarUsuario();
+      }, error: (error: any) => {
+        console.log('HUBO ERROR');
+        console.log(error);
+      }
+    });
   }
 
 }

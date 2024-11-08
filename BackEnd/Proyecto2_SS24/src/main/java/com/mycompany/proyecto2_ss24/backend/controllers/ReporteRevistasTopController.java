@@ -95,6 +95,12 @@ public class ReporteRevistasTopController {
             String query = this.generarConsultaWHERE();
             ArrayList<String[]> contenidoFilasReporte = this.dataReporte.getReporteRevistasTop(query, this.contarIterrogantes(query), this.filtroReporte);
             contenido = this.generarContenidoReporte(contenidoFilasReporte);
+            if (contenido.size() > 1) {
+                this.ordenarReporteRevistasTop(contenido);
+            }
+            if (contenido.size() > 5) {
+                this.simplificarReporteRevistasTop(contenido);
+            }
             this.generarNumeroRevista(contenido);
             return contenido;
         } else {//  Eceneario 4: No se ingreso ningun dato
@@ -103,6 +109,12 @@ public class ReporteRevistasTopController {
             ArrayList<Integer> idsRevistaEditor = this.dataReporte.getIdsRevistasEditor(idEditor);
             ArrayList<String[]> contenidoFilasReporte = this.dataReporte.getFullReporteRevistasTop(idsRevistaEditor);
             contenido = this.generarContenidoReporte(contenidoFilasReporte);
+            if (contenido.size() > 1) {
+                this.ordenarReporteRevistasTop(contenido);
+            }
+            if (contenido.size() > 5) {
+                this.simplificarReporteRevistasTop(contenido);
+            }
             this.generarNumeroRevista(contenido);
             return contenido;
         }
@@ -207,6 +219,16 @@ public class ReporteRevistasTopController {
             }
         }
         return contenidoReporte;
+    }
+    
+    private void simplificarReporteRevistasTop(ArrayList<ContenidoReporteRevistasTop> reporte) {
+        while (reporte.size() > 5) {
+            reporte.removeLast();
+        }
+    }
+    
+    private void ordenarReporteRevistasTop(ArrayList<ContenidoReporteRevistasTop> reporte) {
+        reporte.sort((reporte1, reporte2) -> Integer.compare(reporte2.getCantidadlikes(), reporte1.getCantidadlikes()));
     }
 
 }

@@ -5,5 +5,10 @@
     <p>Vigencia en Dias: {{anuncio.vigenciaDias}}</p>
     <p>Esta Activo: {{anuncio.isActivo}}</p>
     <p>Costo: {{anuncio.precio}}</p>
-    <a routerLink="/anunciante/home-page/editar-anuncio/{{anuncio.idAnuncio}}" routerLinkActive="active">Editar</a>
+    <p>Esta Vigente: {{anuncio.isVigente}}</p>
+    @if (anuncio.isVigente) {
+        <a routerLink="/anunciante/home-page/editar-anuncio/{{anuncio.idAnuncio}}" routerLinkActive="active">Editar</a>
+    } @else {
+        <button (click)="eliminarAnuncio()">Eliminar Anuncio</button>
+    }
 </div>

@@ -13,3 +13,13 @@ div a{
     color: white;
     border-radius: 5px;
 }
+
+div button {
+    padding: 10px 20px;
+    border: none;
+    background-color: darkgray;
+    text-decoration: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}

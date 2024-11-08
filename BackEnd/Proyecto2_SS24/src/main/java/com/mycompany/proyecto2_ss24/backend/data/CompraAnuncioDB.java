@@ -33,7 +33,8 @@ public class CompraAnuncioDB {
     }
     
     public void crearAnuncio(Anuncio anuncio, int idInversionista) {
-        String query = "INSERT INTO anuncio (costo, tipo_anuncio, inversionista, vigencia_dias, estado, id_periodo, titulo) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO anuncio (costo, tipo_anuncio, inversionista, vigencia_dias, estado, id_periodo, titulo, fecha_compra, isVigente)"
+                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
             prepared.setDouble(1, anuncio.getPrecio());
             prepared.setInt(2, anuncio.getIdTipoAnuncio());
@@ -42,6 +43,8 @@ public class CompraAnuncioDB {
             prepared.setBoolean(5, anuncio.isIsActivo());
             prepared.setInt(6, anuncio.getIdPeriodoTiempo());
             prepared.setString(7, anuncio.getTitulo());
+            prepared.setString(8, anuncio.getFechaCompra());
+            prepared.setBoolean(9, true);
             prepared.executeUpdate();
             System.out.println("Anuncio Creado!!!");
         } catch (SQLException e) {

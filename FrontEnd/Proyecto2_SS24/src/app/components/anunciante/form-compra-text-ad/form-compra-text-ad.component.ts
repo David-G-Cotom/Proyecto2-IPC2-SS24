@@ -47,7 +47,7 @@ export class FormCompraTextAdComponent {
       }
       
       let anuncioTexto = new Anuncio(0, parseInt(duracion), true, this.usuairoLogeado.idUsuario,
-        0, 1, 0, tituloControl.value, contenidoControl.value, 0, fecha);
+        0, 1, 0, tituloControl.value, contenidoControl.value, 0, fecha, true);
 
       this.anuncioService.registrarCompraAdText(anuncioTexto).subscribe({
         next: (mensajeCreacion: any) => {

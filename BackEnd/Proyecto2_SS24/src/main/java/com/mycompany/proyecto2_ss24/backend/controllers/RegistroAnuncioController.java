@@ -236,6 +236,7 @@ public class RegistroAnuncioController {
         AnuncioTexto adTextJava = new AnuncioTexto(this.anuncio.getContenido(), this.anuncio.getPrecio(),
                 this.anuncio.getVigenciaDias(), true, this.anuncio.getIdInversionista(), idPeriodoTiempo, 1);
         adTextJava.setTitulo(this.anuncio.getTitulo());
+        adTextJava.setFechaCompra(this.anuncio.getFechaCompra());
         return adTextJava;
     }
     
@@ -244,6 +245,7 @@ public class RegistroAnuncioController {
         AnuncioTextoImagen adImageJava = new AnuncioTextoImagen(this.anuncio.getContenido(), imagen, this.anuncio.getPrecio(),
                 this.anuncio.getVigenciaDias(), true, this.anuncio.getIdInversionista(), idPeriodoTiempo, 2);
         adImageJava.setTitulo(this.anuncio.getTitulo());
+        adImageJava.setFechaCompra(this.anuncio.getFechaCompra());
         return adImageJava;
     }
     
@@ -252,6 +254,7 @@ public class RegistroAnuncioController {
         AnuncioVideo adVideoJava = new AnuncioVideo(video, this.anuncio.getPrecio(),
                 this.anuncio.getVigenciaDias(), true, this.anuncio.getIdInversionista(), idPeriodoTiempo, 3);
         adVideoJava.setTitulo(this.anuncio.getTitulo());
+        adVideoJava.setFechaCompra(this.anuncio.getFechaCompra());
         return adVideoJava;
     }
     

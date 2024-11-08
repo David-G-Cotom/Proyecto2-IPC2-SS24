@@ -193,7 +193,7 @@ export const routes: Routes = [
     ]
   },
   {
-    path: 'publicacion/:id',
+    path: 'publicacion/:id/:hayAnuncios',
     component: PublicacionComponent
   },
   {

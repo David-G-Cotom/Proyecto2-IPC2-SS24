@@ -6,16 +6,21 @@
     <p>Vigencia en Dias: {{anuncio.vigenciaDias}}</p>
     <p>Esta Activo: {{anuncio.isActivo}}</p>
     <p>Costo: {{anuncio.precio}}</p>
-    <form [formGroup]="formulario" (ngSubmit)="editarAnuncio()">
-        <div class="radio-group">
-            <label for="estado-si">
-            @if (anuncio.isActivo) {
-                <input type="checkbox" id="estado-si" name="estado" (click)="cambiarEstado()" checked> Activar?
-            } @else {
-                <input type="checkbox" id="estado-si" name="estado" (click)="cambiarEstado()"> Activar?
-            }          
-            </label>
-        </div>
-        <button type="submit">Guardar</button>
-    </form>
+    <p>Esta Vigente: {{anuncio.isVigente}}</p>
+    @if (anuncio.isVigente) {
+        <form [formGroup]="formulario" (ngSubmit)="editarAnuncio()">
+            <div class="radio-group">
+                <label for="estado-si">
+                @if (anuncio.isActivo) {
+                    <input type="checkbox" id="estado-si" name="estado" (click)="cambiarEstado()" checked> Activar?
+                } @else {
+                    <input type="checkbox" id="estado-si" name="estado" (click)="cambiarEstado()"> Activar?
+                }          
+                </label>
+            </div>
+            <button type="submit">Guardar</button>
+        </form>
+    } @else {
+        <button (click)="eliminarAnuncio()">Eliminar Anuncio</button>
+    }
 </div>

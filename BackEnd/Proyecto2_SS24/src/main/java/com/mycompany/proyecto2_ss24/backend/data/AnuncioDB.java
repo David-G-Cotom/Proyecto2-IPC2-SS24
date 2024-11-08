@@ -46,7 +46,7 @@ public class AnuncioDB {
             return false;
         }
     }
-    
+
     public boolean editarAnuncio(int idAnuncio, boolean estado) {
         String query = "UPDATE anuncio SET estado = ? WHERE id_anuncio = ?";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
@@ -95,6 +95,9 @@ public class AnuncioDB {
                     Anuncio anuncio = new Anuncio(costo, vigencia, estado, idInversionista, idPeriodo, idTipoAnuncio);
                     anuncio.setIdAnuncio(idAnuncio);
                     anuncio.setTitulo(resul.getString("titulo"));
+                    anuncio.setFechaCompra(resul.getString("fecha_compra"));
+                    boolean isVigente = resul.getBoolean("isVigente");
+                    anuncio.setIsVigente(isVigente);
                     this.agregarAnuncioEspecifico(anuncios, anuncio);
                 }
             } catch (SQLException e) {
@@ -105,7 +108,7 @@ public class AnuncioDB {
         }
         return anuncios;
     }
-    
+
     public ArrayList<Anuncio> getAllAnuncios() {
         String query = "SELECT * FROM anuncio";
         ArrayList<Anuncio> anuncios = new ArrayList<>();
@@ -121,6 +124,9 @@ public class AnuncioDB {
                 Anuncio anuncio = new Anuncio(costo, vigencia, isActivo, idInversionista, idPeriodo, idTipoAnuncio);
                 anuncio.setIdAnuncio(idAnuncio);
                 anuncio.setTitulo(resul.getString("titulo"));
+                anuncio.setFechaCompra(resul.getString("fecha_compra"));
+                boolean isVigente = resul.getBoolean("isVigente");
+                anuncio.setIsVigente(isVigente);
                 this.agregarAnuncioEspecifico(anuncios, anuncio);
             }
         } catch (SQLException e) {
@@ -144,7 +150,10 @@ public class AnuncioDB {
                 Anuncio anuncio = new Anuncio(costo, vigencia, isActivo, idInversionista, idPeriodo, idTipoAnuncio);
                 anuncio.setIdAnuncio(idAnuncio);
                 anuncio.setTitulo(resul.getString("titulo"));
-                if (isActivo) {
+                anuncio.setFechaCompra(resul.getString("fecha_compra"));
+                boolean isVigente = resul.getBoolean("isVigente");
+                anuncio.setIsVigente(isVigente);
+                if (isActivo && isVigente) {
                     this.agregarAnuncioEspecifico(anuncios, anuncio);
                 }
             }
@@ -183,6 +192,8 @@ public class AnuncioDB {
         }
         anuncioTexto.setIdAnuncio(anuncio.getIdAnuncio());
         anuncioTexto.setTitulo(anuncio.getTitulo());
+        anuncioTexto.setFechaCompra(anuncio.getFechaCompra());
+        anuncioTexto.setIsVigente(anuncio.isIsVigente());
         return anuncioTexto;
     }
 
@@ -205,6 +216,8 @@ public class AnuncioDB {
         }
         anuncioTextoImagen.setIdAnuncio(anuncio.getIdAnuncio());
         anuncioTextoImagen.setTitulo(anuncio.getTitulo());
+        anuncioTextoImagen.setFechaCompra(anuncio.getFechaCompra());
+        anuncioTextoImagen.setIsVigente(anuncio.isIsVigente());
         return anuncioTextoImagen;
     }
 
@@ -226,6 +239,8 @@ public class AnuncioDB {
         }
         anuncioVideo.setIdAnuncio(anuncio.getIdAnuncio());
         anuncioVideo.setTitulo(anuncio.getTitulo());
+        anuncioVideo.setFechaCompra(anuncio.getFechaCompra());
+        anuncioVideo.setIsVigente(anuncio.isIsVigente());
         return anuncioVideo;
     }
 
@@ -258,5 +273,97 @@ public class AnuncioDB {
         }
         return precios;
     }
+
+    /**
+     * Metodo que se utiliza para cuando el anuncio ha vencido, por lo tanto se
+     * actualiza el estado de la vigencia y el estado de activo en la DB
+     *
+     * @param isVigente
+     * @param idAnuncio
+     * @return
+     */
+    public boolean actualizarEstadoVigencia(boolean isVigente, int idAnuncio) {
+        String query = "UPDATE anuncio SET isVigente = ?, estado = ? WHERE id_anuncio = ?";
+        try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            prepared.setBoolean(1, isVigente);
+            prepared.setBoolean(2, false);
+            prepared.setInt(3, idAnuncio);
+            prepared.execute();
+            System.out.println("Estados isVIgente del Anuncio Actualizado!!!");
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Error actualizarEstadoVigencia(isVigente, idAnuncio) en AnuncioDB: " + e);
+            return false;
+        }
+    }
+
+    public boolean deleteAnuncio(int idAnuncio) {
+        int tipoAnuncio = this.getTipoAnuncio(idAnuncio);
+        if (!this.deleteAnuncioEspecifico(tipoAnuncio, idAnuncio)) {
+            return false;
+        }
+        String query = "DELETE FROM anuncio WHERE id_anuncio = ?";
+        try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            prepared.setInt(1, idAnuncio);
+            prepared.executeUpdate();
+            System.out.println("Anuncio General: " + idAnuncio + " del Tipo: " + tipoAnuncio + " ELIMINDAO!!!");
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Error deleteAnuncio(idAnuncio) en AnuncioDB: " + e);
+            return false;
+        }
+    }
+
+    private int getTipoAnuncio(int idAnuncio) {
+        String query = "SELECT tipo_anuncio FROM anuncio WHERE id_anuncio = ?";
+        int idTipoAnuncio = 0;
+        try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            prepared.setInt(1, idAnuncio);
+            try (ResultSet resul = prepared.executeQuery()) {
+                if (resul.next()) {
+                    idTipoAnuncio = resul.getInt("tipo_anuncio");
+                }
+            } catch (SQLException e) {
+                System.out.println("Error getTipoAnuncio(idAnuncio) en AnuncioDB: " + e);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error getTipoAnuncio(idAnuncio) en AnuncioDB: " + e);
+        }
+        return idTipoAnuncio;
+    }
+
+    private boolean deleteAnuncioEspecifico(int tipoAnuncio, int idAnuncio) {
+        String tablaEspecifica = "";
+        switch (tipoAnuncio) {
+            case 1 ->
+                tablaEspecifica = "anuncio_texto";
+            case 2 ->
+                tablaEspecifica = "anuncio_texto_imagen";
+            case 3 ->
+                tablaEspecifica = "anuncio_video";
+        }
+        String query = "DELETE FROM " + tablaEspecifica + " WHERE id_anuncio = ?";
+        try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            prepared.setInt(1, idAnuncio);
+            prepared.executeUpdate();
+            System.out.println("Anuncio en Especifico: " + idAnuncio + " del Tipo: " + tipoAnuncio + " ELIMINDAO!!!");
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Error deleteAnuncioEspecifico(tipoAnuncio, idAnuncio) en AnuncioDB: " + e);
+            return false;
+        }
+    }
+    /*
+        try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            prepared.setBoolean(1, isVigente);
+            prepared.setInt(2, idAnuncio);
+            prepared.execute();
+            System.out.println("Estados isVIgente del Anuncio Actualizado!!!");
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Error actualizarEstadoVigencia(isVigente, idAnuncio) en AnuncioDB: " + e);
+            return false;
+        }
+     */
 
 }

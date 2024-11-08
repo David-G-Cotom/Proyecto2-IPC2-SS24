@@ -21,6 +21,7 @@ public class AnuncioTS {
     private String contenido;
     private int idAnuncioEspecifico;
     private String fechaCompra;
+    private boolean isVigente;
 
     public AnuncioTS() {
     }
@@ -128,6 +129,31 @@ public class AnuncioTS {
 
     public void setFechaCompra(String fechaCompra) {
         this.fechaCompra = fechaCompra;
+    }
+
+    public boolean isIsVigente() {
+        return isVigente;
+    }
+
+    public void setIsVigente(boolean isVigente) {
+        this.isVigente = isVigente;
+    }
+    
+    public String toJSON() {
+        return "{"
+                + "\"precio\":" + precio + ","
+                + "\"vigenciaDias\":" + vigenciaDias + ","
+                + "\"isActivo\":" + isActivo + ","
+                + "\"idInversionista\":" + idInversionista + ","
+                + "\"idPeriodoTiempo\":" + idPeriodoTiempo + ","
+                + "\"idTipoAnuncio\":" + idTipoAnuncio + ","
+                + "\"idAnuncio\":" + idAnuncio + ","
+                + "\"titulo\":\"" + titulo + "\","
+                + "\"contenido\":\"" + contenido + "\","
+                + "\"idAnuncioEspecifico\":" + idAnuncioEspecifico + ","
+                + "\"fechaCompra\":\"" + fechaCompra + "\","
+                + "\"isVigente\":" + isVigente + "" + 
+                "}";
     }
     
 }
