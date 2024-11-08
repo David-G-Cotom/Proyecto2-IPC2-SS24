@@ -283,11 +283,10 @@ public class AnuncioDB {
      * @return
      */
     public boolean actualizarEstadoVigencia(boolean isVigente, int idAnuncio) {
-        String query = "UPDATE anuncio SET isVigente = ?, estado = ? WHERE id_anuncio = ?";
+        String query = "UPDATE anuncio SET isVigente = ? WHERE id_anuncio = ?";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
             prepared.setBoolean(1, isVigente);
-            prepared.setBoolean(2, false);
-            prepared.setInt(3, idAnuncio);
+            prepared.setInt(2, idAnuncio);
             prepared.execute();
             System.out.println("Estados isVIgente del Anuncio Actualizado!!!");
             return true;

@@ -33,6 +33,7 @@ import { ReporteComentariosComponent } from './components/editor/reporte-comenta
 import { ReporteSuscripcionesComponent } from './components/editor/reporte-suscripciones/reporte-suscripciones.component';
 import { FormLikeComponent } from './components/suscriptor/form-like/form-like.component';
 import { ReporteRevistasTopComponent } from './components/editor/reporte-revistas-top/reporte-revistas-top.component';
+import { ReporteAnunciosCompradosComponent } from './components/administrador/reporte-anuncios-comprados/reporte-anuncios-comprados.component';
 
 export const routes: Routes = [
   {
@@ -189,6 +190,10 @@ export const routes: Routes = [
       {
         path: 'editar-anuncio',
         component: AnunciosRegistradosComponent
+      },
+      {
+        path: 'reporte-compra-anuncios',
+        component: ReporteAnunciosCompradosComponent
       }
     ]
   },

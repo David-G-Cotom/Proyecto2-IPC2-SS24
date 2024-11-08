@@ -180,6 +180,7 @@ public class SuscriptorDB {
         revista.setPuedeComentarse(resul.getBoolean("estado_comentarios"));
         revista.setPuedeSuscribirse(resul.getBoolean("estado_suscripcion"));
         revista.setPuedeTenerLikes(resul.getBoolean("estado_likes"));
+        revista.setTieneOcultacionAnuncios(resul.getBoolean("estado_ocultacion_anuncios"));
         return revista;
     }
     

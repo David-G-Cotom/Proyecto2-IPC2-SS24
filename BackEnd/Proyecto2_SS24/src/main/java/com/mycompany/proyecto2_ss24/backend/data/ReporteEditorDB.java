@@ -5,7 +5,6 @@
 package com.mycompany.proyecto2_ss24.backend.data;
 
 import com.mycompany.proyecto2_ss24.backend.model.reportes.ContenidoReporteComentarios;
-import com.mycompany.proyecto2_ss24.backend.model.reportes.ContenidoReporteRevistasTop;
 import com.mycompany.proyecto2_ss24.backend.model.reportes.ContenidoReporteSuscripcion;
 import com.mycompany.proyecto2_ss24.backend.model.reportes.ReporteComentarios;
 import com.mycompany.proyecto2_ss24.backend.model.reportes.ReporteRevistasTop;

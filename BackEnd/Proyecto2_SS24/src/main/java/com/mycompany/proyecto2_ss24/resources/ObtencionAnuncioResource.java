@@ -158,12 +158,14 @@ public class ObtencionAnuncioResource {
                 System.out.println("diasDiferencia: " + diasDiferencia);
                 System.out.println("vigenciaDias: " + anuncio.getVigenciaDias());
                 int tiempoRestante = anuncio.getVigenciaDias() - (int) diasDiferencia;
+                System.out.println("tiempoRestante: " + tiempoRestante);
                 if (tiempoRestante <= 0) {
                     anuncio.setVigenciaDias(0);
                     System.out.println("Anuncio: " + anuncio.getIdAnuncio() + " YA NO ES VIGENTE");
                     anuncio.setIsVigente(false);
                     anuncio.setIsActivo(false);
                     dataAnuncios.actualizarEstadoVigencia(false, anuncio.getIdAnuncio());
+                    dataAnuncios.editarAnuncio(anuncio.getIdAnuncio(), false);
                 } else {
                     anuncio.setVigenciaDias(tiempoRestante);
                 }

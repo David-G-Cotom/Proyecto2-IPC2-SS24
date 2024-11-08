@@ -1,0 +1,62 @@
+<div class="content-body">
+    <div class="form-container">
+        <h2>Reporte de Comentarios</h2>
+        <form [formGroup]="formulario" (ngSubmit)="hacerBusqueda()">
+            <div class="input-group">
+                <label for="fechaInicio">Fecha de Inicio:</label>
+                <input type="date" id="fechaInicio" name="fechaInicio" formControlName="fechaInicio">
+            </div>
+            <div class="input-group">
+                <label for="fechaFin">Fecha de Fin:</label>
+                <input type="date" id="fechaFin" name="fechaFin" formControlName="fechaFin">
+            </div>
+            <p style="font-size: small;">Fechas Vacias: Muestran Todos los Datos</p>
+            <div class="input-group">
+                <label for="tipoAnuncio">Tipo de Anuncio:</label>
+                <select id="tipoAnuncio" formControlName="tipoAnuncio">
+                    <option value="1">Anuncio de Texto</option>
+                    <option value="2">Anuncio de Texto e Imagen</option>
+                    <option value="3">Anuncio de Video</option>
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="periodoTiempo">Periodo de Tiempo:</label>
+                <select id="periodoTiempo" formControlName="periodoTiempo">
+                    <option value="1">1 Dia</option>
+                    <option value="2">3 Dia</option>
+                    <option value="3">7 Dia</option>
+                    <option value="4">14 Dia</option>
+                    <option value=""></option>
+                </select>
+            </div>
+            <button type="submit">Buscar</button>
+        </form>
+        <div *ngIf="errorDatos"><span style="color: red;">{{ mensajeErro }}</span></div>
+    </div>
+</div>
+<div class="comentarios-container" *ngIf="mostrarTabla" style="margin-left: 255px;">
+    <h2 style="text-align: center;">Reporte</h2>
+    <table style="width:100%;">
+        <tr>
+            <th>Costo de Anuncio</th>
+            <th>Tipo de Anuncio</th>
+            <th>Nombre de Anunciante</th>
+            <th>Periodo de Tiempo Inicial</th>
+            <th>Titulo</th>
+            <th>Fecha de Compra</th>
+            <th>Esta Vigente</th>
+        </tr>
+        @for (anuncio of contenidoReporte; track $index) {
+            <tr>
+              <td>{{anuncio.costo}}</td>
+              <td>{{anuncio.tipoAnuncio}}</td>
+              <td>{{anuncio.nombreAnunciante}}</td>
+              <td>{{anuncio.periodoTiempo}}</td>
+              <td>{{anuncio.titulo}}</td>
+              <td>{{anuncio.fechaCompra}}</td>
+              <td>{{anuncio.isVigente}}</td>
+            </tr>
+        }
+    </table>
+</div>

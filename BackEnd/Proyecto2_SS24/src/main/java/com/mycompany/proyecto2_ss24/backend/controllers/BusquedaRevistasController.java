@@ -82,6 +82,7 @@ public class BusquedaRevistasController {
             revistaTS.setPuedeComentarse(revistaJava.isPuedeComentarse());
             revistaTS.setPuedeSuscribirse(revistaJava.isPuedeSuscribirse());
             revistaTS.setPuedeTenerLikes(revistaJava.isPuedeTenerLikes());
+            revistaTS.setTieneOcultacionAnuncios(revistaJava.isTieneOcultacionAnuncios());
             revistaTS.setDescripcion(revistaJava.getDescripcion());
             revistaTS.setCategoria(revistaJava.getCategoria().toString());
             String[] etiquetas = new String[revistaJava.getEtiquetas().size()];

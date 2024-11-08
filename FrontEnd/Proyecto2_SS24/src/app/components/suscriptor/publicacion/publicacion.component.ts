@@ -50,7 +50,7 @@ export class PublicacionComponent {
         }
       });
     }
-    if (this.hayAnuncios != null && this.hayAnuncios) {
+    if (this.hayAnuncios != null && !this.hayAnuncios) {
       this.anuncioService.getAllAnunciosActivos().subscribe({
         next: (mensaje: any) => {
           console.log('Todo fue bien, procesando response...');

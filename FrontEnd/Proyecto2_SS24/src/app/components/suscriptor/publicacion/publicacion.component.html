@@ -1,5 +1,5 @@
-<app-anuncio-lateral id="left-sidebar" class="sidebar" *ngIf="hayAnuncios" [anuncios]="anunciosMostrarIzquierda"></app-anuncio-lateral>
+<app-anuncio-lateral id="left-sidebar" class="sidebar" *ngIf="!hayAnuncios" [anuncios]="anunciosMostrarIzquierda"></app-anuncio-lateral>
 <div class="container">
     <iframe *ngIf="archivoSrc" [src]="archivoSrc" height="1000px"></iframe>
 </div>
-<app-anuncio-lateral id="right-sidebar" class="sidebar" *ngIf="hayAnuncios" [anuncios]="anunciosMostrarDeracha"></app-anuncio-lateral>
+<app-anuncio-lateral id="right-sidebar" class="sidebar" *ngIf="!hayAnuncios" [anuncios]="anunciosMostrarDeracha"></app-anuncio-lateral>
