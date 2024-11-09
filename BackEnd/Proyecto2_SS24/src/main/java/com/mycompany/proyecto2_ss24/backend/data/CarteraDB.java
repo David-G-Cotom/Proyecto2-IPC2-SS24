@@ -54,7 +54,7 @@ public class CarteraDB {
         }
     }
     
-    private double getCredito(int idInversionista, String tablaConsulta) {
+    public double getCredito(int idInversionista, String tablaConsulta) {
         String query = "SELECT credito FROM " + tablaConsulta + " WHERE usuario = ?";
         double credito = 0;
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {

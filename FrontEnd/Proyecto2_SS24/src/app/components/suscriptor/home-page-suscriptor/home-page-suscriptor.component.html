@@ -1,3 +1,7 @@
 <app-menu-suscriptor></app-menu-suscriptor>
-<h1 style="margin-top: 0; margin-left: 250px; padding: 20px; box-sizing: border-box;">Bienvenido Suscriptor:</h1>
-<router-outlet></router-outlet>
+<app-anuncio-lateral id="left-sidebar" class="sidebar" [anuncios]="anunciosMostrarIzquierda"></app-anuncio-lateral>
+<div class="container">
+    <h1 style="margin: 50px 0px 0px 0px; padding: 10px; box-sizing: border-box;">Bienvenido Suscriptor</h1>
+    <router-outlet></router-outlet>
+</div>
+<app-anuncio-lateral id="right-sidebar" class="sidebar" [anuncios]="anunciosMostrarDeracha"></app-anuncio-lateral>

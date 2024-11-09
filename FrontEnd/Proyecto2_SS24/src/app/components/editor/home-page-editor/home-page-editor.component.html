@@ -1,3 +1,8 @@
 <app-menu-editor></app-menu-editor>
-<h1 style="margin-top: 0; margin-left: 250px; padding: 20px; box-sizing: border-box;">Bienvenido Autor:</h1>
-<router-outlet></router-outlet>
+<app-anuncio-lateral id="left-sidebar" class="sidebar" [anuncios]="anunciosMostrarIzquierda"></app-anuncio-lateral>
+<div class="container">
+    <h1 style="margin: 65px 0px 0px 0px; padding: 10px; box-sizing: border-box;">Bienvenido Autor</h1>
+    <h3 style="margin: 0 0 20px 0; padding: 10px; box-sizing: border-box;">Este es tu Credito Actual: {{creditoActual}}</h3>
+    <router-outlet></router-outlet>
+</div>
+<app-anuncio-lateral id="right-sidebar" class="sidebar" [anuncios]="anunciosMostrarDeracha"></app-anuncio-lateral>

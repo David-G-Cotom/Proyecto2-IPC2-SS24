@@ -4,6 +4,7 @@
  */
 package com.mycompany.proyecto2_ss24.resources;
 
+import com.mycompany.proyecto2_ss24.backend.data.CarteraDB;
 import com.mycompany.proyecto2_ss24.backend.data.EditorDB;
 import com.mycompany.proyecto2_ss24.backend.data.PerfilDB;
 import com.mycompany.proyecto2_ss24.backend.model.users.UsuarioAplicacion;
@@ -77,6 +78,21 @@ public class PerfilUsuarioResource {
         EditorDB dataSuscriptor = new EditorDB();
         UsuarioAplicacion editor = dataSuscriptor.getEditor(idEditor);
         return Response.ok(editor).build();
+    }
+    
+    @GET
+    @Path("credito/{idUsuario}/{idTipoUsuario}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getPerfilEditor(@PathParam("idUsuario") int idUsuario, @PathParam("idUsuario") int idTipoUsuario) {
+        CarteraDB dataCartera = new CarteraDB();
+        String tablaConsulta = "";
+        if (idTipoUsuario == 1) {
+            tablaConsulta = "editor";
+        } else if (idTipoUsuario == 3) {
+            tablaConsulta = "inversionista";
+        }
+        double credito = dataCartera.getCredito(idUsuario, tablaConsulta);
+        return Response.ok(credito).build();
     }
     
 }

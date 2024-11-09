@@ -1,14 +1,8 @@
-div {
-    margin: 50px auto;
-    padding: 10px 25px;
-}
-
 .form-container {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 50vw;
     text-align: center;
 }
 
@@ -38,10 +32,7 @@ button:hover {
 }
 
 .revistas-container {
-    margin-left: 300px; /* Espacio para las barras laterales y la barra de navegación */
-    margin-top: 50px;
-    margin-bottom: 50px;
-    margin-right: 50px;
+    margin-left: 0;
     padding: 10px 25px;
     border: 1px solid lightgrey;
     border-radius: 10px;

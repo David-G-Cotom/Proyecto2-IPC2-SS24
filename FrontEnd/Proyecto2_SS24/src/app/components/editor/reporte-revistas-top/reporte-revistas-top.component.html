@@ -25,7 +25,7 @@
         <div *ngIf="errorDatos"><span style="color: red;">{{ mensajeErro }}</span></div>
     </div>
 </div>
-<div class="comentarios-container" *ngIf="mostrarTabla" style="margin-left: 255px;">
+<div class="comentarios-container" *ngIf="mostrarTabla" style="margin: 0;">
     <h2 style="text-align: center;">Reporte</h2>
     <table style="width:100%;">
         @for (like of contenidoReporte; track $index) {

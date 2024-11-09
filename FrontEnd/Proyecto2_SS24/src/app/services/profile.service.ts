@@ -40,4 +40,8 @@ export class ProfileService {
     return this.http.get<UsuarioAplicacionJava>(`${this.urlBackend}PerfilUsuario/${idEditor}`);
   }
 
+  public getCredito(idUsuario: number, idTipoUsuario: number): Observable<number> {
+    return this.http.get<number>(`${this.urlBackend}PerfilUsuario/credito/${idUsuario}/${idTipoUsuario}`);
+  }
+
 }

@@ -1,5 +1,5 @@
 .content {    
     padding: 20px;
     box-sizing: border-box;
-    margin-left: 250px; /* Espacio para las barras laterales y la barra de navegación */
+    margin-left: 0;
 }
