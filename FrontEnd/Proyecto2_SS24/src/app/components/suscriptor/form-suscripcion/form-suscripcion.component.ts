@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UsuarioAplicacionJava } from '../../../models/usuarioAplicacionJava';
-import { CommonModule, formatDate, JsonPipe } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { RoutingService } from '../../../services/routing.service';
 import { SuscripcionService } from '../../../services/suscripcion.service';
 import { Suscripcion } from '../../../models/suscripcion';
@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-form-suscripcion',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, JsonPipe],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './form-suscripcion.component.html',
   styleUrl: './form-suscripcion.component.css'
 })

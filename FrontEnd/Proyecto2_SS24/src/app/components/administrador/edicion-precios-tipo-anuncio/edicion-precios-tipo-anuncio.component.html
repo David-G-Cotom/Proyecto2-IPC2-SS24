@@ -14,7 +14,7 @@
                 <label for="precio-video">Precio para el Anuncio de Video</label>
                 <input type="text" id="precio-video" name="precio-video" formControlName="precioVideo">
             </div>
-            <button type="submit">Guardar</button>
+            <button type="submit" [disabled]="formulario.invalid">Guardar</button>
         </form>
         <div *ngIf="errorDatos"><span style="color: red;">{{ mensajeErro }}</span></div>
     </div>

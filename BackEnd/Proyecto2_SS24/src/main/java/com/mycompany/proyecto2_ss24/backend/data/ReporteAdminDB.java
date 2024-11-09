@@ -159,8 +159,8 @@ public class ReporteAdminDB {
                     int cantidadSucripciones = resul.getInt("veces");
                     String[] datosRevista = this.getDatosRevista(idRevista);    //[idEditor, descripcion, nombre]
                     String nombreEditor = this.getNombreUsuario(this.getIdUsuarioEditor(Integer.parseInt(datosRevista[0])));
-                    ArrayList<String> nombresSuscriptores = this.getNombresSuscriptores(idRevista);
-                    ArrayList<String> fechasSuscripciones = this.getFechasSuscripciones(idRevista);
+                    ArrayList<String> nombresSuscriptores = this.getNombresSuscriptores(idRevista, clausulaWHERE, datos);
+                    ArrayList<String> fechasSuscripciones = this.getFechasSuscripciones(idRevista, clausulaWHERE, datos);
                     ContenidoReporteRevistaPopular contenidoFila
                             = new ContenidoReporteRevistaPopular(nombreEditor, datosRevista[1], datosRevista[2], cantidadSucripciones, nombresSuscriptores, fechasSuscripciones);
                     contenido.add(contenidoFila);
@@ -212,11 +212,26 @@ public class ReporteAdminDB {
         return idUsuarioEditor;
     }
 
-    private ArrayList<String> getNombresSuscriptores(int idRevista) {
-        String query = "SELECT suscriptor FROM suscripcion WHERE revista = ?";
+    private ArrayList<String> getNombresSuscriptores(int idRevista, String clausulaWHERE, ReporteRevistaPopular datos) {
+        String query = "SELECT suscriptor FROM suscripcion";
+        int cantidadInterrogantes;
+        if (clausulaWHERE.equals("")) {
+            query += " WHERE revista = ?";
+            cantidadInterrogantes = 1;
+        } else {
+            query += (clausulaWHERE + " AND revista = ?");
+            cantidadInterrogantes = 3;
+        }
         ArrayList<String> contenido = new ArrayList<>();
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
-            prepared.setInt(1, idRevista);
+            switch (cantidadInterrogantes) {
+                case 1 -> prepared.setInt(1, idRevista);
+                case 3 -> {
+                    prepared.setString(1, datos.getFechaInicio());
+                    prepared.setString(2, datos.getFechaFin());
+                    prepared.setInt(3, idRevista);
+                }
+            }
             try (ResultSet resul = prepared.executeQuery()) {
                 while (resul.next()) {
                     int idSuscriptor = resul.getInt("suscriptor");
@@ -250,11 +265,26 @@ public class ReporteAdminDB {
         return idUsuarioSuscriptor;
     }
 
-    private ArrayList<String> getFechasSuscripciones(int idRevista) {
-        String query = "SELECT fecha_suscripcion FROM suscripcion WHERE revista = ?";
+    private ArrayList<String> getFechasSuscripciones(int idRevista, String clausulaWHERE, ReporteRevistaPopular datos) {
+        String query = "SELECT fecha_suscripcion FROM suscripcion";
+        int cantidadInterrogantes;
+        if (clausulaWHERE.equals("")) {
+            query += " WHERE revista = ?";
+            cantidadInterrogantes = 1;
+        } else {
+            query += (clausulaWHERE + " AND revista = ?");
+            cantidadInterrogantes = 3;
+        }
         ArrayList<String> contenido = new ArrayList<>();
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
-            prepared.setInt(1, idRevista);
+            switch (cantidadInterrogantes) {
+                case 1 -> prepared.setInt(1, idRevista);
+                case 3 -> {
+                    prepared.setString(1, datos.getFechaInicio());
+                    prepared.setString(2, datos.getFechaFin());
+                    prepared.setInt(3, idRevista);
+                }
+            }
             try (ResultSet resul = prepared.executeQuery()) {
                 while (resul.next()) {
                     contenido.add("\"" + resul.getString("fecha_suscripcion") + "\"");
@@ -285,9 +315,9 @@ public class ReporteAdminDB {
                     int cantidadComentarios = resul.getInt("veces");
                     String[] datosRevista = this.getDatosRevista(idRevista);    //[idEditor, descripcion, nombre]
                     String nombreEditor = this.getNombreUsuario(this.getIdUsuarioEditor(Integer.parseInt(datosRevista[0])));
-                    ArrayList<String> nombresSuscriptores = this.getNombresSuscriptoresComentaristas(idRevista);
-                    ArrayList<String> comentarios = this.getComentarios(idRevista);
-                    ArrayList<String> fechasComentarios = this.getFechasComentarios(idRevista);
+                    ArrayList<String> nombresSuscriptores = this.getNombresSuscriptoresComentaristas(idRevista, clausulaWHERE, datos);
+                    ArrayList<String> comentarios = this.getComentarios(idRevista, clausulaWHERE, datos);
+                    ArrayList<String> fechasComentarios = this.getFechasComentarios(idRevista, clausulaWHERE, datos);
                     ContenidoReporteRevistaComentada contenidoFila
                             = new ContenidoReporteRevistaComentada(nombreEditor, datosRevista[1], datosRevista[2], cantidadComentarios, nombresSuscriptores, comentarios, fechasComentarios);
                     contenido.add(contenidoFila);
@@ -301,11 +331,26 @@ public class ReporteAdminDB {
         return contenido;
     }
     
-    private ArrayList<String> getComentarios(int idRevista) {
-        String query = "SELECT contenido FROM comentario WHERE revista = ?";
+    private ArrayList<String> getComentarios(int idRevista, String clausulaWHERE, ReporteRevistaComentada datos) {
+        String query = "SELECT contenido FROM comentario";
+        int cantidadInterrogantes;
+        if (clausulaWHERE.equals("")) {
+            query += " WHERE revista = ?";
+            cantidadInterrogantes = 1;
+        } else {
+            query += (clausulaWHERE + " AND revista = ?");
+            cantidadInterrogantes = 3;
+        }
         ArrayList<String> contenido = new ArrayList<>();
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
-            prepared.setInt(1, idRevista);
+            switch (cantidadInterrogantes) {
+                case 1 -> prepared.setInt(1, idRevista);
+                case 3 -> {
+                    prepared.setString(1, datos.getFechaInicio());
+                    prepared.setString(2, datos.getFechaFin());
+                    prepared.setInt(3, idRevista);
+                }
+            }
             try (ResultSet resul = prepared.executeQuery()) {
                 while (resul.next()) {
                     contenido.add("\"" + resul.getString("contenido") + "\"");
@@ -319,11 +364,26 @@ public class ReporteAdminDB {
         return contenido;
     }
     
-    private ArrayList<String> getFechasComentarios(int idRevista) {
-        String query = "SELECT fecha_comentario FROM comentario WHERE revista = ?";
+    private ArrayList<String> getFechasComentarios(int idRevista , String clausulaWHERE, ReporteRevistaComentada datos) {
+        String query = "SELECT fecha_comentario FROM comentario";
+        int cantidadInterrogantes;
+        if (clausulaWHERE.equals("")) {
+            query += " WHERE revista = ?";
+            cantidadInterrogantes = 1;
+        } else {
+            query += (clausulaWHERE + " AND revista = ?");
+            cantidadInterrogantes = 3;
+        }
         ArrayList<String> contenido = new ArrayList<>();
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
-            prepared.setInt(1, idRevista);
+            switch (cantidadInterrogantes) {
+                case 1 -> prepared.setInt(1, idRevista);
+                case 3 -> {
+                    prepared.setString(1, datos.getFechaInicio());
+                    prepared.setString(2, datos.getFechaFin());
+                    prepared.setInt(3, idRevista);
+                }
+            }
             try (ResultSet resul = prepared.executeQuery()) {
                 while (resul.next()) {
                     contenido.add("\"" + resul.getString("fecha_comentario") + "\"");
@@ -337,11 +397,26 @@ public class ReporteAdminDB {
         return contenido;
     }
     
-    private ArrayList<String> getNombresSuscriptoresComentaristas(int idRevista) {
-        String query = "SELECT suscriptor FROM comentario WHERE revista = ?";
+    private ArrayList<String> getNombresSuscriptoresComentaristas(int idRevista, String clausulaWHERE, ReporteRevistaComentada datos) {
+        String query = "SELECT suscriptor FROM comentario";
+        int cantidadInterrogantes;
+        if (clausulaWHERE.equals("")) {
+            query += " WHERE revista = ?";
+            cantidadInterrogantes = 1;
+        } else {
+            query += (clausulaWHERE + " AND revista = ?");
+            cantidadInterrogantes = 3;
+        }
         ArrayList<String> contenido = new ArrayList<>();
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
-            prepared.setInt(1, idRevista);
+            switch (cantidadInterrogantes) {
+                case 1 -> prepared.setInt(1, idRevista);
+                case 3 -> {
+                    prepared.setString(1, datos.getFechaInicio());
+                    prepared.setString(2, datos.getFechaFin());
+                    prepared.setInt(3, idRevista);
+                }
+            }
             try (ResultSet resul = prepared.executeQuery()) {
                 while (resul.next()) {
                     int idSuscriptor = resul.getInt("suscriptor");

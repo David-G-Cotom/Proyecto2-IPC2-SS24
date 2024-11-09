@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuEditorComponent } from "../menu-editor/menu-editor.component";
-import { ContentEditorComponent } from "../content-editor/content-editor.component";
 import { RouterOutlet } from '@angular/router';
 import { UsuarioAplicacionJava } from '../../../models/usuarioAplicacionJava';
 import { ProfileService } from '../../../services/profile.service';
@@ -11,7 +10,7 @@ import { AnuncioService } from '../../../services/anuncio.service';
 @Component({
   selector: 'app-home-page-editor',
   standalone: true,
-  imports: [MenuEditorComponent, ContentEditorComponent, RouterOutlet, AnuncioLateralComponent],
+  imports: [MenuEditorComponent, RouterOutlet, AnuncioLateralComponent],
   templateUrl: './home-page-editor.component.html',
   styleUrl: './home-page-editor.component.css'
 })

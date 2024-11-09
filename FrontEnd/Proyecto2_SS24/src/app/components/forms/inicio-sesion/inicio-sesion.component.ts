@@ -1,15 +1,14 @@
-import { CommonModule, JsonPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { User } from '../../../models/user';
 import { AuthService } from '../../../services/auth.service';
 import { RoutingService } from '../../../services/routing.service';
-import { UsuarioAplicacionJava } from '../../../models/usuarioAplicacionJava';
 
 @Component({
   selector: 'app-inicio-sesion',
   standalone: true,
-  imports: [ReactiveFormsModule, JsonPipe, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './inicio-sesion.component.html',
   styleUrl: './inicio-sesion.component.css'
 })

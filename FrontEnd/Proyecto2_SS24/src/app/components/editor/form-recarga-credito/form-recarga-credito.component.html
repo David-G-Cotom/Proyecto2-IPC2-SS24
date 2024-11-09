@@ -11,10 +11,8 @@
                 <label for="fecha">Fecha de Recarga</label>
                 <input type="date" id="fecha" name="fecha" formControlName="fecha">
             </div>                
-            <button type="submit">Recargar</button>
+            <button type="submit" [disabled]="formulario.invalid">Recargar</button>
         </form>
         <div *ngIf="errorDatos"><span style="color: red;">{{ mensajeErro }}</span></div>
-        <pre>{{ formulario.value | json }}</pre>
-        <pre>{{ formulario.valid | json }}</pre>
     </div>
 </div>

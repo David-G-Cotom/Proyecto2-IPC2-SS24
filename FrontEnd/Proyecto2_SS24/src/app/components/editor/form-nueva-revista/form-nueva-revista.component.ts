@@ -3,13 +3,13 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Revista } from '../../../models/revista';
 import { RevistaService } from '../../../services/revista.service';
 import { RoutingService } from '../../../services/routing.service';
-import { CommonModule, formatDate, JsonPipe } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { UsuarioAplicacionJava } from '../../../models/usuarioAplicacionJava';
 
 @Component({
   selector: 'app-form-nueva-revista',
   standalone: true,
-  imports: [ReactiveFormsModule, JsonPipe, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './form-nueva-revista.component.html',
   styleUrl: './form-nueva-revista.component.css'
 })

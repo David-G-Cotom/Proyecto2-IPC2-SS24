@@ -36,7 +36,7 @@
                 </div>
                 <button type="submit" id="contact-btn">Guardar</button>
             </form>
+            <div *ngIf="errorDatos"><span style="color: red;">{{ mensajeErro }}</span></div>
         </div>
-        <pre>{{ formulario.value | json }}</pre>
     </div>
 </div>

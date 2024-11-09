@@ -6,10 +6,8 @@
                 <label for="cantidad">Cantidad de Dias a Bloquear Anuncios:</label>
                 <input type="text" id="cantidad" name="cantidad" formControlName="cantidadDias">
             </div>               
-            <button type="submit">Hacer Bloqueo</button>
+            <button type="submit" [disabled]="formulario.invalid">Hacer Bloqueo</button>
         </form>
         <div *ngIf="errorDatos"><span style="color: red;">{{ mensajeErro }}</span></div>
-        <pre>{{ formulario.value | json }}</pre>
-        <pre>{{ formulario.valid | json }}</pre>
     </div>
 </div>

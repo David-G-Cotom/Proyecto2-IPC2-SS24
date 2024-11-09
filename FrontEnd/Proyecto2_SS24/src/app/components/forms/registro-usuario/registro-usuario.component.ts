@@ -1,4 +1,4 @@
-import { CommonModule, JsonPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UsuarioAplicacion } from '../../../models/usuarioAplicacion';
@@ -10,7 +10,7 @@ import { RoutingService } from '../../../services/routing.service';
 @Component({
   selector: 'app-registro-usuario',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, JsonPipe],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './registro-usuario.component.html',
   styleUrl: './registro-usuario.component.css'
 })

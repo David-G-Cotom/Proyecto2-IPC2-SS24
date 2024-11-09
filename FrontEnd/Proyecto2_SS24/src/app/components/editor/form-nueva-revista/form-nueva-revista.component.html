@@ -100,7 +100,5 @@
             <button type="submit" [disabled]="formulario.invalid">Crear Revista</button>
         </form>
         <div *ngIf="errorDatos"><span style="color: red;">{{ mensajeErro }}</span></div>
-        <pre>{{ formulario.value | json }}</pre>
-        <pre>{{ formulario.valid | json }}</pre>
     </div>
 </div>

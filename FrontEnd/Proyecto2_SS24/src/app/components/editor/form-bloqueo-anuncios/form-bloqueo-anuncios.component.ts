@@ -1,4 +1,4 @@
-import { CommonModule, JsonPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EditorService } from '../../../services/editor.service';
@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-form-bloqueo-anuncios',
   standalone: true,
-  imports: [ReactiveFormsModule, JsonPipe, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './form-bloqueo-anuncios.component.html',
   styleUrl: './form-bloqueo-anuncios.component.css'
 })

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuAnuncianteComponent } from "../menu-anunciante/menu-anunciante.component";
-import { ContentAnuncianteComponent } from "../content-anunciante/content-anunciante.component";
 import { RouterOutlet } from '@angular/router';
 import { UsuarioAplicacionJava } from '../../../models/usuarioAplicacionJava';
 import { ProfileService } from '../../../services/profile.service';
@@ -8,7 +7,7 @@ import { ProfileService } from '../../../services/profile.service';
 @Component({
   selector: 'app-home-page-anunciante',
   standalone: true,
-  imports: [MenuAnuncianteComponent, ContentAnuncianteComponent, RouterOutlet],
+  imports: [MenuAnuncianteComponent, RouterOutlet],
   templateUrl: './home-page-anunciante.component.html',
   styleUrl: './home-page-anunciante.component.css'
 })

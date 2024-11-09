@@ -41,7 +41,7 @@ export class ReporteRevistasPopularesComponent {
           this.errorDatos = true;
           this.mensajeErro = listado.mensaje;
         } else if (listado.mensaje === 'exito' && listado.contenido.length === 0) {
-          alert('No Revistas Populares por Mostrar');
+          alert('No hay Revistas Populares por Mostrar');
           this.mostrarTabla = false;
           this.errorDatos = false;
           this.routingServices.redireccionarRuta('administrador/home-page/reporte-revistas-populares');

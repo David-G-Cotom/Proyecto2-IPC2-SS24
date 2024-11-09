@@ -10,7 +10,7 @@
                 <label for="fecha">Fecha de Comentario:</label>
                 <input type="date" id="fecha" name="fecha" formControlName="fechaComentario">
             </div>
-            <button type="submit">Crear Comentario</button>
+            <button type="submit" [disabled]="formulario.invalid">Crear Comentario</button>
         </form>
         <div *ngIf="errorDatos"><span style="color: red;">{{ mensajeErro }}</span></div>
     </div>

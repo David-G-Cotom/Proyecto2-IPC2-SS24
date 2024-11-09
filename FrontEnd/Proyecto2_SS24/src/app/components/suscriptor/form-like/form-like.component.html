@@ -6,7 +6,7 @@
                 <label for="fecha">Fecha de Like:</label>
                 <input type="date" id="fecha" name="fecha" formControlName="fechaLike">
             </div>
-            <button type="submit">Dar Like</button>
+            <button type="submit" [disabled]="formulario.invalid">Dar Like</button>
         </form>
         <div *ngIf="errorDatos"><span style="color: red;">{{ mensajeErro }}</span></div>
     </div>

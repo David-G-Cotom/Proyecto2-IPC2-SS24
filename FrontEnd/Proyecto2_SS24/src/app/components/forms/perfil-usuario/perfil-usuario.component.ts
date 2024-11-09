@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioAplicacionJava } from '../../../models/usuarioAplicacionJava';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { JsonPipe } from '@angular/common';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { ProfileService } from '../../../services/profile.service';
 import { RoutingService } from '../../../services/routing.service';
 import { ImagenService } from '../../../services/imagen.service';
@@ -9,7 +9,7 @@ import { ImagenService } from '../../../services/imagen.service';
 @Component({
   selector: 'app-perfil-usuario',
   standalone: true,
-  imports: [ReactiveFormsModule, JsonPipe],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './perfil-usuario.component.html',
   styleUrl: './perfil-usuario.component.css'
 })
@@ -21,6 +21,8 @@ export class PerfilUsuarioComponent implements OnInit {
   passDecode: string;
   fotoSrc!: string;
   fotoNueva: File | null = null;
+  errorDatos: boolean = false;
+  mensajeErro: string = '';
 
   constructor (private perfileService: ProfileService,
               private routingService: RoutingService,
@@ -33,8 +35,8 @@ export class PerfilUsuarioComponent implements OnInit {
       temasInteres: new FormControl(this.usuarioAnterior.temasInteres),
       descripcion: new FormControl(this.usuarioAnterior.descripcion),
       gustos: new FormControl(this.usuarioAnterior.gustos),
-      userName: new FormControl(this.usuarioAnterior.userName),
-      password: new FormControl(this.passDecode),
+      userName: new FormControl(this.usuarioAnterior.userName, Validators.required),
+      password: new FormControl(this.passDecode, Validators.required),
       archivoFotoNueva: new FormControl('')
     });
   }
@@ -56,46 +58,60 @@ export class PerfilUsuarioComponent implements OnInit {
   }
 
   public guardarCambios() {
-    const nombreControl: FormControl = this.formulario.get('nombre') as FormControl;
-    const hobbiesControl: FormControl = this.formulario.get('hobbies') as FormControl;
-    const temasInteresControl: FormControl = this.formulario.get('temasInteres') as FormControl;
-    const descripcionControl: FormControl = this.formulario.get('descripcion') as FormControl;
-    const gustosControl: FormControl = this.formulario.get('gustos') as FormControl;
-    const userNameControl: FormControl = this.formulario.get('userName') as FormControl;
-    const passwordControl: FormControl = this.formulario.get('password') as FormControl;
-    
-    this.usuarioActualizado = new UsuarioAplicacionJava('', hobbiesControl.value, temasInteresControl.value,
-      descripcionControl.value, gustosControl.value, this.usuarioAnterior.userName, this.usuarioAnterior.password,
-      this.usuarioAnterior.idTipoUsuario, nombreControl.value, this.usuarioAnterior.idUsuario
-    );
-    this.usuarioActualizado.userName = userNameControl.value;
-    this.usuarioActualizado.password = passwordControl.value;
-
-    if (this.fotoNueva != null) {
-      this.perfileService.actualizarPerfil1(this.usuarioActualizado, this.fotoNueva).subscribe({
-        next: (nuevoUsuario: UsuarioAplicacionJava) => {
-          console.log('ACTUALIZACION REALIZADA CON EXITO')
-          this.perfileService.actualizarLocalStorage(nuevoUsuario);
-          this.routingService.redireccionarUsuario();
-        }, error: (error: any) => {
-          console.log('HUBO ERROR');
-          console.log(error);
-        }
-      });
+    if (this.formulario.valid) {
+      const nombreControl: FormControl = this.formulario.get('nombre') as FormControl;
+      const hobbiesControl: FormControl = this.formulario.get('hobbies') as FormControl;
+      const temasInteresControl: FormControl = this.formulario.get('temasInteres') as FormControl;
+      const descripcionControl: FormControl = this.formulario.get('descripcion') as FormControl;
+      const gustosControl: FormControl = this.formulario.get('gustos') as FormControl;
+      const userNameControl: FormControl = this.formulario.get('userName') as FormControl;
+      const passwordControl: FormControl = this.formulario.get('password') as FormControl;
+      
+      this.usuarioActualizado = new UsuarioAplicacionJava('', hobbiesControl.value, temasInteresControl.value,
+        descripcionControl.value, gustosControl.value, this.usuarioAnterior.userName, this.usuarioAnterior.password,
+        this.usuarioAnterior.idTipoUsuario, nombreControl.value, this.usuarioAnterior.idUsuario
+      );
+      this.usuarioActualizado.userName = userNameControl.value;
+      this.usuarioActualizado.password = passwordControl.value;
+  
+      if (this.fotoNueva != null) {
+        this.perfileService.actualizarPerfil1(this.usuarioActualizado, this.fotoNueva).subscribe({
+          next: (nuevoUsuario: any) => {
+            if (nuevoUsuario.mensaje !== 'exito') {
+              this.errorDatos = true;
+              this.mensajeErro = nuevoUsuario.mensaje;
+            } else {
+              this.errorDatos = false;
+              alert('ACTUALIZACION REALIZADA CON EXITO')
+              this.perfileService.actualizarLocalStorage(nuevoUsuario.usuario);
+              this.routingService.redireccionarUsuario();
+            }
+          }, error: (error: any) => {
+            console.log('HUBO ERROR');
+            console.log(error);
+          }
+        });
+      } else {
+        this.perfileService.actualizarPerfil2(this.usuarioActualizado).subscribe({
+          next: (nuevoUsuario: any) => {
+            if (nuevoUsuario.mensaje !== 'exito') {
+              this.errorDatos = true;
+              this.mensajeErro = nuevoUsuario.mensaje;
+            } else {
+              this.errorDatos = false;
+              alert('ACTUALIZACION REALIZADA CON EXITO')
+              this.perfileService.actualizarLocalStorage(nuevoUsuario.usuario);
+              this.routingService.redireccionarUsuario();
+            }
+          }, error: (error: any) => {
+            console.log('HUBO ERROR');
+            console.log(error);
+          }
+        })
+      }
     } else {
-      this.perfileService.actualizarPerfil2(this.usuarioActualizado).subscribe({
-        next: (nuevoUsuario: UsuarioAplicacionJava) => {
-          console.log('ACTUALIZACION REALIZADA CON EXITO')
-          this.perfileService.actualizarLocalStorage(nuevoUsuario);
-          this.routingService.redireccionarUsuario();
-        }, error: (error: any) => {
-          console.log('HUBO ERROR');
-          console.log(error);
-        }
-      })
+      alert('Los campos de Username y Passwor NO pueden estar Vacios!!!')
     }
-
-    
   }
 
 }

@@ -18,7 +18,7 @@
                 <label for="precio-14">Precio para 14 dias</label>
                 <input type="text" id="precio-14" name="precio-14" formControlName="precioDia14">
             </div>
-            <button type="submit">Guardar</button>
+            <button type="submit" [disabled]="formulario.invalid">Guardar</button>
         </form>
         <div *ngIf="errorDatos"><span style="color: red;">{{ mensajeErro }}</span></div>
     </div>

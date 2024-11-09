@@ -39,6 +39,11 @@ public class PerfilUsuarioResource {
             @FormDataParam("TemasInteres") String temasInteres,@FormDataParam("Desripcion") String descripcion,
             @FormDataParam("Gustos") String gustos, @FormDataParam("IDusuario") String idUsuairo,
             @FormDataParam("IDtipoUsuario") String idTipoUsuairo) {
+        if (userName.equals("") || password.equals("")) {
+            String mensaje = "LOS CAMPOS DE USERNAME Y PASSWORD NO PUEDEN ESTAR VACIOS";
+            String JSONRespones = "{\"mensaje\":\"" + mensaje +"\"}";
+            return Response.ok(JSONRespones).build();
+        }
         String codificado = Base64.getEncoder().encodeToString(password.getBytes());
         UsuarioAplicacion nuevoUsuario = new UsuarioAplicacion();
         nuevoUsuario.setUserName(userName);
@@ -52,7 +57,8 @@ public class PerfilUsuarioResource {
         nuevoUsuario.setIdTipoUsuario(Integer.parseInt(idTipoUsuairo));
         PerfilDB dataPerfil = new PerfilDB();
         if (dataPerfil.actualizarPerfil(nuevoUsuario, foto)) {
-            return Response.ok(nuevoUsuario).build();
+            String JSONResponse = "{\"mensaje\": \"exito\", \"usuario\":" + nuevoUsuario.toJSON() + "}";
+            return Response.ok(JSONResponse).build();
         }
         return Response.status(Response.Status.UNAUTHORIZED).build();
     }
@@ -62,11 +68,17 @@ public class PerfilUsuarioResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updatePerfil2(UsuarioAplicacion usuario) {
+        if (usuario.getUserName().equals("") || usuario.getPassword().equals("")) {
+            String mensaje = "LOS CAMPOS DE USERNAME Y PASSWORD NO PUEDEN ESTAR VACIOS";
+            String JSONRespones = "{\"mensaje\":\"" + mensaje +"\"}";
+            return Response.ok(JSONRespones).build();
+        }
         String codificado = Base64.getEncoder().encodeToString(usuario.getPassword().getBytes());
         usuario.setPassword(codificado);
         PerfilDB dataPerfil = new PerfilDB();
         if (dataPerfil.actualizarPerfil(usuario)) {
-            return Response.ok(usuario).build();
+            String JSONResponse = "{\"mensaje\": \"exito\", \"usuario\":" + usuario.toJSON() + "}";
+            return Response.ok(JSONResponse).build();
         }
         return Response.status(Response.Status.UNAUTHORIZED).build();
     }
@@ -83,7 +95,7 @@ public class PerfilUsuarioResource {
     @GET
     @Path("credito/{idUsuario}/{idTipoUsuario}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPerfilEditor(@PathParam("idUsuario") int idUsuario, @PathParam("idUsuario") int idTipoUsuario) {
+    public Response getCreditor(@PathParam("idUsuario") int idUsuario, @PathParam("idTipoUsuario") int idTipoUsuario) {
         CarteraDB dataCartera = new CarteraDB();
         String tablaConsulta = "";
         if (idTipoUsuario == 1) {

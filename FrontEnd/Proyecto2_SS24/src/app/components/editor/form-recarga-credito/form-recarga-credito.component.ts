@@ -3,13 +3,13 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Recarga } from '../../../models/recarga';
 import { EditorService } from '../../../services/editor.service';
 import { RoutingService } from '../../../services/routing.service';
-import { CommonModule, formatDate, JsonPipe } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { UsuarioAplicacionJava } from '../../../models/usuarioAplicacionJava';
 
 @Component({
   selector: 'app-form-recarga-credito',
   standalone: true,
-  imports: [ReactiveFormsModule, JsonPipe, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './form-recarga-credito.component.html',
   styleUrl: './form-recarga-credito.component.css'
 })
