@@ -1,24 +1,24 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RoutingService } from '../../../services/routing.service';
 import { AdministradorService } from '../../../services/administrador.service';
-import { CommonModule } from '@angular/common';
-import { ContenidoReporteRevistaPopular } from '../../../models/contenidoReporteRevistasPopulares';
-import { ReporteRevistaPopular } from '../../../models/reporteRevistasPopulares';
+import { ContenidoReporteRevistaComentada } from '../../../models/contenidoReporteRevistasComentadas';
+import { ReporteRevistaComentada } from '../../../models/reporteRevistasComentadas';
 
 @Component({
-  selector: 'app-reporte-revistas-populares',
+  selector: 'app-reporte-revistas-comentadas',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './reporte-revistas-populares.component.html',
-  styleUrl: './reporte-revistas-populares.component.css'
+  templateUrl: './reporte-revistas-comentadas.component.html',
+  styleUrl: './reporte-revistas-comentadas.component.css'
 })
-export class ReporteRevistasPopularesComponent {
+export class ReporteRevistasComentadasComponent {
 
   formulario: FormGroup;
   errorDatos: boolean = false;
   mensajeErro: string = '';
-  contenidoReporte: ContenidoReporteRevistaPopular[] = [];
+  contenidoReporte: ContenidoReporteRevistaComentada[] = [];
   mostrarTabla: boolean;
 
   constructor(private routingServices: RoutingService, private adminService: AdministradorService) {
@@ -32,8 +32,8 @@ export class ReporteRevistasPopularesComponent {
   public hacerBusqueda() {
     const fechaInicioControl: FormControl = this.formulario.get('fechaInicio') as FormControl;
     const fechaFinControl: FormControl = this.formulario.get('fechaFin') as FormControl;
-    let datosReporte = new ReporteRevistaPopular(fechaInicioControl.value, fechaFinControl.value);
-    this.adminService.getReporteRevistasPopulares(datosReporte).subscribe({
+    let datosReporte = new ReporteRevistaComentada(fechaInicioControl.value, fechaFinControl.value);
+    this.adminService.getReporteRevistasComentadas(datosReporte).subscribe({
       next: (listado: any) => {
         console.log('Todo fue bien, procesando response...');
         if (listado.mensaje !== 'exito') {

@@ -1,6 +1,6 @@
 <div class="content-body">
     <div class="form-container">
-        <h2>Reporte de Revistas Populares</h2>
+        <h2>Reporte de Revistas Comentadas</h2>
         <form [formGroup]="formulario" (ngSubmit)="hacerBusqueda()">
             <div class="input-group">
                 <label for="fechaInicio">Fecha de Inicio:</label>
@@ -24,22 +24,24 @@
               <th>Nombre Editor</th>
               <th>Nombre Revista</th> 
               <th>Descripcion</th>
-              <th>Total de Suscripciones</th>
+              <th>Total de Comentarios</th>
             </tr>
             <tr>
               <td>{{revista.nombreEditor}}</td>
               <td>{{revista.nombreRevista}}</td>
               <td>{{revista.descripcion}}</td>
-              <td>{{revista.cantidadSuscripciones}}</td>
+              <td>{{revista.cantidadComentarios}}</td>
             </tr>
             <tr>
-                <th colspan="2">Nombre Suscriptor</th>
-                <th colspan="2">Fecha Suscripcion</th>
+                <th>Nombre Suscriptor Comentarista</th>
+                <th colspan="2">Contenido Comentario</th> 
+                <th>Fecha Suscripcion</th>
             </tr>
             @for (item of revista.nombresSuscriptores; track $index) {
                 <tr>
-                    <td colspan="2">{{item}}</td>
-                    <td colspan="2">{{revista.fechasSuscripciones[$index]}}</td>
+                    <td>{{item}}</td>
+                    <td colspan="2">{{revista.comentarios[$index]}}</td>
+                    <td>{{revista.fechasComentarios[$index]}}</td>
                 </tr>
             }
         }

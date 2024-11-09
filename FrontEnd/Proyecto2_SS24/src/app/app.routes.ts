@@ -34,6 +34,8 @@ import { ReporteSuscripcionesComponent } from './components/editor/reporte-suscr
 import { FormLikeComponent } from './components/suscriptor/form-like/form-like.component';
 import { ReporteRevistasTopComponent } from './components/editor/reporte-revistas-top/reporte-revistas-top.component';
 import { ReporteAnunciosCompradosComponent } from './components/administrador/reporte-anuncios-comprados/reporte-anuncios-comprados.component';
+import { ReporteRevistasPopularesComponent } from './components/administrador/reporte-revistas-populares/reporte-revistas-populares.component';
+import { ReporteRevistasComentadasComponent } from './components/administrador/reporte-revistas-comentadas/reporte-revistas-comentadas.component';
 
 export const routes: Routes = [
   {
@@ -194,6 +196,14 @@ export const routes: Routes = [
       {
         path: 'reporte-compra-anuncios',
         component: ReporteAnunciosCompradosComponent
+      },
+      {
+        path: 'reporte-revistas-populares',
+        component: ReporteRevistasPopularesComponent
+      },
+      {
+        path: 'reporte-revistas-comentadas',
+        component: ReporteRevistasComentadasComponent
       }
     ]
   },
