@@ -14,7 +14,7 @@ export class MenuAdminComponent {
   constructor(private authService: AuthService) { }
 
   public logOut() {
-    this.authService.removeLocalStorageItem();
+    this.authService.removeStorageItems();
   }
 
 }

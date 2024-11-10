@@ -73,6 +73,7 @@ public class PerfilDB {
     public boolean actualizarPerfil(UsuarioAplicacion nuevoUsuario) {
         String query = "UPDATE usuario SET hobbie = ?, temas_interes = ?, descripcion = ?, gustos = ?, nombre = ?, user_name = ?, user_password = ? WHERE id_usuario = ?";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            this.connection.setAutoCommit(false);
             prepared.setString(1, nuevoUsuario.getHobbies());
             prepared.setString(2, nuevoUsuario.getTemasInteres());
             prepared.setString(3, nuevoUsuario.getDescripcion());
@@ -82,9 +83,16 @@ public class PerfilDB {
             prepared.setString(7, nuevoUsuario.getPassword());
             prepared.setInt(8, nuevoUsuario.getIdUsuario());
             prepared.executeUpdate();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("Perfil del Usuario Actualizado!!!");
             return true;
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error al Actualizar los Datos del Usuario " + e);
             return false;
         }
@@ -93,6 +101,7 @@ public class PerfilDB {
     public boolean actualizarPerfil(UsuarioAplicacion nuevoUsuario, InputStream foto) {
         String query = "UPDATE usuario SET foto = ?, hobbie = ?, temas_interes = ?, descripcion = ?, gustos = ?, nombre = ?, user_name = ?, user_password = ? WHERE id_usuario = ?";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            this.connection.setAutoCommit(false);
             prepared.setBlob(1, foto);
             prepared.setString(2, nuevoUsuario.getHobbies());
             prepared.setString(3, nuevoUsuario.getTemasInteres());
@@ -103,9 +112,16 @@ public class PerfilDB {
             prepared.setString(8, nuevoUsuario.getPassword());
             prepared.setInt(9, nuevoUsuario.getIdUsuario());
             prepared.executeUpdate();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("Perfil del Usuario Actualizado!!!");
             return true;
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error al Actualizar los Datos del Usuario " + e);
             return false;
         }

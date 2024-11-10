@@ -51,7 +51,7 @@ public class RegistroUsuarioController {
             return "ERROR AL SELECCIONAR EL TIPO DE USUARIO";
         }
         if (!this.extensCorrect(usuario.getPerfil().getPathFoto())) {
-            return "DEBE ELEGIR UN ARCHIVO DE IMAGEN PARA LA FOTO (.ico .png .jpg .jpeg)";
+            return "DEBE ELEGIR UN ARCHIVO DE IMAGEN PARA LA FOTO (.png .jpg .jpeg)";
         }
         return "";
     }

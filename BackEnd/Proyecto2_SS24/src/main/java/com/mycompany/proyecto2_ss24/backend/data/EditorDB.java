@@ -126,11 +126,19 @@ public class EditorDB {
     public void bloquearAnunciosRevista(int idRevista) {
         String query = "UPDATE revista SET estado_ocultacion_anuncios = ? WHERE id_revista = ?";
         try (PreparedStatement prepared = connection.prepareStatement(query)) {
+            this.connection.setAutoCommit(false);
             prepared.setBoolean(1, true);
             prepared.setInt(2, idRevista);
             prepared.executeUpdate();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("estado_ocultacion_anuncios de Revista " + idRevista + " Actualizado a true!!!");
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error al Actualizar en bloquearAnunciosRevista(idRevista) en EditorDB: " + e);
         }
     }
@@ -140,11 +148,19 @@ public class EditorDB {
         double creditoActual = this.getCreditoEditor(idEditor);
         creditoActual -= cantidadGastada;
         try (PreparedStatement prepared = connection.prepareStatement(query)) {
+            this.connection.setAutoCommit(false);
             prepared.setDouble(1, creditoActual);
             prepared.setInt(2, idEditor);
             prepared.executeUpdate();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("Credito del Editor " + idEditor + " actualizado!!!");
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error al actualizar el Credito del Editor en EditorDB: " + e);
         }
     }

@@ -30,12 +30,20 @@ public class CarteraDB {
     public void crearApago(Recarga pago) {
         String query = "INSERT INTO pago (inversionista, monto, fecha_pago) VALUES (?, ?, ?)";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {            
+            this.connection.setAutoCommit(false);
             prepared.setInt(1, pago.getIdUsuario());
             prepared.setDouble(2, Double.parseDouble(pago.getCantidad()));
             prepared.setString(3, pago.getFechaRecarga());
             prepared.executeUpdate();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("Pago Creado!!!");
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error en crear un Pago: " + e);
         }
     }
@@ -45,11 +53,19 @@ public class CarteraDB {
         double creditoActual = this.getCredito(idUsuario, tablaConsulta);
         creditoActual += abono;
         try (PreparedStatement prepared = connection.prepareStatement(query)) {
+            this.connection.setAutoCommit(false);
             prepared.setDouble(1, creditoActual);
             prepared.setInt(2, idUsuario);
             prepared.executeUpdate();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("Credito del " + tablaConsulta + " actualizado");
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error al actualizar el Credito del Inversionista: " + e);
         }
     }

@@ -12,6 +12,8 @@
             </div>
             <button type="submit" [disabled]="formulario.invalid" (click)="ingresar()">Entrar</button>
         </form>
+        <div *ngIf="errorDatos">
+            <span style="color: red;">CREDENCIALES INCORRECTAS, quieres Registrarte? <a routerLink="/registro-usuario" routerLinkActive="active">Registrarse</a></span>
+        </div>
     </div>
-    <div *ngIf="errorDatos"><span style="color: red;">CREDENCIALES INCORRECTAS</span></div>
 </div>

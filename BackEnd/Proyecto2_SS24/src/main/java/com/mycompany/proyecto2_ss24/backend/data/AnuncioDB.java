@@ -35,13 +35,21 @@ public class AnuncioDB {
     public boolean editarAnuncio(int idAnuncio, boolean estado, String titulo) {
         String query = "UPDATE anuncio SET estado = ?, titulo = ? WHERE id_anuncio = ?";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            this.connection.setAutoCommit(false);
             prepared.setBoolean(1, estado);
             prepared.setString(2, titulo);
             prepared.setInt(3, idAnuncio);
             prepared.execute();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("Estados del Anuncio Actualizado!!!");
             return true;
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error al Actualizar el Estado del Anuncio: " + e);
             return false;
         }
@@ -50,12 +58,20 @@ public class AnuncioDB {
     public boolean editarAnuncio(int idAnuncio, boolean estado) {
         String query = "UPDATE anuncio SET estado = ? WHERE id_anuncio = ?";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            this.connection.setAutoCommit(false);
             prepared.setBoolean(1, estado);
             prepared.setInt(2, idAnuncio);
             prepared.execute();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("Estados del Anuncio Actualizado!!!");
             return true;
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error al Actualizar el Estado del Anuncio: " + e);
             return false;
         }
@@ -285,12 +301,20 @@ public class AnuncioDB {
     public boolean actualizarEstadoVigencia(boolean isVigente, int idAnuncio) {
         String query = "UPDATE anuncio SET isVigente = ? WHERE id_anuncio = ?";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            this.connection.setAutoCommit(false);
             prepared.setBoolean(1, isVigente);
             prepared.setInt(2, idAnuncio);
             prepared.execute();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("Estados isVIgente del Anuncio Actualizado!!!");
             return true;
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error actualizarEstadoVigencia(isVigente, idAnuncio) en AnuncioDB: " + e);
             return false;
         }
@@ -303,11 +327,19 @@ public class AnuncioDB {
         }
         String query = "DELETE FROM anuncio WHERE id_anuncio = ?";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            this.connection.setAutoCommit(false);
             prepared.setInt(1, idAnuncio);
             prepared.executeUpdate();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("Anuncio General: " + idAnuncio + " del Tipo: " + tipoAnuncio + " ELIMINDAO!!!");
             return true;
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error deleteAnuncio(idAnuncio) en AnuncioDB: " + e);
             return false;
         }
@@ -343,26 +375,22 @@ public class AnuncioDB {
         }
         String query = "DELETE FROM " + tablaEspecifica + " WHERE id_anuncio = ?";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            this.connection.setAutoCommit(false);
             prepared.setInt(1, idAnuncio);
             prepared.executeUpdate();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("Anuncio en Especifico: " + idAnuncio + " del Tipo: " + tipoAnuncio + " ELIMINDAO!!!");
             return true;
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error deleteAnuncioEspecifico(tipoAnuncio, idAnuncio) en AnuncioDB: " + e);
             return false;
         }
     }
-    /*
-        try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
-            prepared.setBoolean(1, isVigente);
-            prepared.setInt(2, idAnuncio);
-            prepared.execute();
-            System.out.println("Estados isVIgente del Anuncio Actualizado!!!");
-            return true;
-        } catch (SQLException e) {
-            System.out.println("Error actualizarEstadoVigencia(isVigente, idAnuncio) en AnuncioDB: " + e);
-            return false;
-        }
-     */
 
 }

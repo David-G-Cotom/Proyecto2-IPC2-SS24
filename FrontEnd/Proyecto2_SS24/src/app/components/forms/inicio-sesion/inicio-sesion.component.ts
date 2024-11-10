@@ -4,11 +4,12 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { User } from '../../../models/user';
 import { AuthService } from '../../../services/auth.service';
 import { RoutingService } from '../../../services/routing.service';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-inicio-sesion',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './inicio-sesion.component.html',
   styleUrl: './inicio-sesion.component.css'
 })
@@ -24,6 +25,7 @@ export class InicioSesionComponent {
       password: new FormControl('', Validators.required)
     }),
     this.user = new User("", "", "")
+    authService.removeStorageItems();
   };
 
   ingresar() {
@@ -35,12 +37,14 @@ export class InicioSesionComponent {
 
       this.authService.validarInicioSesion(this.user).subscribe({
         next: (existeUsuario: any) =>{
-          if (existeUsuario) {
+          if (existeUsuario.mensaje === 'Si hay usuario') {
             console.log("DENTRO DE EXISTE USUARIO");
+            this.authService.removeStorageItems();
             this.authService.setLocalStorageItem(existeUsuario.usuario);
             this.authService.setSessionStorage(existeUsuario.token);
             this.routingService.redireccionarUsuario();
-          } else {
+            this.errorDatos = false;
+          } else if (existeUsuario.mensaje === 'No hay usuario') {
             console.log("DENTRO DE EXISTE USUARIO NO");
             this.errorDatos = true;
             this.formulario.reset();

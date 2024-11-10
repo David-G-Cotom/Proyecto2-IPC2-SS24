@@ -14,7 +14,7 @@ export class MenuSuscriptorComponent {
   constructor(private authService: AuthService) { }
 
   public logOut() {
-    this.authService.removeLocalStorageItem();
+    this.authService.removeStorageItems();
   }
 
 }

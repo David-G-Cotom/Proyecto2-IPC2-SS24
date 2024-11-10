@@ -36,6 +36,11 @@ import { ReporteRevistasTopComponent } from './components/editor/reporte-revista
 import { ReporteAnunciosCompradosComponent } from './components/administrador/reporte-anuncios-comprados/reporte-anuncios-comprados.component';
 import { ReporteRevistasPopularesComponent } from './components/administrador/reporte-revistas-populares/reporte-revistas-populares.component';
 import { ReporteRevistasComentadasComponent } from './components/administrador/reporte-revistas-comentadas/reporte-revistas-comentadas.component';
+import { authGuard } from './guards/auth.guard';
+import { authAdministradorGuard } from './guards/auth-administrador.guard';
+import { authAnuncianteGuard } from './guards/auth-anunciante.guard';
+import { authSuscriptorGuard } from './guards/auth-suscriptor.guard';
+import { authEditorGuard } from './guards/auth-editor.guard';
 
 export const routes: Routes = [
   {
@@ -58,6 +63,7 @@ export const routes: Routes = [
   {
     path: 'editor/home-page',
     component: HomePageEditorComponent,
+    canActivate: [ authGuard, authEditorGuard ],
     children: [
       {
         path: 'perfil',
@@ -104,6 +110,7 @@ export const routes: Routes = [
   {
     path: 'suscriptor/home-page',
     component: HomePageSuscriptorComponent,
+    canActivate: [ authGuard, authSuscriptorGuard ],
     children: [
       {
         path: 'perfil',
@@ -138,6 +145,7 @@ export const routes: Routes = [
   {
     path: 'anunciante/home-page',
     component: HomePageAnuncianteComponent,
+    canActivate: [ authGuard, authAnuncianteGuard ],
     children: [
       {
         path: 'perfil',
@@ -172,6 +180,7 @@ export const routes: Routes = [
   {
     path: 'administrador/home-page',
     component: HomePageAdminComponent,
+    canActivate: [ authGuard, authAdministradorGuard ],
     children: [
       {
         path: 'perfil',

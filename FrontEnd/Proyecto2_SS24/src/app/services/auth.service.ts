@@ -37,7 +37,7 @@ export class AuthService {
     return this.http.post<any>(`${this.urlBackend}RegistroUsuario`, formData);
   }
 
-  public removeLocalStorageItem(): void {
+  public removeStorageItems(): void {
     localStorage.removeItem('Usuario-Actual');
     localStorage.clear();
     sessionStorage.removeItem('token');

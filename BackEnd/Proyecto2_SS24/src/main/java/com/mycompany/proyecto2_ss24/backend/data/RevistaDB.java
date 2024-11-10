@@ -36,6 +36,7 @@ public class RevistaDB {
     public void crearRevista(Revista revista, int idUsuario) {
         String query = "INSERT INTO revista (editor, descripcion, likes, costo, fecha_creacion, nombre, estado_comentarios, estado_likes, estado_suscripcion, categoria, costo_global, costo_ocultacion, estado_ocultacion_anuncios) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            this.connection.setAutoCommit(false);
             int idAutor = this.getIdEditor(idUsuario);
             prepared.setInt(1, idAutor);
             prepared.setString(2, revista.getDescripcion());
@@ -52,8 +53,15 @@ public class RevistaDB {
             prepared.setDouble(12, 0);
             prepared.setBoolean(13, false);
             prepared.executeUpdate();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("Revista Creada!!!");
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error en crear una Revista: " + e);
         }
     }
@@ -98,6 +106,7 @@ public class RevistaDB {
         String query = "UPDATE revista SET descripcion = ?, nombre = ?, estado_comentarios = ?, estado_likes = ?, estado_suscripcion = ?, categoria = ? WHERE id_revista = ?";
         int idCategoriaNueva = this.getIdCategoria(CategoriaEnum.valueOf(revista.getCategoria()));
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            this.connection.setAutoCommit(false);
             prepared.setString(1, revista.getDescripcion());
             prepared.setString(2, revista.getNombre());
             prepared.setBoolean(3, revista.isPuedeComentarse());
@@ -106,9 +115,16 @@ public class RevistaDB {
             prepared.setInt(6, idCategoriaNueva);
             prepared.setInt(7, revista.getIdRevista());
             prepared.executeUpdate();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("Estados de la Revista Actualizada!!!");
             return true;
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error al Actualizar los Estados de la Revista " + e);
             return false;
         }
@@ -187,11 +203,19 @@ public class RevistaDB {
         for (Integer id : ids) {
             String query = "INSERT INTO etiqueta (revista, tipo_etiqueta) VALUES (?, ?)";
             try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+                this.connection.setAutoCommit(false);
                 prepared.setInt(1, idRevista);
                 prepared.setInt(2, id);
                 prepared.executeUpdate();
+                this.connection.commit();
+                this.connection.setAutoCommit(true);
                 System.out.println("Etiqueta Creada!!!");
             } catch (SQLException e) {
+                try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
                 System.out.println("Error en crear una Etiqueta: " + e);
             }
         }
@@ -266,20 +290,28 @@ public class RevistaDB {
         }
         return dataPdf;
     }
-    
+
     public void actualizarLikes(int idRevista) {
         String query = "UPDATE revista SET likes = ? WHERE id_revista = ?";
         int likes = this.getLikes(idRevista);
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            this.connection.setAutoCommit(false);
             prepared.setInt(1, likes);
             prepared.setInt(2, idRevista);
             prepared.executeUpdate();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("Likes Actualizados de la Revista");
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error al Actualizar los Likes de la Revista: " + e);
         }
     }
-    
+
     private int getLikes(int idRevista) {
         String query = "SELECT * FROM likes WHERE revista = ?";
         int cantidadLikes = 0;
@@ -297,22 +329,30 @@ public class RevistaDB {
         }
         return cantidadLikes;
     }
-    
+
     public boolean crearPublicacion(String numeroPublicacion, InputStream archivo, int idRevista) {
         String query = "INSERT INTO publicacion (archivo_pdf, id_revista, numero_publicacion) VALUES (?, ?, ?)";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            this.connection.setAutoCommit(false);
             prepared.setBlob(1, archivo);
             prepared.setInt(2, idRevista);
             prepared.setString(3, numeroPublicacion);
             prepared.executeUpdate();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("Publicacion Creada!!!");
             return true;
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error en crear una Publicacion: " + e);
             return false;
         }
     }
-    
+
     public ArrayList<String> getCantidadRevistasEditor(int idEditor) {
         String query = "SELECT id_revista FROM revista WHERE editor = ?";
         ArrayList<String> revistas = new ArrayList<>();

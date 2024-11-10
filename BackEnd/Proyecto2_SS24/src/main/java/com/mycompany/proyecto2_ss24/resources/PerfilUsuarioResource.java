@@ -6,6 +6,7 @@ package com.mycompany.proyecto2_ss24.resources;
 
 import com.mycompany.proyecto2_ss24.backend.data.CarteraDB;
 import com.mycompany.proyecto2_ss24.backend.data.EditorDB;
+import com.mycompany.proyecto2_ss24.backend.data.LogInUsuarioDB;
 import com.mycompany.proyecto2_ss24.backend.data.PerfilDB;
 import com.mycompany.proyecto2_ss24.backend.model.users.UsuarioAplicacion;
 import jakarta.ws.rs.Consumes;
@@ -44,6 +45,11 @@ public class PerfilUsuarioResource {
             String JSONRespones = "{\"mensaje\":\"" + mensaje +"\"}";
             return Response.ok(JSONRespones).build();
         }
+        if (this.verificarUsuarioExistente(userName, password, Integer.parseInt(idUsuairo)) == null) {
+            String mensajeErrorDatos = "Error en los campos de 'usuario' y 'password'. Intente con otros datos";
+            String JSONRespones = "{\"mensaje\":\"" + mensajeErrorDatos +"\"}";
+            return Response.ok(JSONRespones).build();
+        }
         String codificado = Base64.getEncoder().encodeToString(password.getBytes());
         UsuarioAplicacion nuevoUsuario = new UsuarioAplicacion();
         nuevoUsuario.setUserName(userName);
@@ -63,6 +69,20 @@ public class PerfilUsuarioResource {
         return Response.status(Response.Status.UNAUTHORIZED).build();
     }
     
+    private UsuarioAplicacion verificarUsuarioExistente(String userName, String password, int idUsuario) {
+        LogInUsuarioDB dataUsuario = new LogInUsuarioDB();
+        UsuarioAplicacion userAplication = new UsuarioAplicacion();
+        userAplication.setUserName(userName);
+        String codificado = Base64.getEncoder().encodeToString(password.getBytes());
+        userAplication.setPassword(codificado);
+        UsuarioAplicacion usuarioExistente = dataUsuario.getUsuario(userAplication.getUserName(), userAplication.getPassword());
+        if (usuarioExistente != null && idUsuario != usuarioExistente.getIdUsuario()) {
+            System.out.println("SIE EXISTE EL USUARIO");
+            return null;
+        }
+        return userAplication;
+    }
+    
     @PUT
     @Path("v2") //Version en donde no se actuliza la foto
     @Consumes(MediaType.APPLICATION_JSON)
@@ -71,6 +91,11 @@ public class PerfilUsuarioResource {
         if (usuario.getUserName().equals("") || usuario.getPassword().equals("")) {
             String mensaje = "LOS CAMPOS DE USERNAME Y PASSWORD NO PUEDEN ESTAR VACIOS";
             String JSONRespones = "{\"mensaje\":\"" + mensaje +"\"}";
+            return Response.ok(JSONRespones).build();
+        }
+        if (this.verificarUsuarioExistente(usuario.getUserName(), usuario.getPassword(), usuario.getIdUsuario()) == null) {
+            String mensajeErrorDatos = "Error en los campos de 'usuario' y 'password'. Intente con otros datos";
+            String JSONRespones = "{\"mensaje\":\"" + mensajeErrorDatos +"\"}";
             return Response.ok(JSONRespones).build();
         }
         String codificado = Base64.getEncoder().encodeToString(usuario.getPassword().getBytes());

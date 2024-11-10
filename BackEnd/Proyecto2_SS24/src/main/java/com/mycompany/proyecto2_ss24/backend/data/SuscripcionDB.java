@@ -240,13 +240,21 @@ public class SuscripcionDB {
     public void crearSuscripcion(Suscripcion suscripcion, int idUsuario) {
         String query = "INSERT INTO suscripcion (revista, suscriptor, fecha_suscripcion) VALUES (?, ?, ?)";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            this.connection.setAutoCommit(false);
             int idSuscriptor = this.getIdSuscriptor(idUsuario);
             prepared.setInt(1, suscripcion.getIdRevista());
             prepared.setInt(2, idSuscriptor);
             prepared.setString(3, suscripcion.getFecha());
             prepared.executeUpdate();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("Suscripcion Creada!!!");
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error en crear una Suscripcion: " + e);
         }
     }

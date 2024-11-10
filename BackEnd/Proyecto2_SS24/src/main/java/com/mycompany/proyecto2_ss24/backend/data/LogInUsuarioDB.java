@@ -37,7 +37,7 @@ public class LogInUsuarioDB {
             try (ResultSet resul = prepared.executeQuery()) {
                 if (resul.next()) {
                     int idUsuario = resul.getInt("id_usuario");
-                    String foto = resul.getString("foto");
+                    String foto = "";
                     String hobbies = resul.getString("hobbie");
                     String temasInteres = resul.getString("temas_interes");
                     String descripcion = resul.getString("descripcion");
@@ -76,6 +76,7 @@ public class LogInUsuarioDB {
     public void crearUsuario(UsuarioAplicacion usuario, InputStream foto) {
         String query = "INSERT INTO usuario (foto, tipo_usuario, user_name, user_password, nombre, hobbie, temas_interes, descripcion, gustos) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";        
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            this.connection.setAutoCommit(false);
             prepared.setBlob(1, foto);
             prepared.setInt(2, usuario.getIdTipoUsuario());
             prepared.setString(3, usuario.getUserName());
@@ -86,8 +87,15 @@ public class LogInUsuarioDB {
             prepared.setString(8, "");
             prepared.setString(9, "");
             prepared.executeUpdate();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("Nuevo Usuario Creado");
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error en crear un Usuario: " + e);
         }
         this.crearTipoUsuario(usuario);
@@ -129,42 +137,74 @@ public class LogInUsuarioDB {
     private void crearEditor(int idUsuario) {
         String query = "INSERT INTO editor (usuario, credito) VALUES (?, ?)";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            this.connection.setAutoCommit(false);
             prepared.setInt(1, idUsuario);
             prepared.setDouble(2, 0);
             prepared.executeUpdate();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("Nuevo Editor Creado!!!");
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error en crear un Editor: " + e);
         }
     }
     private void crearSuscriptor(int idUsuario) {
         String query = "INSERT INTO suscriptor (usuario) VALUES (?)";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            this.connection.setAutoCommit(false);
             prepared.setInt(1, idUsuario);
             prepared.executeUpdate();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("Nuevo Suscriptor Creado!!!");
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error en crear un Suscriptor: " + e);
         }
     }
     private void crearInversionista(int idUsuario) {
         String query = "INSERT INTO inversionista (credito, usuario) VALUES (?, ?)";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            this.connection.setAutoCommit(false);
             prepared.setDouble(1, 0);
             prepared.setInt(2, idUsuario);
             prepared.executeUpdate();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("Nuevo Inversionista Creado!!!");
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error en crear un Inversionista: " + e);
         }
     }
     private void crearSisAdmin(int idUsuario) {
         String query = "INSERT INTO administrador_sistema (usuario) VALUES (?)";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            this.connection.setAutoCommit(false);
             prepared.setInt(1, idUsuario);
             prepared.executeUpdate();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("Nuevo Administrador Creado!!!");
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error en crear un Administrador: " + e);
         }
     }

@@ -29,10 +29,18 @@ public class PreciosAnuncioDB {
         for (int i = 0; i < precios.length; i++) {
             String query = "UPDATE tipo_anuncio SET precio = ? WHERE id_tipo = ?";
             try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+                this.connection.setAutoCommit(false);
                 prepared.setDouble(1, precios[i]);
                 prepared.setInt(2, (i + 1));
                 prepared.executeUpdate();
+                this.connection.commit();
+                this.connection.setAutoCommit(true);
             } catch (SQLException e) {
+                try {
+                    this.connection.rollback();
+                } catch (SQLException ex) {
+                    System.out.println("Exception de RollBack: " + ex);
+                }
                 System.out.println("Error al Actualizar los Precios de los Tipos de Anuncios: " + e);
             }
         }
@@ -43,10 +51,18 @@ public class PreciosAnuncioDB {
         for (int i = 0; i < precios.length; i++) {
             String query = "UPDATE periodo_tiempos SET precio = ? WHERE id_periodo = ?";
             try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+                this.connection.setAutoCommit(false);
                 prepared.setDouble(1, precios[i]);
                 prepared.setInt(2, (i + 1));
                 prepared.executeUpdate();
+                this.connection.commit();
+                this.connection.setAutoCommit(true);
             } catch (SQLException e) {
+                try {
+                    this.connection.rollback();
+                } catch (SQLException ex) {
+                    System.out.println("Exception de RollBack: " + ex);
+                }
                 System.out.println("Error al Actualizar los Precios de los Periodos de Tiempo para los Anuncios: " + e);
             }
         }

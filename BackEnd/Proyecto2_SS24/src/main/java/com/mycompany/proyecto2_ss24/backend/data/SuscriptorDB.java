@@ -36,14 +36,22 @@ public class SuscriptorDB {
     public void crearComentario(Comentario comentario, int idUsuario) {
         String query = "INSERT INTO comentario (revista, contenido, suscriptor, fecha_comentario) VALUES (?, ?, ?, ?)";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            this.connection.setAutoCommit(false);
             int idSuscriptor = this.getIdSuscriptor(idUsuario);
             prepared.setInt(1, comentario.getRevista());
             prepared.setString(2, comentario.getContenido());
             prepared.setInt(3, idSuscriptor);
             prepared.setString(4, comentario.getFechaComentario());
             prepared.executeUpdate();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("Comentario Creado!!!");
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error en crear un Comentario: " + e);
         }
     }
@@ -69,14 +77,22 @@ public class SuscriptorDB {
     public boolean crearLike(Like datosLike) {
         String query = "INSERT INTO likes (revista, suscriptor, fecha_like) VALUES (?, ?, ?)";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            this.connection.setAutoCommit(false);
             int idSuscriptor = this.getIdSuscriptor(datosLike.getIdUsuario());
             prepared.setInt(1, datosLike.getIdRevista());
             prepared.setInt(2, idSuscriptor);
             prepared.setString(3, datosLike.getFechaLike());
             prepared.executeUpdate();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("Like Creado!!!");
             return true;
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error en crear un Like: " + e);
             return false;
         }

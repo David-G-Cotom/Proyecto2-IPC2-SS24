@@ -34,12 +34,13 @@ public class InicioSesionResource {
         UsuarioAplicacion usuario = dataUsuario.getUsuario(userName, codificado);
         if (usuario == null) {
             System.out.println("NO HAY USUARIO COINCIDENTE");
-            return Response.status(Response.Status.NOT_FOUND).build();
+            String JSONRespones = "{\"mensaje\":\"No hay usuario\"}";
+            return Response.ok(JSONRespones).build();
         }
         System.out.println("USUARIO ENCONTRADO");
         TokenService tokenService = new TokenService();
         String token = tokenService.generarToken(usuario);
-        String JSONRespones = "{\"token\":\"" + token + "\", \"usuario\":" + usuario.toJSON() + "}";
+        String JSONRespones = "{\"mensaje\":\"Si hay usuario\", \"token\":\"" + token + "\", \"usuario\":" + usuario.toJSON() + "}";
         return Response.ok(JSONRespones).build();
     }
 

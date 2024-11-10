@@ -36,6 +36,7 @@ public class CompraAnuncioDB {
         String query = "INSERT INTO anuncio (costo, tipo_anuncio, inversionista, vigencia_dias, estado, id_periodo, titulo, fecha_compra, isVigente)"
                 + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            this.connection.setAutoCommit(false);
             prepared.setDouble(1, anuncio.getPrecio());
             prepared.setInt(2, anuncio.getIdTipoAnuncio());
             prepared.setInt(3, anuncio.getIdInversionista());
@@ -46,8 +47,15 @@ public class CompraAnuncioDB {
             prepared.setString(8, anuncio.getFechaCompra());
             prepared.setBoolean(9, true);
             prepared.executeUpdate();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("Anuncio Creado!!!");
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error en crear un Anuncio: " + e);
         }
     }
@@ -56,11 +64,19 @@ public class CompraAnuncioDB {
         String query = "INSERT INTO anuncio_texto (contenido, id_anuncio) VALUES (?, ?)";
         int idUltimaRevista = this.getIdAnuncioCreado();
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            this.connection.setAutoCommit(false);
             prepared.setString(1, anuncio.getContenido());
             prepared.setInt(2, idUltimaRevista);
             prepared.executeUpdate();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("Anuncio de Texto Creado!!!");
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error en crear un Anuncio de Texto: " + e);
         }
     }
@@ -69,12 +85,20 @@ public class CompraAnuncioDB {
         String query = "INSERT INTO anuncio_texto_imagen (contenido, id_anuncio, imagen) VALUES (?, ?, ?)";
         int idUltimaRevista = this.getIdAnuncioCreado();
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            this.connection.setAutoCommit(false);
             prepared.setString(1, anuncio.getContenido());
             prepared.setInt(2, idUltimaRevista);
             prepared.setBlob(3, anuncio.getImagen());
             prepared.executeUpdate();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("Anuncio de Texto e Imagen Creado!!!");
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error en crear un Anuncio de Texto e Imagen: " + e);
         }
     }
@@ -83,11 +107,19 @@ public class CompraAnuncioDB {
         String query = "INSERT INTO anuncio_video (id_anuncio, video) VALUES (?, ?)";
         int idUltimaRevista = this.getIdAnuncioCreado();
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            this.connection.setAutoCommit(false);
             prepared.setInt(1, idUltimaRevista);
             prepared.setBlob(2, anuncio.getVideo());
             prepared.executeUpdate();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("Anuncio de Video Creado!!!");
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error en crear un Anuncio de Video: " + e);
         }
     }
@@ -109,12 +141,20 @@ public class CompraAnuncioDB {
     public void crearApago(Recarga pago) {
         String query = "INSERT INTO pago (inversionista, monto, fecha_pago) VALUES (?, ?, ?)";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            this.connection.setAutoCommit(false);
             prepared.setInt(1, pago.getIdUsuario());
             prepared.setDouble(2, Double.parseDouble(pago.getCantidad()));
             prepared.setString(3, pago.getFechaRecarga());
             prepared.executeUpdate();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("Pago Creado!!!");
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error en crear un Pago: " + e);
         }
     }
@@ -124,11 +164,19 @@ public class CompraAnuncioDB {
         double creditoActual = this.getCredito(idInversionista);
         creditoActual -= gasto;
         try (PreparedStatement prepared = connection.prepareStatement(query)) {
+            this.connection.setAutoCommit(false);
             prepared.setDouble(1, creditoActual);
             prepared.setInt(2, idInversionista);
             prepared.executeUpdate();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("Credito del Inversionista actualizado");
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error al actualizar el Credito del Inversionista: " + e);
         }
     }
@@ -138,11 +186,19 @@ public class CompraAnuncioDB {
         double creditoActual = this.getCredito(idInversionista);
         creditoActual += abono;
         try (PreparedStatement prepared = connection.prepareStatement(query)) {
+            this.connection.setAutoCommit(false);
             prepared.setDouble(1, creditoActual);
             prepared.setInt(2, idInversionista);
             prepared.executeUpdate();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("Credito del Inversionista actualizado");
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error al actualizar el Credito del Inversionista: " + e);
         }
     }

@@ -165,13 +165,21 @@ public class PreciosRevistaDB {
     public void actualizarPrecioRevista(double precioDia, double precioGlobal, double precioOcultacion, int idRevista) {
         String query = "UPDATE revista SET costo = ?, costo_global = ?, costo_ocultacion = ? WHERE id_revista = ?";
         try (PreparedStatement prepared = this.connection.prepareStatement(query)) {
+            this.connection.setAutoCommit(false);
             prepared.setDouble(1, precioDia);
             prepared.setDouble(2, precioGlobal);
             prepared.setDouble(3, precioOcultacion);
             prepared.setInt(4, idRevista);
             prepared.executeUpdate();
+            this.connection.commit();
+            this.connection.setAutoCommit(true);
             System.out.println("Precio de la Revista Actualizado!!!");
         } catch (SQLException e) {
+            try {
+                this.connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Exception de RollBack: " + ex);
+            }
             System.out.println("Error al Actualizar el Precio de la Revista: " + e);
         }
     }
